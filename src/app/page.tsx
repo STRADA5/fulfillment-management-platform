@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
@@ -11,6 +13,9 @@ export default function Home() {
         <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-8 text-slate-600">
           The platform foundation is operational and ready for the next stage of development.
         </p>
+        <Link href="/login" className="mt-8 inline-flex rounded-lg bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">
+          Sign in
+        </Link>
       </section>
     </main>
   );

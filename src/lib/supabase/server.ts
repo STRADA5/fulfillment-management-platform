@@ -7,16 +7,16 @@ import { getSupabasePublicConfig } from "@/lib/supabase/env";
 
 export const createClient = async () => {
   const cookieStore = await cookies();
-  const { url, anonKey } = getSupabasePublicConfig();
+  const { url, publishableKey } = getSupabasePublicConfig();
 
-  return createServerClient(url, anonKey, {
+  return createServerClient(url, publishableKey, {
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll(cookiesToSet) {
         try {
           cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
         } catch {
-          // Server Components cannot write cookies. A future auth boundary can.
+          // Cookie refresh is handled by proxy.ts. Server Components cannot write cookies.
         }
       },
     },

@@ -6,5 +6,5 @@ const getRequiredPublicEnvironmentVariable = (name: string): string => {
 
 export const getSupabasePublicConfig = () => ({
   url: getRequiredPublicEnvironmentVariable("NEXT_PUBLIC_SUPABASE_URL"),
-  anonKey: getRequiredPublicEnvironmentVariable("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+  publishableKey: getRequiredPublicEnvironmentVariable("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
 });
