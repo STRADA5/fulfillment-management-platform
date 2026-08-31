@@ -1,2 +1,31 @@
-import { ProtectedPlaceholder } from "@/components/ui/protected-placeholder";
-export default function Page() { return <ProtectedPlaceholder title="Shipping" permission="shipping.read" />; }
+import { PageHeading } from "@/components/ui/page-heading";
+import { CatalogForm } from "@/components/catalog/catalog-form";
+import { requirePermission, can } from "@/lib/auth/authorization";
+import { createClient } from "@/lib/supabase/server";
+import { configurePackageShipping, createTestShippingLabels, ingestTrackingEvent, quoteShipmentShipping, voidShippingLabel } from "@/lib/shipping/actions";
+
+export default async function ShippingPage() {
+  const context = await requirePermission("shipping.view");
+  const supabase = await createClient();
+  const [{ data: shipments }, { data: packages }, { data: services }, { data: labels }, { data: events }] = await Promise.all([
+    supabase.from("shipments").select("id,order_id,shipment_sequence,status,locked_at").order("created_at", { ascending: false }),
+    supabase.from("shipment_packages").select("id,shipment_id,package_sequence,status,weight,weight_unit,length,width,height,shipping_locked_at").order("created_at", { ascending: false }),
+    supabase.from("shipping_services").select("carrier_code,service_code,service_name").eq("enabled", true).order("carrier_code"),
+    can(context, "shipping.view") ? supabase.from("shipping_labels").select("id,package_id,shipment_id,carrier_code,service_code,tracking_number,label_status,created_at").order("created_at", { ascending: false }) : Promise.resolve({ data: [] }),
+    can(context, "shipping.view") ? supabase.from("shipping_tracking_events").select("id,package_id,normalized_status,occurred_at,message").order("occurred_at", { ascending: false }).limit(100) : Promise.resolve({ data: [] }),
+  ]);
+  const shipmentMap = new Map((shipments ?? []).map((s) => [s.id, s]));
+  return <>
+    <PageHeading title="Shipping" description={`Local carrier foundation for ${context.membership?.organizationName ?? "your organization"}.`} />
+    <p className="mt-3 text-sm text-slate-600">Labels use deterministic local adapters. Creating labels is the irreversible package lock; later additions require a new shipment.</p>
+    <section className="mt-6 rounded-xl border border-slate-200 bg-white p-5"><h2 className="text-lg font-semibold">Shipping queue</h2>
+      <div className="mt-3 space-y-3">{(shipments ?? []).map((shipment) => <div key={shipment.id} className="rounded-lg border p-3 text-sm"><p className="font-medium">Shipment {shipment.shipment_sequence} · {shipment.status}</p><p className="text-slate-600">Order {shipment.order_id} {shipment.locked_at ? `· fulfillment locked ${shipment.locked_at}` : ""}</p><div className="mt-2 space-y-2">{(packages ?? []).filter((pkg) => pkg.shipment_id === shipment.id).map((pkg) => { const label = (labels ?? []).find((item) => item.package_id === pkg.id); return <div key={pkg.id} className="rounded border bg-slate-50 p-2"><p>Package {pkg.package_sequence} · {pkg.status} {pkg.shipping_locked_at ? "· shipping locked" : ""}</p>{label ? <p className="text-slate-600">{label.carrier_code}/{label.service_code} · {label.tracking_number} · {label.label_status}</p> : <p className="text-slate-600">No local label yet</p>}</div>; })}</div></div>)}{!shipments?.length ? <p className="text-sm text-slate-600">No shipments are ready for shipping.</p> : null}</div>
+    </section>
+    {can(context, "shipping.manage") ? <section className="mt-6 grid gap-6 lg:grid-cols-2"><CatalogForm title="Configure package" action={configurePackageShipping} fields={[{ name: "packageId", label: "Package ID", required: true }, { name: "carrier", label: "Carrier", required: true, options: (services ?? []).map((s) => ({ value: s.carrier_code, label: s.carrier_code.toUpperCase() })) }, { name: "service", label: "Service code", required: true, options: (services ?? []).map((s) => ({ value: s.service_code, label: `${s.service_code} · ${s.service_name}` })) }, { name: "length", label: "Length", type: "number", required: true }, { name: "width", label: "Width", type: "number", required: true }, { name: "height", label: "Height", type: "number", required: true }, { name: "dimensionUnit", label: "Dimension unit", required: true }, { name: "requestKey", label: "Request key", required: true }]} /><CatalogForm title="Quote shipment" action={quoteShipmentShipping} fields={[{ name: "shipmentId", label: "Shipment ID", required: true }, { name: "currency", label: "Currency", required: true }, { name: "requestKey", label: "Request key", required: true }]} /></section> : null}
+    {can(context, "shipping.label.create") ? <section className="mt-6 grid gap-6 lg:grid-cols-2"><CatalogForm title="Create local labels (locks packages)" action={createTestShippingLabels} fields={[{ name: "shipmentId", label: "Shipment ID", required: true }, { name: "requestKey", label: "Request key", required: true }]} /></section> : null}
+    {can(context, "shipping.tracking.manage") ? <section className="mt-6"><CatalogForm title="Record tracking event" action={ingestTrackingEvent} fields={[{ name: "packageId", label: "Package ID", required: true }, { name: "providerEventId", label: "Provider event ID", required: true }, { name: "status", label: "Status", required: true, options: ["pre_transit", "picked_up", "in_transit", "out_for_delivery", "delayed", "exception", "delivered", "returned"].map((value) => ({ value, label: value })) }, { name: "occurredAt", label: "Occurred at", type: "datetime-local", required: true }, { name: "message", label: "Message" }, { name: "requestKey", label: "Request key", required: true }]} /></section> : null}
+    <section className="mt-6 rounded-xl border border-slate-200 bg-white p-5"><h2 className="text-lg font-semibold">Recent tracking events</h2>{(events ?? []).map((event) => <p key={event.id} className="mt-2 text-sm">Package {event.package_id} · {event.normalized_status} · {event.occurred_at}{event.message ? ` · ${event.message}` : ""}</p>)}{!events?.length ? <p className="mt-2 text-sm text-slate-600">No tracking events recorded.</p> : null}</section>
+    {can(context, "shipping.label.void") && labels?.some((label) => label.label_status === "created") ? <section className="mt-6"><CatalogForm title="Void a pre-dispatch label" action={voidShippingLabel} fields={[{ name: "packageId", label: "Package ID", required: true }, { name: "requestKey", label: "Request key", required: true }]} /></section> : null}
+    <span className="hidden">{shipmentMap.size}</span>
+  </>;
+}

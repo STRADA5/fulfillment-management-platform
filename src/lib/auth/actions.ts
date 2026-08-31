@@ -18,6 +18,7 @@ export async function loginAction(_state: AuthActionState, formData: FormData): 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { error: "Unable to sign in with those credentials." };
+  await supabase.rpc("accept_my_organization_invitations");
   redirect(next);
 }
 

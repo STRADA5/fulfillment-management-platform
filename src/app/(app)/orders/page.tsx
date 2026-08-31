@@ -1,2 +1,17 @@
-import { ProtectedPlaceholder } from "@/components/ui/protected-placeholder";
-export default function Page() { return <ProtectedPlaceholder title="Orders" permission="orders.read" />; }
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { PageHeading } from "@/components/ui/page-heading";
+import { OrderIntakeForm } from "@/components/orders/order-intake-form";
+import { requireUser } from "@/lib/auth/session";
+import { createClient } from "@/lib/supabase/server";
+
+type Intake={customers:Array<{id:string;name:string;number:string}>;addresses:Array<{id:string;customer_id:string;label:string;recipient:string;line1:string;city:string}>;catalog:Array<{entry_id:string;display_name:string;sku:string|null;unit_price:number|string;currency:string}>};
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){await requireUser();const s=await createClient(),p=await searchParams;
+ const{data:contexts,error}=await s.rpc("get_order_contexts");if(error)throw Error("Order contexts unavailable.");if(!contexts?.length)return <PageHeading title="Orders" description="No active order authorization. Catalog and parent relationships do not grant order access."/>;
+ const clientId=p.client??contexts[0].id,context=contexts.find(x=>x.id===clientId);if(!context)notFound();const page=Math.max(0,Number.parseInt(p.page??"0",10)||0);
+ let query=s.from("orders").select("id,order_number,status,currency,total,submitted_at,customer_snapshot",{count:"exact"}).eq("client_organization_id",clientId).order("submitted_at",{ascending:false}).range(page*25,page*25+24);if(p.q)query=query.ilike("order_number",`%${p.q.slice(0,60)}%`);if(['submitted','accepted','cancelled'].includes(p.status??''))query=query.eq('status',p.status as 'submitted'|'accepted'|'cancelled');
+ const[{data:orders,count},{data:options}]=await Promise.all([query,context.can_create?s.rpc("get_order_intake_options",{target_client_organization_id:clientId,target_currency:"USD"}):Promise.resolve({data:null})]);const intake=options as Intake|null;
+ const href=(changes:Record<string,string>)=>`/orders?${new URLSearchParams({client:clientId,q:p.q??'',status:p.status??'',page:String(page),...changes})}`;
+ return <><PageHeading title="Orders" description={`Order owner: ${context.name}. Submitted commercial snapshots remain historical; allocation status is tracked separately.`}/><p className="my-3"><Link href="/orders/service-access" className="text-blue-700">Order service access administration</Link></p><form className="my-5 flex flex-wrap gap-3"><label>Client<select name="client" defaultValue={clientId} className="m-2 rounded border p-2">{contexts.map(x=><option value={x.id} key={x.id}>{x.name}</option>)}</select></label><label>Order number<input name="q" defaultValue={p.q} className="m-2 rounded border p-2"/></label><label>Status<select name="status" defaultValue={p.status??''} className="m-2 rounded border p-2"><option value="">All</option><option>submitted</option><option>accepted</option><option>cancelled</option></select></label><button className="rounded bg-slate-900 px-4 text-white">Filter</button></form>
+ {context.can_create&&intake?<OrderIntakeForm clientId={clientId} customers={intake.customers} addresses={intake.addresses} catalog={intake.catalog}/>:null}<h2 className="mt-8 text-xl">Orders ({count??0})</h2>{orders?.map(o=><article key={o.id} className="my-3 rounded border bg-white p-4"><Link className="font-semibold text-blue-700" href={`/orders/${o.id}`}>{o.order_number}</Link><p>{o.status} · {Number(o.total).toFixed(2)} {o.currency} · {o.submitted_at}</p><p>Customer: {(o.customer_snapshot as {display_name?:string}).display_name}</p></article>)}{!orders?.length?<p>No orders found.</p>:null}<nav className="my-5 flex gap-4">{page>0?<Link href={href({page:String(page-1)})}>Previous</Link>:null}{(count??0)>(page+1)*25?<Link href={href({page:String(page+1)})}>Next</Link>:null}</nav></>;
+}

@@ -7,7 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:security:local": "node supabase/tests/run-local-security-tests.mjs",
+    "test:security:local:4c": "node supabase/tests/run-local-security-tests.mjs --phase4c",
+    "test:security:local:4d": "node supabase/tests/run-local-security-tests.mjs --phase4d",
+    "test:security:local:4e": "node supabase/tests/run-local-security-tests.mjs --phase4e",
+    "test:security:local:4f": "node supabase/tests/run-local-security-tests.mjs --phase4f",
+    "test:security:local:4g": "node supabase/tests/run-local-security-tests.mjs --phase4g",
+    "test:security:local:5a": "node supabase/tests/run-local-security-tests.mjs --phase5a",
+    "test:security:local:5b": "node supabase/tests/run-local-security-tests.mjs --phase5b",
+    "test:security:local:5c": "node supabase/tests/run-local-security-tests.mjs --phase5c",
+    "test:security:local:5d": "node supabase/tests/run-local-security-tests.mjs --phase5d"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",
@@ -23,6 +33,7 @@
     "@types/react-dom": "19.2.4",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.1",
+    "supabase": "^2.115.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3"
   }

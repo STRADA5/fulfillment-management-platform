@@ -4,7 +4,7 @@
 
 The publishable Supabase key is intentionally available to browser code. It identifies the project; it does not grant tenant access. PostgreSQL Row Level Security (RLS), authenticated user identity, active organization membership, and role permissions form the authorization boundary.
 
-No service-role key is used by the application foundation. If privileged server-only credentials are introduced later, they must never use a `NEXT_PUBLIC_` name, enter a browser bundle, or be used as a substitute for explicit authorization checks.
+The service-role key is used only by a `server-only` Supabase Auth administration client for trusted invitation and account lookup operations. It never uses a `NEXT_PUBLIC_` name and must never enter a browser bundle. Organization membership changes still execute with the administrator's authenticated JWT through guarded database functions, so the privileged key is not a substitute for actor authorization.
 
 ## Tenant isolation
 
@@ -23,6 +23,7 @@ Permissions are records joined to roles through `role_permissions`, allowing the
 - `CLIENT_ADMIN` can assign only `CLIENT_ADMIN` or `CLIENT_USER` within the same client organization.
 - Non-super administrators cannot modify or remove a membership whose role they are not permitted to assign. This prevents demoting or deleting a super-admin membership.
 - `STAFF` and `WAREHOUSE` do not receive supplier, acquisition-cost, margin, system-setting, security, membership-management, or role-management permissions by default.
+- Global role-permission assignments are mutable only through an audited `SUPER_ADMIN` database function. Direct authenticated DML is revoked, `SUPER_ADMIN` assignments are immutable, and possessing `roles.manage` alone cannot invoke the mutation function.
 
 ## Authentication
 
@@ -33,6 +34,10 @@ Public registration is not implemented. Users must be created or invited by an a
 ## Audit logs
 
 `audit_logs` is append-oriented. Authenticated browser clients have no insert, update, or delete grant. Authorized users may read organization events when their role has `audit.read`; trusted future server processes or database triggers can append events. Ordinary users cannot rewrite or delete audit history through the Data API.
+
+Phase 2A membership functions append invitation, acceptance, role/status, primary-organization, removal, and global profile-status events in the same transaction as the protected mutation. Private audit helpers are not executable by anonymous or authenticated API roles.
+
+Phase 2B role-permission grants and removals use the same transactional audit boundary. Audit rows remain read-only to authenticated users and are filtered by organization RLS; active super-admins retain platform-wide visibility for organization-associated events.
 
 ## Future schema requirements
 

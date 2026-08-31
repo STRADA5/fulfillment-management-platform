@@ -14,7 +14,7 @@ export default async function AdministrationPage() {
         {items.map((item) => (
           <Link key={item.href} href={item.href} className="rounded-xl border border-slate-200 bg-white p-5 font-semibold text-slate-900 shadow-sm transition hover:border-slate-400">
             {item.label}
-            <span className="mt-2 block text-sm font-normal text-slate-500">Foundation placeholder</span>
+            <span className="mt-2 block text-sm font-normal text-slate-500">Open {item.label.toLowerCase()}</span>
           </Link>
         ))}
       </div>

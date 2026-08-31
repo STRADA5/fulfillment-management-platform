@@ -1,6 +1,8 @@
 # Supabase migrations
 
-SQL migrations in `migrations/` are the version-controlled source of truth. Creating a file does not change any Supabase project.
+SQL migrations in `migrations/` are the version-controlled source of truth. The original Phase 1 migration is immutable; its later security correction is formalized in `20260820010000_phase1_security_hardening.sql`. Creating a file does not change any Supabase project.
+
+The completed Phase 1–5D chain contains 21 migrations. Review `docs/migration-manifest.sha256` before applying any hosted non-production migration. The local test runner refuses non-loopback Supabase URLs and must never be pointed at a hosted project.
 
 ## Apply safely
 
@@ -22,6 +24,8 @@ SQL migrations in `migrations/` are the version-controlled source of truth. Crea
    ```
 
 6. Confirm all tenant-sensitive tables have RLS enabled and test access with accounts from unrelated organizations before production rollout.
+
+The local `seed.sql` file is intentionally empty. Phase-specific security suites create and remove disposable local fixtures; bootstrap data is created only through the trusted process below. Phase 5B keeps salesperson commission tables provider-only and uses provider-scoped order and verification-number uniqueness so independent tenants cannot collide. Phase 5C adds composable client capabilities and keeps affiliate/referral commissions in a separate provider-scoped ledger with direct table access revoked. Phase 5D adds provider-owned Knowledge Library & Tools tables with direct authenticated access revoked, guarded version/approval/share/delivery RPCs, and a metadata-only calculator plugin framework; it does not execute calculators or prescribe dosing.
 
 ## Initial bootstrap
 

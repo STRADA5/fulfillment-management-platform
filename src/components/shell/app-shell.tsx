@@ -2,16 +2,19 @@
 
 import { useState, type ReactNode } from "react";
 
+import { setPrimaryOrganizationAction } from "@/lib/admin/membership-actions";
 import { logoutAction } from "@/lib/auth/actions";
 import type { NavigationItem } from "@/config/navigation";
 import { Sidebar } from "@/components/shell/sidebar";
 
-export function AppShell({ children, navigation, organizationName, displayName, email }: {
+export function AppShell({ children, navigation, organizationName, displayName, email, currentMembershipId, memberships }: {
   children: ReactNode;
   navigation: NavigationItem[];
   organizationName: string;
   displayName: string;
   email: string;
+  currentMembershipId?: string;
+  memberships: Array<{ id: string; organizationName: string; roleCode: string }>;
 }) {
   const [navigationOpen, setNavigationOpen] = useState(false);
 
@@ -31,7 +34,24 @@ export function AppShell({ children, navigation, organizationName, displayName, 
             </button>
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Current organization</p>
-              <p className="truncate text-sm font-semibold text-slate-900">{organizationName}</p>
+              {memberships.length > 1 ? (
+                <form action={setPrimaryOrganizationAction}>
+                  <label className="sr-only" htmlFor="active-membership">Current organization</label>
+                  <select
+                    id="active-membership"
+                    name="membershipId"
+                    defaultValue={currentMembershipId}
+                    onChange={(event) => event.currentTarget.form?.requestSubmit()}
+                    className="max-w-56 truncate rounded-md border border-slate-300 bg-white px-2 py-1 text-sm font-semibold text-slate-900"
+                  >
+                    {memberships.map((membership) => (
+                      <option key={membership.id} value={membership.id}>
+                        {membership.organizationName} · {membership.roleCode}
+                      </option>
+                    ))}
+                  </select>
+                </form>
+              ) : <p className="truncate text-sm font-semibold text-slate-900">{organizationName}</p>}
             </div>
           </div>
           <details className="relative">

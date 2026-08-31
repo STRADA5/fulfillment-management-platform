@@ -1,0 +1,37 @@
+name: Local CI
+
+on:
+  push:
+    branches: [main, "codex/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  local-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify migration manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r file hash; do
+            [[ "$file" == \#* || -z "$file" ]] && continue
+            actual="$(sha256sum "supabase/migrations/$file" | awk '{print $1}')"
+            test "$actual" = "$hash"
+          done < docs/migration-manifest.sha256
+      - run: npx supabase start
+      - run: npm run test:security:local
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - if: always()
+        run: npx supabase stop

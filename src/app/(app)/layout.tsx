@@ -14,6 +14,12 @@ export default async function AuthenticatedLayout({ children }: { children: Reac
       organizationName={context.membership?.organizationName ?? "No active organization"}
       displayName={context.profile.displayName}
       email={context.user.email}
+      currentMembershipId={context.membership?.id}
+      memberships={context.memberships.map((membership) => ({
+        id: membership.id,
+        organizationName: membership.organizationName,
+        roleCode: membership.roleCode,
+      }))}
     >
       {children}
     </AppShell>

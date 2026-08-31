@@ -1,0 +1,3 @@
+-- Intentionally empty. Local fixtures are created and removed by the
+-- phase-specific security test suites; production/bootstrap data is created
+-- through the documented trusted bootstrap process.
