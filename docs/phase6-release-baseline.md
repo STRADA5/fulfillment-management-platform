@@ -9,6 +9,7 @@ Phase 6 consolidates the recovered Phase 1–5D implementation into a reproducib
 - The original Phase 1 migration remains byte-for-byte immutable. Its security correction is the separate forward-only Phase 1 hardening migration.
 - The complete chronological chain contains 21 migrations through Phase 5D.
 - Local Phase 1–5D verification, clean rebuild, typecheck, lint, production build, and local app build workflow have passed.
+- Phase 6 hosted-authenticated smoke verification tooling is included as development-only code in `tests/phase6/hosted-auth-smoke.mjs` and `tools/run-phase6-hosted-smoke.ps1`; its protected credentials and bypass secret remain outside Git.
 
 ## Baseline acceptance gates
 
@@ -19,6 +20,7 @@ Phase 6 consolidates the recovered Phase 1–5D implementation into a reproducib
 5. Run `npm ci`, a clean local Supabase reset, the complete security suite, typecheck, lint, and production build.
 6. Confirm `git diff --check`, generated types, package-lock consistency, and secret scanning.
 7. Create an immutable release-baseline commit and tag containing the release SHA and migration-manifest hash.
+8. Run the configuration-only hosted smoke check from the protected staging PowerShell session; the full hosted six-role matrix remains a separately authorized staging operation.
 
 ## Release identity
 

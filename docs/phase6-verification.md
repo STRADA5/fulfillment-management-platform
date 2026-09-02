@@ -10,6 +10,7 @@ Phase 6 local release-baseline preparation was performed on `codex/phase6-releas
 - `supabase/seed.sql` remains an intentionally empty bootstrap-safe local seed.
 - `docs/migration-manifest.sha256` matches every migration file.
 - Staging environment, CI, synthetic-data, backup/restore, rollback, monitoring, and authorized-role runbooks are documented without real secrets.
+- The Phase 6 hosted smoke runner is present as development-only tooling. It requires a direct Playwright dev dependency, exact Preview URL validation, a process-scoped Vercel bypass secret, and Windows Credential Manager input for the six synthetic identities.
 
 ## Verification results
 
@@ -24,8 +25,15 @@ Phase 6 local release-baseline preparation was performed on `codex/phase6-releas
 | Local app build workflow | PASS |
 | Migration manifest hashes | PASS |
 | Hosted Supabase access | NOT RUN — intentionally deferred |
+| Hosted authenticated smoke matrix | NOT RUN — runner implemented; separate staging authorization required |
 | Production credentials/data/providers | NOT USED |
 
 ## Hosted-staging gate remaining
 
 Hosted non-production access becomes appropriate only after this local baseline is reviewed and the project owner explicitly approves creation of a separate synthetic-data-only Supabase project. The required inputs are listed in `docs/phase6-staging-runbook.md`; no production credential is required or requested.
+
+## Hosted runner implementation status
+
+- Configuration-only validation must be run from the protected staging PowerShell session with `npm run test:hosted:phase6 -- -ConfigOnly`.
+- The six-role hosted matrix must be run only with the exact staging Preview URL and approved synthetic Credential Manager entries.
+- No browser artifacts, credentials, session values, or production targets may be recorded.

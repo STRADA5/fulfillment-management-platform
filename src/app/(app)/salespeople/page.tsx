@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAppContext, can } from "@/lib/auth/authorization";
+import { requirePermission, can } from "@/lib/auth/authorization";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeading } from "@/components/ui/page-heading";
 import { CatalogForm, type CatalogField } from "@/components/catalog/catalog-form";
@@ -12,7 +12,7 @@ const statuses = ["active", "inactive", "suspended"].map((value) => ({ value, la
 const blankId = { name: "id", label: "Existing record id (optional)" };
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
-  const context = await getAppContext();
+  const context = await requirePermission("salespeople.view");
   if (!context.membership) return null;
   const params = await searchParams;
   const supabase = await createClient();
