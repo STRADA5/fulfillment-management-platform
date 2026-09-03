@@ -42,11 +42,13 @@ async function signInAndCheck(page, email, password, expectedStatus, label) {
   await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL((url) => url.pathname === "/dashboard", { timeout: 30000 });
-  const response = await page.goto("/salespeople", { waitUntil: "domcontentloaded" });
-  assert.equal(response?.status(), expectedStatus, `${label}: unexpected /salespeople response status`);
-  const body = await page.locator("body").innerText();
-  if (expectedStatus === 404) assert.doesNotMatch(body, /Salespeople & commissions/, `${label}: protected page shell rendered`);
-  if (expectedStatus === 200) assert.match(body, /Salespeople & commissions/, `${label}: authorized page did not render`);
+  for (const [path, shell] of [["/salespeople", /Salespeople & commissions/], ["/pricing-tiers", /Pricing tiers/]]) {
+    const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+    assert.equal(response?.status(), expectedStatus, `${label}: unexpected ${path} response status`);
+    const body = await page.locator("body").innerText();
+    if (expectedStatus === 404) assert.doesNotMatch(body, shell, `${label}: protected ${path} page shell rendered`);
+    if (expectedStatus === 200) assert.match(body, shell, `${label}: authorized ${path} page did not render`);
+  }
 }
 
 const local = localEnvironment();
@@ -120,7 +122,7 @@ try {
       await context.close();
     }
   }
-  console.log("Phase 6 /salespeople route authorization regression passed.");
+  console.log("Phase 6 /salespeople and /pricing-tiers route authorization regressions passed.");
 } finally {
   await browser?.close();
   if (app && !app.killed) app.kill();

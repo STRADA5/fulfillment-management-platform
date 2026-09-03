@@ -1,4 +1,4 @@
-import { getAppContext, can } from "@/lib/auth/authorization";
+import { requirePermission, can } from "@/lib/auth/authorization";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeading } from "@/components/ui/page-heading";
 import { CatalogForm, type CatalogField } from "@/components/catalog/catalog-form";
@@ -7,8 +7,8 @@ import { savePricingTier, assignPricingTier, savePricingTierPrice } from "@/lib/
 type AdminContext = { pricing_tiers: Array<{ id: string; code: string; name: string; priority: number; status: string; version: number }>; tier_assignments: Array<{ id: string; client_organization_id: string; pricing_tier_id: string; status: string }> };
 
 export default async function Page() {
-  const context = await getAppContext();
-  if (!context.membership || !can(context, "pricing_tiers.view")) return null;
+  const context = await requirePermission("pricing_tiers.view");
+  if (!context.membership) return null;
   const supabase = await createClient();
   const organization = context.membership.organizationId;
   const [{ data: rawAdmin }, { data: rawClients }, { data: rawProducts }] = await Promise.all([
