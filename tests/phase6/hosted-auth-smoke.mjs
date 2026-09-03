@@ -1,6 +1,6 @@
 import { chromium } from "@playwright/test";
 
-const EXPECTED_PREVIEW_URL = "https://fulfillment-management-platform-aekq17h48.vercel.app";
+const EXPECTED_PREVIEW_URL = "https://fulfillment-management-platform-5uxw6i3a.vercel.app";
 const EXPECTED_SUPABASE_HOST = "nftufhffzlokryafcbku.supabase.co";
 const REQUIRED_ROLES = ["client-b", "client-a", "salesperson-a", "salesperson-b", "fulfillment-operator", "super-admin"];
 
