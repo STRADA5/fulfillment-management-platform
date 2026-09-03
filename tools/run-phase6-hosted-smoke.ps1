@@ -6,7 +6,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$expectedPreviewUrl = "https://fulfillment-management-platform-b9d85avh4.vercel.app"
+$expectedPreviewUrl = "https://fulfillment-management-git-3872d3-fulfillment-management-platform.vercel.app"
 $previewUrl = $env:PHASE6_PREVIEW_URL
 if ([string]::IsNullOrWhiteSpace($previewUrl)) {
   throw "PHASE6_PREVIEW_URL is required."
