@@ -26,7 +26,7 @@ This runbook is a controlled non-production procedure. It must not be used with 
 The Phase 6 hosted browser runner is development-only verification tooling. It is not part of the production runtime.
 
 - `npm run test:hosted:phase6` must be launched from the same protected PowerShell process that owns `PHASE6_PREVIEW_URL` and `VERCEL_AUTOMATION_BYPASS_SECRET`.
-- `PHASE6_PREVIEW_URL` is rejected unless it is exactly `https://fulfillment-management-platform-dk9hj9ut9.vercel.app`.
+- `PHASE6_PREVIEW_URL` is rejected unless it is exactly `https://fulfillment-management-platform-b9d85avh4.vercel.app`.
 - The bypass secret is read only from the inherited process environment and sent only as the `x-vercel-protection-bypass` request header.
 - The PowerShell launcher reads the six existing synthetic credentials from Windows Credential Manager and pipes them to the runner without printing, persisting, or passing them as command-line arguments.
 - Credential Manager target names are non-secret process configuration for Client B, Client A, Salesperson A, Salesperson B, Fulfillment Operator, and Super-Admin.
