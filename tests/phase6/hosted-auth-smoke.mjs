@@ -107,9 +107,24 @@ async function bodyText(page) {
 }
 
 async function expectAppLogin(page) {
-  await page.goto("/login", { waitUntil: "domcontentloaded" });
+  const response = await page.goto("/login", { waitUntil: "domcontentloaded" });
+  const responseStatus = response?.status() ?? 0;
+  const currentUrl = new URL(page.url());
+  const pageTitle = await page.title().catch(() => "");
+  const identityText = await bodyText(page).catch(() => "");
+  const gatewayVisible = (await page.getByRole("heading", { name: "Log in to Vercel" }).count()) > 0;
+  const gatewayIdentity = /deployment protection|vercel authentication|log in to vercel/i.test(`${pageTitle} ${identityText}`);
+
+  if (currentUrl.origin !== EXPECTED_PREVIEW_URL || currentUrl.pathname !== "/login") {
+    fail("VERCEL_BYPASS_FAILED: Preview navigation did not reach the application login route.");
+  }
+  if (responseStatus < 200 || responseStatus >= 400) {
+    fail("VERCEL_BYPASS_FAILED: Preview returned a non-success response before application login.");
+  }
+  if (gatewayVisible || gatewayIdentity) {
+    fail("VERCEL_BYPASS_FAILED: Vercel Deployment Protection remained in front of the application.");
+  }
   await page.getByRole("heading", { name: "Sign in" }).waitFor({ state: "visible" });
-  if ((await page.getByRole("heading", { name: "Log in to Vercel" }).count()) > 0) fail("Vercel protection gateway remained in front of the application.");
 }
 
 async function signIn(page, record) {
@@ -211,7 +226,10 @@ async function main() {
       const matrix = roleMatrix[role];
       const context = await browser.newContext({
         baseURL: config.previewUrl,
-        extraHTTPHeaders: { "x-vercel-protection-bypass": config.bypass },
+        extraHTTPHeaders: {
+          "x-vercel-protection-bypass": config.bypass,
+          "x-vercel-set-bypass-cookie": "true",
+        },
         acceptDownloads: false,
       });
       const page = await context.newPage();

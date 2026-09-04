@@ -25,7 +25,7 @@ Phase 6 local release-baseline preparation was performed on `codex/phase6-releas
 | Local app build workflow | PASS |
 | Migration manifest hashes | PASS |
 | Hosted Supabase access | NOT RUN — intentionally deferred |
-| Hosted authenticated smoke matrix | NOT RUN — runner implemented; separate staging authorization required |
+| Hosted authenticated smoke matrix | BLOCKED — Vercel automation-bypass path remains unresolved; no application failure inferred |
 | Production credentials/data/providers | NOT USED |
 
 ## Hosted-staging gate remaining
@@ -36,4 +36,5 @@ Hosted non-production access becomes appropriate only after this local baseline 
 
 - Configuration-only validation must be run from the protected staging PowerShell session with `npm run test:hosted:phase6 -- -ConfigOnly`.
 - The six-role hosted matrix must be run only with the exact staging Preview URL and approved synthetic Credential Manager entries.
+- Current hosted-testing issue: the protected Preview responds with an application-classified HTTP 404 and no bypass cookie when the automation-bypass headers are used; normal browser access remains successful. Treat this as unresolved Vercel/Preview testing infrastructure, not as authorization evidence, and do not rotate secrets or weaken Deployment Protection without a separately approved diagnosis.
 - No browser artifacts, credentials, session values, or production targets may be recorded.
