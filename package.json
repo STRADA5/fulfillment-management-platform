@@ -22,7 +22,9 @@
     "test:hosted:phase6": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-phase6-hosted-smoke.ps1",
     "validate:phase7": "node tools/validate-phase7-acceptance.mjs",
     "evidence:phase7:release": "node tools/generate-phase7-release-evidence.mjs",
-    "test:phase7:release": "node tests/phase7/release-identity-evidence.mjs"
+    "test:phase7:release": "node tests/phase7/release-identity-evidence.mjs",
+    "test:phase7:ci": "node tests/phase7/local-ci-release-candidate.mjs",
+    "ci:phase7:release": "node tools/run-phase7-local-ci.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",

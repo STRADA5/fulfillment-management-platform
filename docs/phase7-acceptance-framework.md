@@ -20,6 +20,12 @@ Run the local evidence tool with `npm.cmd run evidence:phase7:release`. Supply `
 
 The mismatch and no-network tests run with `npm.cmd run test:phase7:release`. They cover repository/branch/commit/worktree/version/manifest success and mismatches, dirty-state failure, rejection of target-URL input including Production-shaped URLs, and absence of network clients.
 
+## Local CI and release-candidate evidence
+
+`tools/run-phase7-local-ci.mjs` implements the local P7-CI-01 gate. It runs the existing typecheck, lint, serial production build, complete local security/regression suite, Phase 6 authorization regression, Phase 7 definition validator, secret scan, and build-artifact identity checks. It invokes the existing release-identity tool for repository, branch, commit, worktree, version, and migration-manifest evidence. It never cleans fixtures, edits files, accepts a target URL, contacts a remote Git/Vercel/Supabase/Production service, or records child-process output.
+
+Run `npm.cmd run test:phase7:ci` for aggregation and fail-closed behavior tests. The full candidate command is `node tools/run-phase7-local-ci.mjs`; its JSON output records only safe gate statuses, exit categories, manifest/release metadata from the existing evidence tool, and a digest/length for the local build identifier. A nonzero command, stale fixture failure, unreadable evidence, dirty worktree, release mismatch, missing artifact, `BLOCKED`, or `NOT_RUN` result prevents an overall `PASS`. The local CI gate does not claim hosted deployment identity; that remains a separate hosted acceptance gate.
+
 ## Synthetic role matrix
 
 The matrix is intentionally ordered and matches the Phase 6 hosted definitions:

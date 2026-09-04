@@ -17,6 +17,8 @@
     "migrationManifest": "docs/migration-manifest.sha256",
     "evidenceTool": "tools/generate-phase7-release-evidence.mjs",
     "evidenceTestCommand": "npm.cmd run test:phase7:release",
+    "ciValidator": "tools/run-phase7-local-ci.mjs",
+    "ciTestCommand": "npm.cmd run test:phase7:ci",
     "requiredChecks": [
       "branch matches approved release branch",
       "resolved commit is recorded before hosted testing",
@@ -174,7 +176,7 @@
       "category": "readiness",
       "title": "CI and release-candidate gates",
       "status": "NOT_RUN",
-      "evidenceRequired": ["typecheck", "lint", "build", "regression/security suites", "secret scan", "release artifact identity"]
+      "evidenceRequired": ["independent gate statuses", "typecheck", "lint", "build", "regression/security suites", "secret scan", "release artifact identity", "fail-closed aggregate status"]
     }
   ],
   "blockers": [
