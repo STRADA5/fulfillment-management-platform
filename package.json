@@ -19,7 +19,8 @@
     "test:security:local:5c": "node supabase/tests/run-local-security-tests.mjs --phase5c",
     "test:security:local:5d": "node supabase/tests/run-local-security-tests.mjs --phase5d",
     "test:auth:phase6": "node tests/phase6/salespeople-route-authorization.mjs",
-    "test:hosted:phase6": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-phase6-hosted-smoke.ps1"
+    "test:hosted:phase6": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-phase6-hosted-smoke.ps1",
+    "validate:phase7": "node tools/validate-phase7-acceptance.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",

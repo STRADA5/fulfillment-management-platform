@@ -1,0 +1,194 @@
+{
+  "framework": "phase7-hosted-staging-acceptance",
+  "frameworkVersion": 1,
+  "executionPolicy": {
+    "localDefinitionValidationOnly": true,
+    "hostedAccessRequiresSeparateAuthorization": true,
+    "productionAccessAllowed": false,
+    "syntheticDataOnly": true,
+    "secretRecordingAllowed": false
+  },
+  "statusVocabulary": ["PASS", "FAIL", "NOT_RUN", "BLOCKED"],
+  "releaseIdentity": {
+    "repository": "fulfillment-management-platform",
+    "approvedBranch": "codex/phase6-release-baseline",
+    "phase6ReconciliationCommit": "f8e3547",
+    "currentRoadmapCommit": "6126e16",
+    "migrationManifest": "docs/migration-manifest.sha256",
+    "requiredChecks": [
+      "branch matches approved release branch",
+      "resolved commit is recorded before hosted testing",
+      "worktree is clean",
+      "migration manifest matches the locked migration chain",
+      "deployment commit matches the approved release identity"
+    ]
+  },
+  "targetIdentity": {
+    "environment": "non-production-staging",
+    "previewUrlEnvironmentVariable": "PHASE7_PREVIEW_URL",
+    "approvedPreviewUrlMustBeRecordedBeforeHostedRun": true,
+    "approvedSupabaseProjectReference": "nftufhffzlokryafcbku",
+    "requiredHttps": true,
+    "productionTargetRejectionRequired": true,
+    "arbitraryTargetRejectionRequired": true,
+    "remoteContactedByThisFramework": false
+  },
+  "syntheticRoleMatrix": [
+    {
+      "order": 1,
+      "roleKey": "client-b",
+      "label": "Unrelated synthetic Client B",
+      "role": "CLIENT_USER",
+      "organizationContext": "client-b",
+      "fixtureBoundary": "may access only synthetic organization B",
+      "mustNotAccess": ["organization A", "salesperson data", "pricing-tier administration", "provider administration"]
+    },
+    {
+      "order": 2,
+      "roleKey": "client-a",
+      "label": "Multi-role synthetic Client A",
+      "role": "CLIENT_USER",
+      "organizationContext": "client-a",
+      "fixtureBoundary": "may access only its approved synthetic client context and approved client-safe library content",
+      "mustNotAccess": ["organization B", "salesperson data", "pricing-tier administration", "provider administration"]
+    },
+    {
+      "order": 3,
+      "roleKey": "salesperson-a",
+      "label": "Salesperson A",
+      "role": "STAFF",
+      "organizationContext": "provider",
+      "fixtureBoundary": "may access only assigned synthetic client A attribution and authorized salesperson reporting",
+      "mustNotAccess": ["client B attribution", "provider administration", "client relationship administration"]
+    },
+    {
+      "order": 4,
+      "roleKey": "salesperson-b",
+      "label": "Salesperson B",
+      "role": "STAFF",
+      "organizationContext": "provider",
+      "fixtureBoundary": "may access only assigned synthetic client B attribution and authorized salesperson reporting",
+      "mustNotAccess": ["client A attribution", "provider administration", "client relationship administration"]
+    },
+    {
+      "order": 5,
+      "roleKey": "fulfillment-operator",
+      "label": "Fulfillment Operator",
+      "role": "WAREHOUSE",
+      "organizationContext": "provider",
+      "fixtureBoundary": "may access authorized fulfillment, inventory, receiving, QC, warehouse, and library workflows",
+      "mustNotAccess": ["provider administration", "salesperson commissions", "billing", "client relationship administration"]
+    },
+    {
+      "order": 6,
+      "roleKey": "super-admin",
+      "label": "Platform Super-Admin / Provider Administrator",
+      "role": "SUPER_ADMIN",
+      "organizationContext": "platform",
+      "fixtureBoundary": "may access the approved provider administration and cross-organization administration scope",
+      "mustNotAccess": ["none beyond the platform security model"]
+    }
+  ],
+  "acceptanceGates": [
+    {
+      "id": "P7-REL-01",
+      "category": "release-identity",
+      "title": "Repository release identity",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["branch", "full commit SHA", "clean-worktree result", "release version identifier"]
+    },
+    {
+      "id": "P7-REL-02",
+      "category": "release-identity",
+      "title": "Migration chain and deployment identity",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["migration count", "manifest verification", "deployment commit", "environment identity"]
+    },
+    {
+      "id": "P7-TGT-01",
+      "category": "target-safety",
+      "title": "Preview and staging target is exact and non-production",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["approved Preview URL", "staging project reference", "production rejection result", "arbitrary-target rejection result"]
+    },
+    {
+      "id": "P7-AUTH-01",
+      "category": "synthetic-role-matrix",
+      "title": "Exactly six synthetic identities and isolated sessions",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["role order", "synthetic identity presence only", "fresh context per role", "no credential/session recording"]
+    },
+    {
+      "id": "P7-AUTH-02",
+      "category": "synthetic-role-matrix",
+      "title": "Client A/B tenant isolation",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["Client B cannot read A", "Client A cannot read B", "denied-route results", "no cross-tenant leakage"]
+    },
+    {
+      "id": "P7-AUTH-03",
+      "category": "synthetic-role-matrix",
+      "title": "Salesperson attribution and commission confidentiality",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["A sees only A assignment", "B sees only B assignment", "client/provider confidentiality", "no privilege escalation"]
+    },
+    {
+      "id": "P7-AUTH-04",
+      "category": "synthetic-role-matrix",
+      "title": "Fulfillment and administrator boundaries",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["fulfillment permissions", "administrator permissions", "denied actions", "no privilege escalation"]
+    },
+    {
+      "id": "P7-OPS-01",
+      "category": "recovery",
+      "title": "Backup and restore rehearsal",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["backup identifier", "disposable restore destination", "verification result", "approver and timestamps"]
+    },
+    {
+      "id": "P7-OPS-02",
+      "category": "recovery",
+      "title": "Application rollback rehearsal",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["previous release identity", "rollback result", "smoke verification", "approver and timestamps"]
+    },
+    {
+      "id": "P7-OPS-03",
+      "category": "recovery",
+      "title": "Migration failure and recovery evidence",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["rehearsal target", "failure point", "restore or forward-recovery result", "no historical migration edits"]
+    },
+    {
+      "id": "P7-OBS-01",
+      "category": "readiness",
+      "title": "Monitoring and logging readiness",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["application logs", "Supabase logs", "audit logs", "alerts", "redaction review"]
+    },
+    {
+      "id": "P7-CI-01",
+      "category": "readiness",
+      "title": "CI and release-candidate gates",
+      "status": "NOT_RUN",
+      "evidenceRequired": ["typecheck", "lint", "build", "regression/security suites", "secret scan", "release artifact identity"]
+    }
+  ],
+  "blockers": [
+    {
+      "id": "P7-BLOCK-VERCEL-AUTOMATION-BYPASS",
+      "description": "The Phase 6 Vercel Preview automation-bypass issue is unresolved.",
+      "status": "BLOCKED",
+      "effect": "Hosted browser gates cannot be marked PASS from this framework until an approved non-production access path is available.",
+      "prohibitedResolution": "Do not weaken Deployment Protection or Production safeguards."
+    }
+  ],
+  "evidenceRules": {
+    "allowedStatuses": ["PASS", "FAIL", "NOT_RUN", "BLOCKED"],
+    "passRequiresEvidence": true,
+    "blockedOrNotRunCannotBeReportedAsPass": true,
+    "recordOnlyRedactedMetadata": ["status", "timestamp", "release SHA", "target classification", "route/status outcome", "approver", "evidence reference"],
+    "neverRecord": ["password", "secret", "service key", "access token", "session token", "cookie value", "credential blob", "raw authorization header", "customer or production data"]
+  }
+}
