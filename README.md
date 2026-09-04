@@ -2,6 +2,10 @@
 
 The secure multi-tenant fulfillment platform currently includes the Phase 1 foundation through Phase 5D: authentication, tenant and permission administration, catalog and inventory, procurement/QC, client/customer access, order intake and allocation, fulfillment, shipping, notifications, returns, billing, salesperson attribution, commissions, pricing tiers, reporting, configurable multi-role client relationships, and the Knowledge Library & Tools framework.
 
+## Project roadmap
+
+Phase 7 is the next implementation phase: hosted staging validation and production-readiness hardening. The revised future roadmap also preserves an external Affiliate / Referral Program & Campaign Attribution phase, mobile platform readiness for iOS and Android distribution, and a final Training, Documentation & Enablement phase. See [docs/project-roadmap.md](docs/project-roadmap.md) for the authoritative sequence and scope. The existing Phase 5C client-affiliate relationships and Phase 5B salesperson attribution remain separate relationships and must coexist in future order attribution.
+
 ## Technology stack
 
 - [Next.js](https://nextjs.org/) with the App Router
