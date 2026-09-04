@@ -12,6 +12,14 @@ The hosted target must be explicitly classified as non-production staging before
 
 The unresolved Phase 6 Vercel automation-bypass issue is recorded as a blocker. It must not be bypassed by weakening Deployment Protection, accepting arbitrary hosts, or changing Production settings.
 
+## Local release-identity evidence
+
+`tools/generate-phase7-release-evidence.mjs` implements the local portions of P7-REL-01 and P7-REL-02. It reads the repository, Git metadata, `package.json`, migration files, and `docs/migration-manifest.sha256` only. It does not invoke a remote Git operation, make an HTTP request, execute migrations, contact Supabase, or accept a target URL. It never cleans a dirty worktree.
+
+Run the local evidence tool with `npm.cmd run evidence:phase7:release`. Supply `--expected-commit <sha>` for an approved release comparison, and optionally `--expected-branch <branch>` or `--expected-version <version>`. The JSON output contains only redacted release metadata and gate statuses. Without an expected commit, the commit-comparison portion remains `NOT_RUN`; deployment identity remains `NOT_RUN` because it requires a separately authorized hosted check. The tool exits nonzero for blocked or unsupported input, but still emits only a safe category.
+
+The mismatch and no-network tests run with `npm.cmd run test:phase7:release`. They cover repository/branch/commit/worktree/version/manifest success and mismatches, dirty-state failure, rejection of target-URL input including Production-shaped URLs, and absence of network clients.
+
 ## Synthetic role matrix
 
 The matrix is intentionally ordered and matches the Phase 6 hosted definitions:
