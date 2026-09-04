@@ -15,6 +15,7 @@ const REQUIRED_GATES = Object.freeze([
   "phase7ReleaseIdentity",
   "phase7Acceptance",
   "phase7MigrationRecovery",
+  "phase7Observability",
   "secretScan",
   "artifactIdentity",
 ]);
@@ -200,6 +201,7 @@ export async function buildEvidence(options) {
   results.phase6Authorization = runNpmScript("test:auth:phase6", options.repoRoot);
   results.phase7Acceptance = runNpmScript("validate:phase7", options.repoRoot);
   results.phase7MigrationRecovery = runNpmScript("test:phase7:migration-recovery", options.repoRoot);
+  results.phase7Observability = runNpmScript("test:phase7:observability", options.repoRoot);
   results.secretScan = await secretScan(options.repoRoot);
   results.artifactIdentity = results.productionBuild.status === STATUS.PASS
     ? await artifactIdentity(options.repoRoot)

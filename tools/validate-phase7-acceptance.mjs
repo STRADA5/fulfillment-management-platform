@@ -43,6 +43,8 @@ const rollbackGate = gates.find((gate) => gate.id === "P7-OPS-02");
 if (!rollbackGate?.localEvidenceTool || !rollbackGate.localEvidenceCommand || rollbackGate.hostedRehearsalDeferred !== true) fail("application rollback local evidence wiring is incomplete");
 const migrationRecoveryGate = gates.find((gate) => gate.id === "P7-OPS-03");
 if (!migrationRecoveryGate?.localEvidenceTool || !migrationRecoveryGate.localEvidenceCommand || !migrationRecoveryGate.localTestCommand || migrationRecoveryGate.hostedRehearsalDeferred !== true) fail("migration recovery local evidence wiring is incomplete");
+const observabilityGate = gates.find((gate) => gate.id === "P7-OBS-01");
+if (!observabilityGate?.localEvidenceTool || !observabilityGate.localEvidenceCommand || !observabilityGate.localTestCommand || observabilityGate.hostedReadinessDeferred !== true) fail("observability local evidence wiring is incomplete");
 if (!Array.isArray(config.releaseIdentity?.approvedPriorReleases) || config.releaseIdentity.approvedPriorReleases.length === 0) fail("approved prior release allowlist is incomplete");
 if (!config.blockers?.some((blocker) => blocker.status === "BLOCKED")) fail("unresolved blocker status is missing");
 if (config.evidenceRules.passRequiresEvidence !== true || config.evidenceRules.blockedOrNotRunCannotBeReportedAsPass !== true) fail("evidence status rules are incomplete");

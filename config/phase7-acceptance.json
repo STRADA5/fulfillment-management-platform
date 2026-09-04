@@ -202,7 +202,19 @@
       "category": "readiness",
       "title": "Monitoring and logging readiness",
       "status": "NOT_RUN",
-      "evidenceRequired": ["application logs", "Supabase logs", "audit logs", "alerts", "redaction review"]
+      "localEvidenceTool": "tools/validate-phase7-observability-evidence.mjs",
+      "localEvidenceCommand": "npm.cmd run evidence:phase7:observability -- --evidence <local-json-path>",
+      "localTestCommand": "npm.cmd run test:phase7:observability",
+      "hostedReadinessDeferred": true,
+      "evidenceRequired": [
+        "application, Supabase, and audit log source availability/access/retention evidence",
+        "alert signal, routing, and test-notification suppression evidence",
+        "approved operator and reviewer evidence",
+        "bounded log/audit access and retention requirements",
+        "redaction review excluding secrets, credentials, tokens, cookies, sessions, raw payloads, and business data",
+        "release/schema/migration identity and exact non-Production target identity",
+        "no Production contact and redacted evidence reference"
+      ]
     },
     {
       "id": "P7-CI-01",

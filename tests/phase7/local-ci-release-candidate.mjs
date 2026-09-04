@@ -18,6 +18,7 @@ const allPass = {
   phase7ReleaseIdentity: { status: STATUS.PASS },
   phase7Acceptance: { status: STATUS.PASS },
   phase7MigrationRecovery: { status: STATUS.PASS },
+  phase7Observability: { status: STATUS.PASS },
   secretScan: { status: STATUS.PASS },
   artifactIdentity: { status: STATUS.PASS },
 };
