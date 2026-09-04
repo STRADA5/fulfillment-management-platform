@@ -180,7 +180,22 @@
       "category": "recovery",
       "title": "Migration failure and recovery evidence",
       "status": "NOT_RUN",
-      "evidenceRequired": ["rehearsal target", "failure point", "restore or forward-recovery result", "no historical migration edits"]
+      "localEvidenceTool": "tools/validate-phase7-migration-recovery-evidence.mjs",
+      "localEvidenceCommand": "npm.cmd run evidence:phase7:migration-recovery -- --evidence <local-json-path>",
+      "localTestCommand": "npm.cmd run test:phase7:migration-recovery",
+      "hostedRehearsalDeferred": true,
+      "evidenceRequired": [
+        "migration count/order/set digest/manifest digest",
+        "expected release and commit identity",
+        "failure type, failure point, and execution state",
+        "rollback, backup-restore, or forward-fix strategy",
+        "backup dependency and approved operator/approver evidence",
+        "exact non-Production recovery target identity",
+        "post-recovery migration/schema/application/security/data validation",
+        "recovery outcome and no Production contact",
+        "no historical migration edits",
+        "redacted evidence reference"
+      ]
     },
     {
       "id": "P7-OBS-01",

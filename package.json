@@ -28,7 +28,9 @@
     "evidence:phase7:recovery": "node tools/validate-phase7-recovery-evidence.mjs",
     "test:phase7:recovery": "node tests/phase7/recovery-evidence.mjs",
     "evidence:phase7:rollback": "node tools/validate-phase7-rollback-evidence.mjs",
-    "test:phase7:rollback": "node tests/phase7/rollback-evidence.mjs"
+    "test:phase7:rollback": "node tests/phase7/rollback-evidence.mjs",
+    "evidence:phase7:migration-recovery": "node tools/validate-phase7-migration-recovery-evidence.mjs",
+    "test:phase7:migration-recovery": "node tests/phase7/migration-recovery-evidence.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",
