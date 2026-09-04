@@ -16,7 +16,44 @@ Phase 7 is the next implementation phase. It should complete controlled non-prod
 
 The Phase 6 Vercel automation-bypass problem remains a gated testing-infrastructure item. It must not be solved by weakening Deployment Protection or Production safeguards.
 
-## Phase 8 — External Affiliate / Referral Program & Campaign Attribution
+## Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control
+
+This phase adds the commercial foundation for organizations that subscribe to the hosted platform while preserving the separate outright-purchase/white-label model. Subscription access billing must remain distinct from customer order billing, salesperson commissions, and affiliate commissions, while integrating with each where business relationships and historical reporting require it.
+
+### Commercial and billing capabilities
+
+- Represent the commercial mode for an organization as a configurable entitlement/relationship: outright platform purchase/white-label or hosted recurring subscription; do not force either model into an incompatible rigid account type.
+- Configurable subscription plans, recurring monthly platform access fees, per-client billing terms, plan changes, exemptions, arrangements, and effective dates.
+- Automated invoices/statements with controlled invoice numbering, immutable history, due dates, payment status/history, downloadable invoice artifacts, and client invoice views.
+- Payment-provider integration contracts, webhook/event ingestion, idempotent payment reconciliation, and a provider-neutral ledger; live payment providers and production credentials require later non-production and production gates.
+- Configurable grace periods, late fees, payment reminders, overdue notices, and late-payment notices with delivery/audit evidence.
+- Administrator billing dashboard and client billing/invoice view with least-privilege financial confidentiality.
+
+### Delinquency and restoration controls
+
+- Effective-dated, configurable delinquency states with a warning stage before restriction, a restricted state that can prevent new orders/actions while preserving appropriate account visibility, and a broader suspension state after a configured threshold.
+- Never delete an organization or business records for nonpayment. Preserve orders, inventory history, commissions, affiliate attribution, salesperson attribution, messages, audit records, invoices, and related history during restriction or suspension.
+- Preserve essential administrative, compliance, support, and data-export access according to policy rather than applying an indiscriminate data lockout.
+- Support automatic restoration after qualifying payment when configured, administrator manual restoration, administrator override, late-fee waiver, grace-period extension, payment arrangements, and client-specific exemptions.
+- Record complete audit history for billing status changes, notices, restrictions, overrides, waivers, extensions, arrangements, restorations, reconciliation, and payout/access decisions.
+
+### Integration and safety gates
+
+- Integrate subscription status with Phase 5C client organizations and service capabilities without overwriting role relationships or deleting business history.
+- Keep salesperson attribution/commission snapshots and external affiliate/QR attribution/commission snapshots independent from subscription billing; neither attribution may overwrite the other on an order or invoice-related report.
+- Reuse Phase 5A payment/refund/audit primitives where appropriate, with separate immutable subscription-invoice and access-status history.
+- Integrate with the notification architecture, mobile API/service-layer contracts, Knowledge Library/tools permissions where access policy applies, and the future training/documentation program.
+- Require tenant-isolated, server-side permission and RLS/RPC enforcement for billing data; commission, affiliate, provider, and client billing information must be confidential to authorized users.
+- Before schema implementation, define plan/term versioning, invoice numbering ownership, tax/legal requirements, payment-provider boundaries, idempotency/reconciliation rules, state-transition policy, export access, retention, and recovery behavior. All later schema work is additive and forward-only.
+
+### Required validation and deployment gates
+
+- Test plan selection and effective-dated terms, invoice numbering/history, due dates, provider events, idempotent reconciliation, late-fee/reminder/notices, delinquency transitions, new-order/action restrictions, preserved visibility/export access, restoration and overrides, arrangements/exemptions, audit completeness, tenant isolation, confidentiality, concurrency, and non-deletion of historical records.
+- Validate synthetic-only non-production provider/payment/email workflows before any production integration. Production data, credentials, payment providers, and customer notifications remain prohibited until explicitly approved by later release gates.
+
+This phase depends on the Phase 5A financial primitives, Phase 5B salesperson commission snapshots, Phase 5C client organizations and separate attribution relationships, Phase 4F notifications, and Phase 6–7 release/staging readiness. It is not part of the current Phase 7 implementation scope.
+
+## Phase 9 — External Affiliate / Referral Program & Campaign Attribution
 
 This phase adds an external affiliate-company/partner program in addition to the existing salesperson system and Phase 5C client referral relationships.
 
@@ -39,7 +76,7 @@ This phase adds an external affiliate-company/partner program in addition to the
 - Use server-side permission checks, RLS/RPC enforcement, immutable snapshots, concurrency-safe transitions/payouts, and complete audit events.
 - Decide the external affiliate onboarding/identity model, attribution retention window, cookie/session policy, QR/link domain strategy, refund timing rules, and payout approval roles before schema implementation.
 
-## Phase 9 — Mobile platform readiness and application distribution
+## Phase 10 — Mobile platform readiness and application distribution
 
 This phase prepares the platform for future Apple iOS and Android/Google Play applications. Native mobile applications are not part of the current Phase 7 or Phase 8 implementation.
 
@@ -53,7 +90,7 @@ This phase prepares the platform for future Apple iOS and Android/Google Play ap
 
 Native iOS/Android builds, store accounts, store submissions, production push providers, and production mobile credentials remain deferred until the service contracts and non-production validation are complete.
 
-## Phase 10 — Training, documentation, and enablement
+## Phase 11 — Training, documentation, and enablement
 
 At platform completion, this phase creates the structured training program for YouTube, internal operations, and customer onboarding.
 
@@ -71,6 +108,10 @@ Deliverables must cover:
 - Commissions and payouts.
 - Reporting and analytics.
 - Knowledge Library and Tools.
+- Hosted subscription setup and plan administration.
+- Invoicing, statements, making and recording payments, and billing troubleshooting.
+- Late fees, grace periods, reminders, overdue/late notices, and account restriction states.
+- Administrator billing controls, overrides, waivers, extensions, payment arrangements, and restoring suspended accounts.
 - Troubleshooting, security, and account management.
 
 The production package must include written user guides, role-specific quick references, screen-recording shot lists, lesson scripts, voiceover and caption scripts, sequencing for training videos, accessibility review, version ownership, and update/retirement procedures.
@@ -88,8 +129,9 @@ The production package must include written user guides, role-specific quick ref
 The next phase is Phase 7. The remaining sequence before production launch is:
 
 1. Phase 7 — Hosted staging validation and production-readiness hardening.
-2. Phase 8 — External Affiliate / Referral Program & Campaign Attribution.
-3. Phase 9 — Mobile platform readiness and application distribution.
-4. Phase 10 — Training, documentation, and enablement.
+2. Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control.
+3. Phase 9 — External Affiliate / Referral Program & Campaign Attribution.
+4. Phase 10 — Mobile platform readiness and application distribution.
+5. Phase 11 — Training, documentation, and enablement.
 
-There are 10 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 23 detailed phase/subphase entries through Phase 10.
+There are 11 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 24 detailed phase/subphase entries through Phase 11.

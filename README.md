@@ -4,7 +4,7 @@ The secure multi-tenant fulfillment platform currently includes the Phase 1 foun
 
 ## Project roadmap
 
-Phase 7 is the next implementation phase: hosted staging validation and production-readiness hardening. The revised future roadmap also preserves an external Affiliate / Referral Program & Campaign Attribution phase, mobile platform readiness for iOS and Android distribution, and a final Training, Documentation & Enablement phase. See [docs/project-roadmap.md](docs/project-roadmap.md) for the authoritative sequence and scope. The existing Phase 5C client-affiliate relationships and Phase 5B salesperson attribution remain separate relationships and must coexist in future order attribution.
+Phase 7 is the next implementation phase: hosted staging validation and production-readiness hardening. The revised future roadmap also includes Hosted Subscription Billing, Invoicing & Delinquency Access Control, an external Affiliate / Referral Program & Campaign Attribution phase, mobile platform readiness for iOS and Android distribution, and a final Training, Documentation & Enablement phase. See [docs/project-roadmap.md](docs/project-roadmap.md) for the authoritative sequence and scope. The existing Phase 5C client-affiliate relationships and Phase 5B salesperson attribution remain separate relationships and must coexist in future order attribution.
 
 ## Technology stack
 
