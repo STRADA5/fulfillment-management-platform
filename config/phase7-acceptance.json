@@ -148,6 +148,10 @@
       "category": "recovery",
       "title": "Backup and restore rehearsal",
       "status": "NOT_RUN",
+      "localEvidenceTool": "tools/validate-phase7-recovery-evidence.mjs",
+      "localEvidenceCommand": "npm.cmd run evidence:phase7:recovery -- --evidence <local-json-path>",
+      "localTestCommand": "npm.cmd run test:phase7:recovery",
+      "hostedRehearsalDeferred": true,
       "evidenceRequired": ["backup identifier", "disposable restore destination", "verification result", "approver and timestamps"]
     },
     {

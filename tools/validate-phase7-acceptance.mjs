@@ -37,6 +37,8 @@ const gates = config.acceptanceGates ?? [];
 if (!gates.length) fail("no acceptance gates defined");
 for (const category of requiredGateCategories) if (!gates.some((gate) => gate.category === category)) fail(`missing gate category ${category}`);
 if (gates.some((gate) => !gate.id || !gate.title || !config.statusVocabulary.includes(gate.status) || !Array.isArray(gate.evidenceRequired) || gate.evidenceRequired.length === 0)) fail("acceptance gate is incomplete");
+const recoveryGate = gates.find((gate) => gate.id === "P7-OPS-01");
+if (!recoveryGate?.localEvidenceTool || !recoveryGate.localEvidenceCommand || recoveryGate.hostedRehearsalDeferred !== true) fail("backup/restore local evidence wiring is incomplete");
 if (!config.blockers?.some((blocker) => blocker.status === "BLOCKED")) fail("unresolved blocker status is missing");
 if (config.evidenceRules.passRequiresEvidence !== true || config.evidenceRules.blockedOrNotRunCannotBeReportedAsPass !== true) fail("evidence status rules are incomplete");
 

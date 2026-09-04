@@ -54,7 +54,7 @@ The framework records only redacted metadata: status, timestamp, release SHA, ta
 
 ## Recovery and readiness placeholders
 
-The framework reserves gates for backup/restore rehearsal, application rollback, migration failure/recovery evidence, monitoring and logging readiness, and CI/release-candidate verification. These remain `NOT_RUN` until their evidence is produced in the approved non-production process. Database rollback means restore or a compensating forward migration; locked historical migrations are never edited or deleted.
+The framework reserves gates for backup/restore rehearsal, application rollback, migration failure/recovery evidence, monitoring and logging readiness, and CI/release-candidate verification. P7-OPS-01 now has a local-only validator at `tools/validate-phase7-recovery-evidence.mjs` and focused tests at `tests/phase7/recovery-evidence.mjs`. It validates redacted, deterministic evidence for backup identity/integrity, an exact non-Production restore destination, the existing restore-approval roles, rehearsal steps, post-restore invariants, and recovery outcome without performing a backup, restore, migration, or network request. `npm.cmd run evidence:phase7:recovery -- --evidence <local-json-path>` validates a supplied local evidence record; absent, incomplete, `BLOCKED`, or `NOT_RUN` evidence cannot pass. The actual backup/restore rehearsal remains `NOT_RUN` and deferred to separately authorized non-Production staging. Database rollback means restore or a compensating forward migration; locked historical migrations are never edited or deleted.
 
 ## Current Phase 7 status
 

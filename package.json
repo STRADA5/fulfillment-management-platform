@@ -24,7 +24,9 @@
     "evidence:phase7:release": "node tools/generate-phase7-release-evidence.mjs",
     "test:phase7:release": "node tests/phase7/release-identity-evidence.mjs",
     "test:phase7:ci": "node tests/phase7/local-ci-release-candidate.mjs",
-    "ci:phase7:release": "node tools/run-phase7-local-ci.mjs"
+    "ci:phase7:release": "node tools/run-phase7-local-ci.mjs",
+    "evidence:phase7:recovery": "node tools/validate-phase7-recovery-evidence.mjs",
+    "test:phase7:recovery": "node tests/phase7/recovery-evidence.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",
