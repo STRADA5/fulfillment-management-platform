@@ -15,6 +15,16 @@
     "phase6ReconciliationCommit": "f8e3547",
     "currentRoadmapCommit": "6126e16",
     "migrationManifest": "docs/migration-manifest.sha256",
+    "approvedPriorReleases": [
+      {
+        "commit": "a7424b4197653d825d7fc8cb6b995a3f961a9606",
+        "version": "0.1.0",
+        "schemaIdentity": "schema-phase7-21",
+        "migrationManifestDigest": "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3",
+        "artifactIdentity": "phase7-release-a7424b4",
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
     "evidenceTool": "tools/generate-phase7-release-evidence.mjs",
     "evidenceTestCommand": "npm.cmd run test:phase7:release",
     "ciValidator": "tools/run-phase7-local-ci.mjs",
@@ -159,6 +169,10 @@
       "category": "recovery",
       "title": "Application rollback rehearsal",
       "status": "NOT_RUN",
+      "localEvidenceTool": "tools/validate-phase7-rollback-evidence.mjs",
+      "localEvidenceCommand": "npm.cmd run evidence:phase7:rollback -- --evidence <local-json-path>",
+      "localTestCommand": "npm.cmd run test:phase7:rollback",
+      "hostedRehearsalDeferred": true,
       "evidenceRequired": ["previous release identity", "rollback result", "smoke verification", "approver and timestamps"]
     },
     {

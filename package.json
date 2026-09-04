@@ -26,7 +26,9 @@
     "test:phase7:ci": "node tests/phase7/local-ci-release-candidate.mjs",
     "ci:phase7:release": "node tools/run-phase7-local-ci.mjs",
     "evidence:phase7:recovery": "node tools/validate-phase7-recovery-evidence.mjs",
-    "test:phase7:recovery": "node tests/phase7/recovery-evidence.mjs"
+    "test:phase7:recovery": "node tests/phase7/recovery-evidence.mjs",
+    "evidence:phase7:rollback": "node tools/validate-phase7-rollback-evidence.mjs",
+    "test:phase7:rollback": "node tests/phase7/rollback-evidence.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.4",

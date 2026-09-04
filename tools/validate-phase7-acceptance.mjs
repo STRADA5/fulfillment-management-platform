@@ -39,6 +39,9 @@ for (const category of requiredGateCategories) if (!gates.some((gate) => gate.ca
 if (gates.some((gate) => !gate.id || !gate.title || !config.statusVocabulary.includes(gate.status) || !Array.isArray(gate.evidenceRequired) || gate.evidenceRequired.length === 0)) fail("acceptance gate is incomplete");
 const recoveryGate = gates.find((gate) => gate.id === "P7-OPS-01");
 if (!recoveryGate?.localEvidenceTool || !recoveryGate.localEvidenceCommand || recoveryGate.hostedRehearsalDeferred !== true) fail("backup/restore local evidence wiring is incomplete");
+const rollbackGate = gates.find((gate) => gate.id === "P7-OPS-02");
+if (!rollbackGate?.localEvidenceTool || !rollbackGate.localEvidenceCommand || rollbackGate.hostedRehearsalDeferred !== true) fail("application rollback local evidence wiring is incomplete");
+if (!Array.isArray(config.releaseIdentity?.approvedPriorReleases) || config.releaseIdentity.approvedPriorReleases.length === 0) fail("approved prior release allowlist is incomplete");
 if (!config.blockers?.some((blocker) => blocker.status === "BLOCKED")) fail("unresolved blocker status is missing");
 if (config.evidenceRules.passRequiresEvidence !== true || config.evidenceRules.blockedOrNotRunCannotBeReportedAsPass !== true) fail("evidence status rules are incomplete");
 
