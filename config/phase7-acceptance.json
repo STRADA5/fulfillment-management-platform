@@ -11,7 +11,8 @@
   "statusVocabulary": ["PASS", "FAIL", "NOT_RUN", "BLOCKED"],
   "releaseIdentity": {
     "repository": "fulfillment-management-platform",
-    "approvedBranch": "codex/phase6-release-baseline",
+    "approvedBranch": "codex/phase7-hosted-staging-preview",
+    "approvedApplicationReleaseCommit": "889bd38030caa56742091b500c6155b0d30a0222",
     "phase6ReconciliationCommit": "f8e3547",
     "currentRoadmapCommit": "6126e16",
     "migrationManifest": "docs/migration-manifest.sha256",
