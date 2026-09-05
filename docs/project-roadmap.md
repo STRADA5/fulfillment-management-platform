@@ -16,6 +16,34 @@ Phase 7 is the next implementation phase. It should complete controlled non-prod
 
 The Phase 6 Vercel automation-bypass problem remains a gated testing-infrastructure item. It must not be solved by weakening Deployment Protection or Production safeguards.
 
+## Phase 8A — Client-level automatic compound discount and order-calculation consistency
+
+This future pricing enhancement extends the completed Phase 3D client-catalog pricing and Phase 4A order-snapshot foundations. It is a separate post-Phase 7 implementation phase and does not alter the current Phase 7 authorization/security correction. It should be completed before subscription billing so invoices and access-related commercial reporting consume the same authoritative order amounts.
+
+### Client and product discount controls
+
+- Give each client organization an optional persistent default discount percentage with enabled/disabled state, optional effective start, optional expiration, administrator override, and complete audit history.
+- Apply an eligible client's default discount automatically when that client places an eligible order; no coupon or discount code is required.
+- Add an administrator-controlled product-level flag such as `eligible_for_client_discount` so a product can opt out even when the client has a default discount.
+- Limit the discount to eligible compound/product line items. Medical supplies, accessories, shipping, taxes, service charges, packaging charges, and every other explicitly excluded non-compound category must remain undiscounted.
+- Permit only authorized provider/administrator users to create or change client discount settings. Clients must not modify their own discount.
+
+### Centralized pricing and record consistency
+
+- Define and enforce one server-authoritative calculation order for catalog/cart, checkout, order creation, invoice generation, processor-facing line items, transaction history, reporting, and salesperson commission calculations where commissions use product revenue.
+- Record normal client price, automatic discount percentage, discount amount, final line-item price, and source reason `CLIENT DEFAULT DISCOUNT` in internal order/invoice history.
+- Preserve the existing processor-facing SKU-only product-description design. Send the correct discounted amount to the processor without exposing the internal product name.
+- Keep pricing calculations tenant-isolated, deterministic, fixed-precision, idempotent, concurrency-safe, and auditable. Discount changes must not rewrite historical order, invoice, processor, or commission snapshots.
+- Use additive, forward-only schema/RLS/RPC work. Model client settings and product eligibility explicitly rather than embedding discount state in coupon-only or rigid account-type structures.
+
+### Required validation
+
+- Test eligible compound discounting, excluded compounds, medical-supply exclusion, accessory exclusion, shipping exclusion, no-discount normal pricing, product-level opt-out precedence, disabled/expired discounts, cross-client isolation, and authorized administrator-only controls.
+- Prove cart/checkout/order/invoice totals agree, processor-facing amounts equal the authoritative final internal amounts, SKU-only descriptions remain intact, and salesperson commission revenue uses the defined discounted basis where applicable.
+- Add audit, tenant-isolation, authorization, concurrency, idempotency, refund/cancellation, and historical-snapshot regression coverage before the phase is locked.
+
+This phase depends on Phase 3D pricing, Phase 4A order snapshots, Phase 5A financial records, Phase 5B commission snapshots, and the Phase 6–7 release/staging gates. It is not part of the current Phase 7 implementation scope.
+
 ## Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control
 
 This phase adds the commercial foundation for organizations that subscribe to the hosted platform while preserving the separate outright-purchase/white-label model. Subscription access billing must remain distinct from customer order billing, salesperson commissions, and affiliate commissions, while integrating with each where business relationships and historical reporting require it.
@@ -129,9 +157,10 @@ The production package must include written user guides, role-specific quick ref
 The next phase is Phase 7. The remaining sequence before production launch is:
 
 1. Phase 7 — Hosted staging validation and production-readiness hardening.
-2. Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control.
-3. Phase 9 — External Affiliate / Referral Program & Campaign Attribution.
-4. Phase 10 — Mobile platform readiness and application distribution.
-5. Phase 11 — Training, documentation, and enablement.
+2. Phase 8A — Client-level automatic compound discount and order-calculation consistency.
+3. Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control.
+4. Phase 9 — External Affiliate / Referral Program & Campaign Attribution.
+5. Phase 10 — Mobile platform readiness and application distribution.
+6. Phase 11 — Training, documentation, and enablement.
 
-There are 11 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 24 detailed phase/subphase entries through Phase 11.
+There are 11 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 25 detailed phase/subphase entries through Phase 11.
