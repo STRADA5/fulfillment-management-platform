@@ -7,14 +7,14 @@ import { STATUS, validateObservabilityEvidence } from "../../tools/validate-phas
 
 const toolPath = join(process.cwd(), "tools", "validate-phase7-observability-evidence.mjs");
 const tempPath = join(tmpdir(), `phase7-observability-${process.pid}.json`);
-const manifestDigest = "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3";
-const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-21", currentMigrationManifestDigest: manifestDigest };
+const manifestDigest = "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d";
+const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-22", currentMigrationManifestDigest: manifestDigest };
 const source = () => ({ status: STATUS.PASS, availabilityVerified: true, accessControlled: true, retentionReviewed: true, redactionReviewed: true, sensitiveValuesExcluded: true, evidenceReference: "P7-OBS-SOURCE-001" });
 const baseEvidence = {
   gateId: "P7-OBS-01",
   status: STATUS.PASS,
   target: { environment: "local-disposable", identity: "local-observability-fixture", approved: true, productionTarget: false },
-  releaseIdentity: { status: STATUS.PASS, expectedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", observedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", version: "0.1.0", schemaIdentity: "schema-phase7-21", migrationManifestDigest: manifestDigest, verified: true },
+  releaseIdentity: { status: STATUS.PASS, expectedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", observedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", version: "0.1.0", schemaIdentity: "schema-phase7-22", migrationManifestDigest: manifestDigest, verified: true },
   sources: { applicationLogs: source(), supabaseLogs: source(), auditLogs: source() },
   alerts: { status: STATUS.PASS, routingVerified: true, redactionReviewed: true, testNotificationSuppressed: true, requiredSignals: Object.fromEntries(["authFailures", "serverErrors", "databaseErrors", "auditWriteFailures", "migrationFailures", "backupFailures", "queueFailures", "securityEvents"].map((key) => [key, true])) },
   authorization: { status: "AUTHORIZED", operatorRole: "observability-operator", operatorId: "P7-OPERATOR-001", approverRole: "observability-approver", approverId: "P7-APPROVER-001", approvedAt: "2026-01-01T00:02:00.000Z" },

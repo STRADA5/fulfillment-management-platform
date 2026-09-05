@@ -18,8 +18,8 @@ const FORBIDDEN_KEY = /(?:secret|password|credential|access[_ -]?token|session[_
 const FORBIDDEN_VALUE = /(?:sb_(?:publishable|secret)_[A-Za-z0-9_-]+|(?:eyJ[A-Za-z0-9_-]{20,}\.){2}[A-Za-z0-9_-]{10,}|-----BEGIN [A-Z ]+PRIVATE KEY-----|https?:\/\/|(?:password|secret|token|cookie|connection string)\b)/i;
 const DEFAULT_POLICY = Object.freeze({
   approvedStagingProject: APPROVED_STAGING_PROJECT,
-  currentSchemaIdentity: "schema-phase7-21",
-  currentMigrationManifestDigest: "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3",
+  currentSchemaIdentity: "schema-phase7-22",
+  currentMigrationManifestDigest: "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d",
   approvedPriorReleases: [],
 });
 
@@ -217,8 +217,9 @@ async function loadPolicy() {
   const config = JSON.parse(await readFile(join(process.cwd(), "config", "phase7-acceptance.json"), "utf8"));
   return {
     approvedStagingProject: config.targetIdentity?.approvedSupabaseProjectReference,
-    currentSchemaIdentity: "schema-phase7-21",
-    currentMigrationManifestDigest: config.releaseIdentity?.approvedPriorReleases?.[0]?.migrationManifestDigest,
+    currentSchemaIdentity: config.releaseIdentity?.currentSchemaIdentity ?? "schema-phase7-22",
+    currentMigrationManifestDigest: config.releaseIdentity?.currentMigrationManifestDigest
+      ?? config.releaseIdentity?.approvedPriorReleases?.[0]?.migrationManifestDigest,
     approvedPriorReleases: config.releaseIdentity?.approvedPriorReleases,
   };
 }

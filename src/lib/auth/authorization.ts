@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { requireUser } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { filterRolePermissions, isRolePermissionAllowed } from "@/lib/auth/role-policy";
 
 export type AppContext = {
   user: { id: string; email: string };
@@ -57,9 +58,9 @@ export const getAppContext = cache(async (): Promise<AppContext> => {
       organizationId: membership.organization_id,
       organizationName: membership.organizations.name,
       roleCode: membership.roles.code,
-      permissions: membership.roles.role_permissions
+      permissions: filterRolePermissions(membership.roles.code, membership.roles.role_permissions
         .map((entry) => entry.permissions?.code)
-        .filter((code): code is string => Boolean(code)),
+        .filter((code): code is string => Boolean(code))),
     } : null,
     memberships: membershipRows.flatMap((row) => row.organizations && row.roles ? [{
       id: row.id,
@@ -72,7 +73,9 @@ export const getAppContext = cache(async (): Promise<AppContext> => {
 });
 
 export function can(context: AppContext, permission: string) {
-  return context.membership?.permissions.includes(permission) ?? false;
+  return context.membership
+    ? isRolePermissionAllowed(context.membership.roleCode, permission) && context.membership.permissions.includes(permission)
+    : false;
 }
 
 export async function requirePermission(permission: string) {

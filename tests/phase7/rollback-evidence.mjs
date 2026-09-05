@@ -7,18 +7,19 @@ import { validateRollbackEvidence, STATUS } from "../../tools/validate-phase7-ro
 
 const toolPath = join(process.cwd(), "tools", "validate-phase7-rollback-evidence.mjs");
 const tempPath = join(tmpdir(), `phase7-rollback-${process.pid}.json`);
-const manifestDigest = "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3";
+const currentManifestDigest = "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d";
+const priorManifestDigest = "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3";
 const targetCommit = "a7424b4197653d825d7fc8cb6b995a3f961a9606";
 const targetArtifact = "0000000000000000000000000000000000000000000000000000000000000000";
 const policy = {
   approvedStagingProject: "nftufhffzlokryafcbku",
   currentSchemaIdentity: "schema-phase7-21",
-  currentMigrationManifestDigest: manifestDigest,
+  currentMigrationManifestDigest: priorManifestDigest,
   approvedPriorReleases: [{
     commit: targetCommit,
     version: "0.1.0",
     schemaIdentity: "schema-phase7-21",
-    migrationManifestDigest: manifestDigest,
+    migrationManifestDigest: priorManifestDigest,
     artifactIdentity: "phase7-release-a7424b4",
     artifactSha256: targetArtifact,
   }],
@@ -33,7 +34,7 @@ const baseEvidence = {
     version: "0.1.0",
     verified: true,
     schemaIdentity: "schema-phase7-21",
-    migrationManifestDigest: manifestDigest,
+    migrationManifestDigest: priorManifestDigest,
   },
   rollbackTarget: {
     commit: targetCommit,
@@ -41,7 +42,7 @@ const baseEvidence = {
     verified: true,
     approvedPriorRelease: true,
     schemaIdentity: "schema-phase7-21",
-    migrationManifestDigest: manifestDigest,
+    migrationManifestDigest: priorManifestDigest,
     artifactIdentity: "phase7-release-a7424b4",
     artifactSha256: targetArtifact,
   },
@@ -122,9 +123,9 @@ assert.equal(validate(redactionViolation).reason, "redaction-required");
 
 await writeFile(tempPath, JSON.stringify(baseEvidence));
 const cli = spawnSync(process.execPath, [toolPath, "--evidence", tempPath], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
-assert.equal(cli.status, 0);
+assert.equal(cli.status, 1);
 assert.equal(cli.stderr, "");
-assert.equal(JSON.parse(cli.stdout).status, STATUS.PASS);
+assert.equal(JSON.parse(cli.stdout).reason, "rollback-schema-incompatible");
 assert.doesNotMatch(cli.stdout, /(?:password|secret|token|cookie|credential|https?:\/\/)/i);
 
 const source = await readFile(toolPath, "utf8");

@@ -8,8 +8,8 @@ import { validateMigrationRecoveryEvidence, STATUS, readLocalMigrationIdentity }
 const toolPath = join(process.cwd(), "tools", "validate-phase7-migration-recovery-evidence.mjs");
 const tempPath = join(tmpdir(), `phase7-migration-recovery-${process.pid}.json`);
 const identity = await readLocalMigrationIdentity(process.cwd());
-const manifestDigest = "3efbea43b6b0275f602198109476194b9d230ba185751e638e91935b484912a3";
-const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-21", currentMigrationManifestDigest: manifestDigest };
+const manifestDigest = "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d";
+const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-22", currentMigrationManifestDigest: manifestDigest };
 const baseEvidence = {
   gateId: "P7-OPS-03",
   status: STATUS.PASS,
@@ -31,7 +31,7 @@ const baseEvidence = {
     expectedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     observedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     version: "0.1.0",
-    schemaIdentity: "schema-phase7-21",
+    schemaIdentity: "schema-phase7-22",
     migrationManifestDigest: manifestDigest,
     verified: true,
   },
