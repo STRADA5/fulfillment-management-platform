@@ -24,8 +24,26 @@ const clientUserAllowedPermissions = new Set([
   "library.print",
 ]);
 
+const clientAdminAllowedPermissions = new Set([
+  ...clientUserAllowedPermissions,
+  // Client administrators retain organization-scoped membership capabilities.
+  // Provider/platform administration remains outside this client-side allow-list.
+  "organizations.read",
+  "memberships.read",
+  "memberships.manage",
+  "roles.read",
+  "customers.manage",
+  "customers.lifecycle",
+  "customers.history",
+  "customer_addresses.manage",
+]);
+
+const clientSideRoles = new Set(["CLIENT_USER", "CLIENT_ADMIN"]);
+
 export function isRolePermissionAllowed(roleCode: string, permission: string) {
-  return roleCode !== "CLIENT_USER" || clientUserAllowedPermissions.has(permission);
+  if (roleCode === "CLIENT_USER") return clientUserAllowedPermissions.has(permission);
+  if (roleCode === "CLIENT_ADMIN") return clientAdminAllowedPermissions.has(permission);
+  return !clientSideRoles.has(roleCode);
 }
 
 export function filterRolePermissions(roleCode: string, permissions: string[]) {
