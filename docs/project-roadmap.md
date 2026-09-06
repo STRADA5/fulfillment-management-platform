@@ -44,6 +44,45 @@ This future pricing enhancement extends the completed Phase 3D client-catalog pr
 
 This phase depends on Phase 3D pricing, Phase 4A order snapshots, Phase 5A financial records, Phase 5B commission snapshots, and the Phase 6–7 release/staging gates. It is not part of the current Phase 7 implementation scope.
 
+## Phase 8B — Client History & Order Archive
+
+This future client-history module provides a complete, tenant-isolated view of a client's order lifecycle and related documents. It follows the Phase 8A pricing and snapshot rules, reuses the existing order, fulfillment, shipping, billing, commission, affiliate, message, and audit foundations, and remains outside the current Phase 7 implementation scope.
+
+### Unified history and immutable records
+
+- Provide one client-facing and authorized provider-facing history across orders, order lines, fulfillment status, shipments, tracking, invoices, payments, returns, refunds, cancellations, commission outcomes, salesperson attribution, affiliate/referral attribution, messages, and relevant audit events.
+- Preserve immutable order-time snapshots for price, quantity, discounts, taxes, shipping, customer/address, attribution, commission, invoice, payment, and fulfillment facts. Later master-data edits must not rewrite historical records.
+- Keep salesperson attribution and affiliate/referral attribution as independent relationships that can coexist on the same order without overwriting one another.
+- Preserve stable internal product and variant identifiers in historical records even when names, descriptions, catalog visibility, pricing, or other master data changes.
+- Keep processor-facing descriptions SKU-only as required by the existing payment architecture; internal product names remain internal.
+
+### Documents, search, and timeline
+
+- Archive order confirmations, invoices/statements, packing/shipping documents, tracking references, return/refund records, and other permitted order-related documents with document type, version, ownership, retention, access, and audit metadata.
+- Provide server-side search, filtering, sorting, pagination, date/status/type ranges, document access, and export controls without exposing provider-internal or unrelated-tenant data.
+- Provide a chronological client timeline with order, fulfillment, shipment, delivery, billing, payment, return/refund, message, commission, attribution, and administrative events appropriate to the viewer.
+- Provide safe order summaries including totals, quantities, discounts, shipping, taxes, payment status, fulfillment status, tracking, returns, and commission/attribution information only where the viewer is authorized.
+
+### Reordering and future product attribution
+
+- Allow an authorized client to reorder from a prior order only by creating a new editable draft. Never duplicate or mutate the original order, snapshot, invoice, shipment, payment, commission, or attribution records.
+- Resolve reordered items through stable internal product/variant IDs and current authorized catalog availability/pricing, with explicit handling for discontinued, unavailable, or changed products.
+- Do not require SKU or QR codes for the initial module. Preserve future optional SKU support for lookup/scanning and future optional QR support for product, order, referral, or deep-link workflows without making either identifier the sole historical key.
+
+### Authorization, audit, and integration gates
+
+- Enforce client-organization, provider-service, salesperson, affiliate, role, permission, and relationship boundaries server-side through the existing authorization/RLS/RPC model; clients must not read another client's history or documents.
+- Restrict administrative/provider history tools and exports to authorized roles, preserve least privilege, redact internal supplier/cost/security data, and record access, export, reorder, correction, retention, and administrative actions in immutable audit history.
+- Integrate with Phase 8A automatic client discounts and centralized pricing, Phase 5A invoices/payments, Phase 5B salesperson commissions, Phase 5C client capabilities and independent affiliate/referral attribution, notifications/messages, mobile API/service-layer contracts, and the Training/Documentation phase.
+- Define document storage/retention, legal/compliance requirements, export format, pagination/search indexing, correction policy, privacy boundaries, recovery behavior, and additive forward-only schema/RLS/RPC changes before implementation.
+
+### Required validation
+
+- Test complete history coverage, immutable snapshots, document access and retention, search/filter isolation, timeline ordering, safe summaries, reorder-as-new-draft behavior, stable internal product references, discontinued-product handling, tenant isolation, role/permission boundaries, provider/salesperson/affiliate confidentiality, audit completeness, pagination, concurrency, idempotency, and redaction.
+- Prove historical totals and attribution remain unchanged after master-data, pricing, discount, commission, affiliate, fulfillment, billing, or product changes; prove processor-facing SKU-only descriptions remain intact.
+
+This phase depends on Phase 3D catalog/pricing, Phase 4A–4G order/fulfillment/shipping foundations, Phase 5A financial records, Phase 5B salesperson commissions, Phase 5C client capabilities and separate attribution, Phase 5D Knowledge Library/tools, Phase 8A pricing consistency, and the Phase 6–7 release/staging gates. It is a future planning phase and is not part of the current Phase 7 implementation scope.
+
 ## Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control
 
 This phase adds the commercial foundation for organizations that subscribe to the hosted platform while preserving the separate outright-purchase/white-label model. Subscription access billing must remain distinct from customer order billing, salesperson commissions, and affiliate commissions, while integrating with each where business relationships and historical reporting require it.
@@ -158,9 +197,10 @@ The next phase is Phase 7. The remaining sequence before production launch is:
 
 1. Phase 7 — Hosted staging validation and production-readiness hardening.
 2. Phase 8A — Client-level automatic compound discount and order-calculation consistency.
-3. Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control.
-4. Phase 9 — External Affiliate / Referral Program & Campaign Attribution.
-5. Phase 10 — Mobile platform readiness and application distribution.
-6. Phase 11 — Training, documentation, and enablement.
+3. Phase 8B — Client History & Order Archive.
+4. Phase 8 — Hosted Subscription Billing, Invoicing & Delinquency Access Control.
+5. Phase 9 — External Affiliate / Referral Program & Campaign Attribution.
+6. Phase 10 — Mobile platform readiness and application distribution.
+7. Phase 11 — Training, documentation, and enablement.
 
-There are 11 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 25 detailed phase/subphase entries through Phase 11.
+There are 11 top-level phases in the revised roadmap. Counting the established lettered subphases individually, the roadmap contains 26 detailed phase/subphase entries through Phase 11.
