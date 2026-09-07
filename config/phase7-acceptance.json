@@ -12,13 +12,21 @@
   "releaseIdentity": {
     "repository": "fulfillment-management-platform",
     "approvedBranch": "codex/phase7-hosted-staging-preview",
-    "approvedApplicationReleaseCommit": "889bd38030caa56742091b500c6155b0d30a0222",
+    "approvedApplicationReleaseCommit": "f55c107dcff17b21fd46e163f3576c719ce5a071",
     "phase6ReconciliationCommit": "f8e3547",
     "currentRoadmapCommit": "6126e16",
     "migrationManifest": "docs/migration-manifest.sha256",
-    "currentSchemaIdentity": "schema-phase7-22",
-    "currentMigrationManifestDigest": "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d",
+    "currentSchemaIdentity": "schema-phase7-23",
+    "currentMigrationManifestDigest": "20e3b42fa2ff449f6155bfc43b64f3fa80ab7d8037f6b1da19176204af39804a",
     "approvedPriorReleases": [
+      {
+        "commit": "889bd38030caa56742091b500c6155b0d30a0222",
+        "version": "0.1.0",
+        "schemaIdentity": "schema-phase7-22",
+        "migrationManifestDigest": "57a91a9b8bfc10bb93258b36b57fdb20d2be630c66c70a428a5f49593c712a7d",
+        "artifactIdentity": "phase7-release-889bd38",
+        "artifactSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
       {
         "commit": "a7424b4197653d825d7fc8cb6b995a3f961a9606",
         "version": "0.1.0",
