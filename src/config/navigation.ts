@@ -29,7 +29,7 @@ export const primaryNavigation: NavigationItem[] = [
   { label: "Supplier Issues", href: "/supplier-issues", permission: "supplier_issues.view" },
   { label: "Branding", href: "/branding", permission: "branding.read" },
   { label: "Messages", href: "/messages", permission: "messages.read" },
-  { label: "Reports", href: "/reports", permission: "reporting.view" },
+  { label: "Reports", href: "/reports", permission: "salesperson.dashboard" },
   { label: "Knowledge Library", href: "/library", permission: "library.view" },
   { label: "Administration", href: "/administration", permission: "administration.access" },
 ];

@@ -6,11 +6,19 @@ import { saveClientAccount, saveClientService } from "@/lib/customers/actions";
 import { FoundationForm, type FoundationField } from "@/components/customers/foundation-form";
 import { PageHeading } from "@/components/ui/page-heading";
 import { onboardClientWithSalesperson } from "@/lib/salespeople/actions";
-import { getAppContext } from "@/lib/auth/authorization";
+import { can, getAppContext } from "@/lib/auth/authorization";
 
 const states=["inactive","active","suspended"].map(value=>({value,label:value}));
 export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
- await requireUser();const appContext=await getAppContext();const p=await searchParams,s=await createClient();
+ await requireUser();const appContext=await getAppContext();const s=await createClient();
+ if(appContext.membership?.roleCode === "STAFF"){
+  if(!can(appContext, "salesperson.dashboard"))notFound();
+  const {data:dashboard,error}=await s.rpc("get_salesperson_dashboard",{target_provider_id:appContext.membership.organizationId});
+  if(error)throw Error("Assigned client access unavailable.");
+  const assigned=(dashboard as {assigned_clients?:Array<{id:string;name:string}>}|null)?.assigned_clients??[];
+  return <><PageHeading title="Assigned clients" description="Salesperson client visibility is limited to active assignments."/><div className="mt-6 space-y-2">{assigned.map(client=><p key={client.id} className="rounded border p-3">{client.name}</p>)}{!assigned.length?<p className="rounded border p-3 text-sm text-slate-500">No assigned clients.</p>:null}</div></>;
+ }
+ const p=await searchParams;
  const{data:adminContext,error}=await s.rpc("get_client_account_admin_context");if(error)throw Error("Client administration unavailable.");
  const context=adminContext as {can_manage:boolean;companies:{id:string;name:string}[]};
  const {data:phase5bContext}=context.can_manage&&appContext.membership?await s.rpc("get_phase5b_admin_context",{target_provider_id:appContext.membership.organizationId}):{data:null};

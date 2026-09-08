@@ -20,6 +20,7 @@
     "test:security:local:5d": "node supabase/tests/run-local-security-tests.mjs --phase5d",
     "test:auth:phase6": "node tests/phase6/salespeople-route-authorization.mjs",
     "test:auth:phase7-role-aware": "node tests/phase6/role-aware-privileged-route-authorization.mjs",
+    "test:auth:phase7-salesperson-scope": "node tests/phase7/salesperson-scope-policy.mjs",
     "test:hosted:phase6": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-phase6-hosted-smoke.ps1",
     "validate:phase7": "node tools/validate-phase7-acceptance.mjs",
     "evidence:phase7:release": "node tools/generate-phase7-release-evidence.mjs",

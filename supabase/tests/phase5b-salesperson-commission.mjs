@@ -29,9 +29,11 @@ async function org(label, type, parent = null) {
 try {
   const seller = await org("seller", "fulfillment_company");
   const clientOrg = await org("client", "client_company", seller);
+  const clientOrgB = await org("client-b", "client_company", seller);
   const otherSeller = await org("other-seller", "fulfillment_company");
   const admin = await user("admin");
   const salesUser = await user("sales");
+  const salesUserB = await user("sales-b");
   const unrelated = await user("unrelated");
   const client = await user("client");
   const otherClient = await user("other-client");
@@ -39,16 +41,21 @@ try {
   await must(svc.from("organization_memberships").insert([
     { organization_id: seller, user_id: admin.id, role_id: roles.ADMIN, status: "active", is_primary: true },
     { organization_id: seller, user_id: salesUser.id, role_id: roles.STAFF, status: "active", is_primary: false },
+    { organization_id: seller, user_id: salesUserB.id, role_id: roles.STAFF, status: "active", is_primary: false },
     { organization_id: seller, user_id: unrelated.id, role_id: roles.STAFF, status: "active", is_primary: false },
     { organization_id: clientOrg, user_id: client.id, role_id: roles.CLIENT_ADMIN, status: "active", is_primary: true },
     { organization_id: otherSeller, user_id: otherClient.id, role_id: roles.ADMIN, status: "active", is_primary: true },
   ]));
   await must(svc.from("client_service_relationships").insert({ organization_id: seller, client_organization_id: clientOrg, status: "active", order_access: "manage", customer_access: "read" }));
+  await must(svc.from("client_service_relationships").insert({ organization_id: seller, client_organization_id: clientOrgB, status: "active", order_access: "manage", customer_access: "read" }));
 
   const salesperson = await must(admin.client.rpc("admin_save_salesperson", { target_id: null, target_provider_id: seller, target_user_id: salesUser.id, target_code: "ALPHA", target_name: "Alpha Sales", target_email: "alpha@example.test", target_status: "active" }));
   check("Salesperson record is created through guarded RPC", Boolean(salesperson));
   const assignment = await must(admin.client.rpc("admin_assign_client_salesperson", { target_provider_id: seller, target_client_id: clientOrg, target_salesperson_id: salesperson, target_effective_from: new Date(Date.now() - 60000).toISOString() }));
   check("Client is assigned to salesperson", Boolean(assignment));
+  const salespersonB = await must(admin.client.rpc("admin_save_salesperson", { target_id: null, target_provider_id: seller, target_user_id: salesUserB.id, target_code: "BETA", target_name: "Beta Sales", target_email: "beta@example.test", target_status: "active" }));
+  const assignmentB = await must(admin.client.rpc("admin_assign_client_salesperson", { target_provider_id: seller, target_client_id: clientOrgB, target_salesperson_id: salespersonB, target_effective_from: new Date(Date.now() - 60000).toISOString() }));
+  check("Second salesperson receives a separate client assignment", Boolean(salespersonB) && Boolean(assignmentB));
 
   const tier = await must(admin.client.rpc("admin_save_pricing_tier", { target_id: null, target_provider_id: seller, target_code: "TIER_1", target_name: "Tier 1", target_description: "Default preferred client tier", target_priority: 100, target_status: "active" }));
   const tierAssignment = await must(admin.client.rpc("admin_assign_client_pricing_tier", { target_provider_id: seller, target_client_id: clientOrg, target_pricing_tier_id: tier, target_effective_from: new Date(Date.now() - 60000).toISOString() }));
@@ -86,6 +93,16 @@ try {
   await denied("Client cannot invoke confidential salesperson dashboard", client.client.rpc("get_salesperson_dashboard", { target_provider_id: seller }));
   const ownDashboard = await must(salesUser.client.rpc("get_salesperson_dashboard", { target_provider_id: seller }));
   check("Salesperson dashboard is self-scoped", ownDashboard.salesperson.id === salesperson && ownDashboard.sales_activity.length === 1 && ownDashboard.commissions.pending === 2.5);
+  const ownAdminContext = await must(salesUser.client.rpc("get_phase5b_admin_context", { target_provider_id: seller }));
+  check("STAFF context contains only the signed-in salesperson and assigned client", ownAdminContext.salespeople.length === 1 && ownAdminContext.salespeople[0].id === salesperson && ownAdminContext.assignments.length === 1 && ownAdminContext.assignments[0].client_organization_id === clientOrg);
+  const otherOwnDashboard = await must(salesUserB.client.rpc("get_salesperson_dashboard", { target_provider_id: seller }));
+  check("Second salesperson dashboard is symmetrically self-scoped", otherOwnDashboard.salesperson.id === salespersonB && otherOwnDashboard.assigned_clients.length === 1 && otherOwnDashboard.assigned_clients[0].id === clientOrgB);
+  const otherOwnAdminContext = await must(salesUserB.client.rpc("get_phase5b_admin_context", { target_provider_id: seller }));
+  check("Second STAFF context excludes the first salesperson assignment", otherOwnAdminContext.salespeople.length === 1 && otherOwnAdminContext.salespeople[0].id === salespersonB && otherOwnAdminContext.assignments.length === 1 && otherOwnAdminContext.assignments[0].client_organization_id === clientOrgB);
+  const providerContext = await must(admin.client.rpc("get_phase5b_admin_context", { target_provider_id: seller }));
+  check("Provider admin retains provider-wide salesperson visibility", providerContext.salespeople.some((entry) => entry.id === salesperson) && providerContext.salespeople.some((entry) => entry.id === salespersonB) && providerContext.assignments.some((entry) => entry.client_organization_id === clientOrg) && providerContext.assignments.some((entry) => entry.client_organization_id === clientOrgB));
+  await denied("Salesperson A cannot view salesperson B dashboard", salesUser.client.rpc("get_salesperson_dashboard", { target_provider_id: seller, target_salesperson_id: salespersonB }));
+  await denied("Salesperson B cannot view salesperson A dashboard", salesUserB.client.rpc("get_salesperson_dashboard", { target_provider_id: seller, target_salesperson_id: salesperson }));
   await denied("Unrelated salesperson cannot view another salesperson dashboard", unrelated.client.rpc("get_salesperson_dashboard", { target_provider_id: seller, target_salesperson_id: salesperson }));
   const adminReport = await must(admin.client.rpc("get_company_sales_report", { target_provider_id: seller, target_start: new Date(Date.now() - 86400000).toISOString(), target_end: new Date(Date.now() + 86400000).toISOString() }));
   check("Company report includes order, quantity, sales, and commissions", adminReport.order_count === 1 && adminReport.quantity === 2 && adminReport.sales_amount === 25 && adminReport.commission_amount === 2.5);

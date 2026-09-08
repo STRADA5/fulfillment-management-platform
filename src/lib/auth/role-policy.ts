@@ -40,9 +40,20 @@ const clientAdminAllowedPermissions = new Set([
 
 const clientSideRoles = new Set(["CLIENT_USER", "CLIENT_ADMIN"]);
 
+const staffProviderWidePermissions = new Set([
+  "salespeople.manage",
+  "salesperson.assign",
+  "commissions.view",
+  "commissions.manage",
+  "payouts.manage",
+  "pricing_tiers.manage",
+  "reporting.view",
+]);
+
 export function isRolePermissionAllowed(roleCode: string, permission: string) {
   if (roleCode === "CLIENT_USER") return clientUserAllowedPermissions.has(permission);
   if (roleCode === "CLIENT_ADMIN") return clientAdminAllowedPermissions.has(permission);
+  if (roleCode === "STAFF") return !staffProviderWidePermissions.has(permission);
   return !clientSideRoles.has(roleCode);
 }
 
