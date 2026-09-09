@@ -12,12 +12,12 @@
   "releaseIdentity": {
     "repository": "fulfillment-management-platform",
     "approvedBranch": "codex/phase7-hosted-staging-preview",
-    "approvedApplicationReleaseCommit": "f55c107dcff17b21fd46e163f3576c719ce5a071",
+    "approvedApplicationReleaseCommit": "ce94f411f392839dd53c2a047d070ab6150d5e9a",
     "phase6ReconciliationCommit": "f8e3547",
     "currentRoadmapCommit": "6126e16",
     "migrationManifest": "docs/migration-manifest.sha256",
-    "currentSchemaIdentity": "schema-phase7-23",
-    "currentMigrationManifestDigest": "20e3b42fa2ff449f6155bfc43b64f3fa80ab7d8037f6b1da19176204af39804a",
+    "currentSchemaIdentity": "schema-phase7-25",
+    "currentMigrationManifestDigest": "42cd0318f4fb34cd65348b722a5e9895f0b4d0e5935b3c462535b0bb7860c1bb",
     "approvedPriorReleases": [
       {
         "commit": "889bd38030caa56742091b500c6155b0d30a0222",
