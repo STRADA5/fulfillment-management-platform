@@ -66,6 +66,17 @@ The approved non-Production Preview at `fulfillment-management-platform-8io6zsa3
 - Client A provider/platform administration controls: not exposed; `PASS`. The hosted Client A account carried the client-side `CLIENT_ADMIN` role during this check, proving the corrected provider/platform boundary for that role as well as ordinary client-side access.
 - Client A/B tenant isolation: manually verified; `PASS`.
 
+### Salesperson B hosted validation
+
+Evidence reference: `P7-AUTH-MANUAL-SALESPERSON-B-001`.
+
+The same approved non-Production Preview at `fulfillment-management-platform-bc94hc28g.vercel.app` was manually validated for Salesperson B on the corrected Phase 7 release chain. This evidence records manual hosted authorization validation only; Playwright/Edge remains `INFRA_BLOCKED/NOT_RUN`.
+
+- Salesperson B authentication, provider context, assigned-client navigation, and Client B visibility: `PASS`.
+- Client A absence from assigned clients and cross-salesperson private assignment/commission data: `PASS`.
+- Self-scoped commission/reporting, assigned-client sales totals, commission status, payout history, and reports: `PASS`.
+- Salesperson B provider/platform administration boundary and Client A attribution absence: `PASS`.
+
 No hosted data, users, memberships, roles, passwords, Windows credentials, Production aliases, or Production environments were modified or contacted. Provider/platform administrator role coverage and the remaining synthetic-role gates are not asserted by this checkpoint and remain subject to the ordered acceptance matrix.
 
 ## Recovery and readiness placeholders
