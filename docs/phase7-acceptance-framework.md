@@ -87,6 +87,17 @@ The current approved non-Production Preview is `https://fulfillment-management-p
 
 The six-role isolated-session matrix is reconciled as `PASS` for this Preview: Platform Super-Admin/Provider Administrator, Fulfillment Operator, Client A, Client B, Salesperson A, and Salesperson B. Evidence is redacted route, identity, authorization-boundary, and session-outcome metadata only; no passwords, tokens, cookies, hosted business data, or raw session values are recorded.
 
+The role-by-role reconciliation for this unchanged Preview identity is:
+
+- Platform Super-Admin/Provider Administrator: `PASS`, carried forward from the completed hosted role evidence and the unchanged deployed release identity.
+- Fulfillment Operator: `PASS`, carried forward from the completed hosted `/dashboard` and `/shipping` validation and the unchanged deployed release identity.
+- Client A: `PASS`, carried forward from the completed hosted identity, client-catalog, library, and tenant-boundary evidence.
+- Client B: `PASS`, carried forward from the completed hosted identity, client-catalog, library, and tenant-boundary evidence.
+- Salesperson A: `PASS`, with direct current-Preview revalidation of authentication, identity, assigned Client A visibility, and `/salespeople` to `/reports` session preservation.
+- Salesperson B: `PASS`, carried forward from the completed hosted identity, assigned Client B scope, reporting/session, library/tools, and isolation evidence.
+
+No role requires another manual hosted check for this reconciliation because the current Preview deployment identity is unchanged and no role, authorization, credential, hosted-data, or application-code state changed after the recorded validations.
+
 This reconciliation does not mark the remaining recovery, monitoring, CI, or automated-browser gates as passed. The historical Vercel automation-bypass blocker remains fail-closed for the automated browser path; the corrective action is to record the approved operator-assisted Preview access path separately and rerun the affected target/browser gate without weakening Deployment Protection or Production safeguards.
 
 ## Recovery and readiness placeholders
