@@ -42,7 +42,9 @@ async function signInAndCheck(page, email, password, expectedStatus, label) {
   await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL((url) => url.pathname === "/dashboard", { timeout: 30000 });
-  for (const [path, shell] of [["/salespeople", /Salespeople & commissions/], ["/pricing-tiers", /Pricing tiers/]]) {
+  const routeChecks = [["/salespeople", /Salespeople & commissions/], ["/pricing-tiers", /Pricing tiers/]];
+  if (expectedStatus === 200) routeChecks.push(["/reports", /Sales reporting/]);
+  for (const [path, shell] of routeChecks) {
     const response = await page.goto(path, { waitUntil: "domcontentloaded" });
     assert.equal(response?.status(), expectedStatus, `${label}: unexpected ${path} response status`);
     const body = await page.locator("body").innerText();
