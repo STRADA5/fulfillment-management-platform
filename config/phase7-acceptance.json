@@ -53,9 +53,9 @@
     "previewUrlEnvironmentVariable": "PHASE7_PREVIEW_URL",
     "approvedPreviewUrlMustBeRecordedBeforeHostedRun": true,
     "currentPreviewDeployment": {
-      "previewUrl": "https://fulfillment-management-platform-q39nhsf03.vercel.app",
-      "deploymentId": "dpl_5SVKmiLX9WmWwzSEhMyeugavr6U7",
-      "deployedCommit": "db0bcb4a0830aef461829cdd6ff51b2bb49c7385",
+      "previewUrl": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+      "deploymentId": "dpl_HNwQgTJB7oupc81kWJ197RY3o7jt",
+      "deployedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
       "target": "Preview",
       "productionDeployed": false
     },

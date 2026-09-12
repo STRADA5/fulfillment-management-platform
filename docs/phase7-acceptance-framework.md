@@ -81,9 +81,9 @@ No hosted data, users, memberships, roles, passwords, Windows credentials, Produ
 
 ### Current Preview release-identity reconciliation
 
-Evidence reference: `P7-RELEASE-CURRENT-PREVIEW-DB0BCB4`.
+Evidence reference: `P7-RELEASE-CURRENT-PREVIEW-213A2CE`.
 
-The current approved non-Production Preview is `https://fulfillment-management-platform-q39nhsf03.vercel.app`, deployment `dpl_5SVKmiLX9WmWwzSEhMyeugavr6U7`, deployed from commit `db0bcb4a0830aef461829cdd6ff51b2bb49c7385`, with deployment target `Preview`. Production was not deployed or contacted.
+The current approved non-Production Preview is `https://fulfillment-management-platform-j4ntvrkrz.vercel.app`, deployment `dpl_HNwQgTJB7oupc81kWJ197RY3o7jt`, deployed from commit `213a2cea3ebf2435d138b201de0a5883e8d8d4e0`, with deployment target `Preview`. The prior `q39nhsf03` Preview is historical evidence only. Production was not deployed or contacted.
 
 The six-role isolated-session matrix is reconciled as `PASS` for this Preview: Platform Super-Admin/Provider Administrator, Fulfillment Operator, Client A, Client B, Salesperson A, and Salesperson B. Evidence is redacted route, identity, authorization-boundary, and session-outcome metadata only; no passwords, tokens, cookies, hosted business data, or raw session values are recorded.
 
