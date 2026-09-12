@@ -52,6 +52,13 @@
     "environment": "non-production-staging",
     "previewUrlEnvironmentVariable": "PHASE7_PREVIEW_URL",
     "approvedPreviewUrlMustBeRecordedBeforeHostedRun": true,
+    "currentPreviewDeployment": {
+      "previewUrl": "https://fulfillment-management-platform-q39nhsf03.vercel.app",
+      "deploymentId": "dpl_5SVKmiLX9WmWwzSEhMyeugavr6U7",
+      "deployedCommit": "db0bcb4a0830aef461829cdd6ff51b2bb49c7385",
+      "target": "Preview",
+      "productionDeployed": false
+    },
     "approvedSupabaseProjectReference": "nftufhffzlokryafcbku",
     "requiredHttps": true,
     "productionTargetRejectionRequired": true,

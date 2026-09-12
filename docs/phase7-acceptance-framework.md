@@ -70,7 +70,7 @@ The approved non-Production Preview at `fulfillment-management-platform-8io6zsa3
 
 Evidence reference: `P7-AUTH-MANUAL-SALESPERSON-B-001`.
 
-The same approved non-Production Preview at `fulfillment-management-platform-bc94hc28g.vercel.app` was manually validated for Salesperson B on the corrected Phase 7 release chain. This evidence records manual hosted authorization validation only; Playwright/Edge remains `INFRA_BLOCKED/NOT_RUN`.
+The same approved non-Production Preview at `fulfillment-management-platform-bc94hc28g.vercel.app` was manually validated for Salesperson B on the corrected Phase 7 release chain. This historical evidence records manual hosted authorization validation only; Playwright/Edge remains `INFRA_BLOCKED/NOT_RUN`.
 
 - Salesperson B authentication, provider context, assigned-client navigation, and Client B visibility: `PASS`.
 - Client A absence from assigned clients and cross-salesperson private assignment/commission data: `PASS`.
@@ -78,6 +78,16 @@ The same approved non-Production Preview at `fulfillment-management-platform-bc9
 - Salesperson B provider/platform administration boundary and Client A attribution absence: `PASS`.
 
 No hosted data, users, memberships, roles, passwords, Windows credentials, Production aliases, or Production environments were modified or contacted. Provider/platform administrator role coverage and the remaining synthetic-role gates are not asserted by this checkpoint and remain subject to the ordered acceptance matrix.
+
+### Current Preview release-identity reconciliation
+
+Evidence reference: `P7-RELEASE-CURRENT-PREVIEW-DB0BCB4`.
+
+The current approved non-Production Preview is `https://fulfillment-management-platform-q39nhsf03.vercel.app`, deployment `dpl_5SVKmiLX9WmWwzSEhMyeugavr6U7`, deployed from commit `db0bcb4a0830aef461829cdd6ff51b2bb49c7385`, with deployment target `Preview`. Production was not deployed or contacted.
+
+The six-role isolated-session matrix is reconciled as `PASS` for this Preview: Platform Super-Admin/Provider Administrator, Fulfillment Operator, Client A, Client B, Salesperson A, and Salesperson B. Evidence is redacted route, identity, authorization-boundary, and session-outcome metadata only; no passwords, tokens, cookies, hosted business data, or raw session values are recorded.
+
+This reconciliation does not mark the remaining recovery, monitoring, CI, or automated-browser gates as passed. The historical Vercel automation-bypass blocker remains fail-closed for the automated browser path; the corrective action is to record the approved operator-assisted Preview access path separately and rerun the affected target/browser gate without weakening Deployment Protection or Production safeguards.
 
 ## Recovery and readiness placeholders
 
