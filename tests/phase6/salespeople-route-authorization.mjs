@@ -119,7 +119,31 @@ try {
   for (const [record, expectedStatus, label] of [[clientUser, 404, "Client user without salespeople.view"], [staffUser, 200, "Authorized salesperson STAFF"], [adminUser, 200, "Authorized provider ADMIN"]]) {
     const context = await browser.newContext({ baseURL: baseUrl });
     try {
-      await signInAndCheck(await context.newPage(), record.email, password, expectedStatus, label);
+      const page = await context.newPage();
+      await signInAndCheck(page, record.email, password, expectedStatus, label);
+      if (record === adminUser) {
+        // The actual server action must accept and persist textarea line breaks.
+        const adminClient = createClient(local.API_URL, local.ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+        await must(adminClient.auth.signInWithPassword({ email: record.email, password }));
+        const sectionId = await must(adminClient.rpc("admin_save_library_section", { target_id: null, target_organization_id: provider.id, target_code: `AUDIT_${run.slice(0, 8).toUpperCase()}`, target_name: "Audit editor", target_description: "", target_section_type: "protocols", target_status: "active", target_display_order: 100, target_expected_version: null }));
+        await page.goto("/library", { waitUntil: "domcontentloaded" });
+        const form = page.locator("form").filter({ has: page.getByRole("heading", { name: "Create protocol or reference draft", exact: true }) });
+        await form.locator('select[name="sectionId"]').selectOption(sectionId);
+        await form.getByLabel("Stable slug", { exact: true }).fill(`audit-editor-${run}`);
+        await form.getByLabel("Title", { exact: true }).fill("Audit multiline article");
+        const body = "First paragraph\n\nSecond paragraph\n\tIndented line";
+        await form.getByLabel("Body", { exact: true }).fill(body);
+        await form.getByLabel("Summary", { exact: true }).fill("Summary first line\nSummary second line");
+        await form.getByRole("button", { name: "Save", exact: true }).click();
+        await form.getByRole("status").waitFor({ timeout: 30000 });
+        assert.equal(await form.getByRole("status").innerText(), "Saved and audited.");
+        const item = await must(service.from("knowledge_library_items").select("id").eq("organization_id", provider.id).eq("slug", `audit-editor-${run}`).single());
+        const version = await must(service.from("knowledge_library_item_versions").select("body,summary").eq("item_id", item.id).single());
+        // Browsers encode textarea newlines as CRLF in multipart form data.
+        assert.equal(version.body.replace(/\r\n/g, "\n"), body);
+        assert.equal(version.summary.replace(/\r\n/g, "\n"), "Summary first line\nSummary second line");
+        console.log("Multiline library article saved through the browser and verified in the database.");
+      }
     } finally {
       await context.close();
     }

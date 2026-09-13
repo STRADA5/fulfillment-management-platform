@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -8,7 +8,7 @@ import { validateMigrationRecoveryEvidence, STATUS, readLocalMigrationIdentity }
 const toolPath = join(process.cwd(), "tools", "validate-phase7-migration-recovery-evidence.mjs");
 const tempPath = join(tmpdir(), `phase7-migration-recovery-${process.pid}.json`);
 const identity = await readLocalMigrationIdentity(process.cwd());
-const manifestDigest = "20e3b42fa2ff449f6155bfc43b64f3fa80ab7d8037f6b1da19176204af39804a";
+const manifestDigest = identity.manifestDigest;
 const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-23", currentMigrationManifestDigest: manifestDigest };
 const baseEvidence = {
   gateId: "P7-OPS-03",
@@ -135,7 +135,16 @@ redactionViolation.notes = "database password must never be recorded";
 assert.equal((await validate(redactionViolation)).reason, "redaction-required");
 
 await writeFile(tempPath, JSON.stringify(baseEvidence));
-const cli = spawnSync(process.execPath, [toolPath, "--evidence", tempPath], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+// Synthetic acceptance evidence belongs to a synthetic policy, not the last
+// approved hosted release's config. Still validate the actual migration files.
+const fixtureRoot = await mkdtemp(join(tmpdir(), "phase7-migration-policy-"));
+await mkdir(join(fixtureRoot, "config"));
+await mkdir(join(fixtureRoot, "docs"));
+await cp(join(process.cwd(), "supabase", "migrations"), join(fixtureRoot, "supabase", "migrations"), { recursive: true });
+await cp(join(process.cwd(), "docs", "migration-manifest.sha256"), join(fixtureRoot, "docs", "migration-manifest.sha256"));
+await writeFile(join(fixtureRoot, "config", "phase7-acceptance.json"), JSON.stringify({ targetIdentity: { approvedSupabaseProjectReference: policy.approvedStagingProject }, releaseIdentity: { currentSchemaIdentity: policy.currentSchemaIdentity, currentMigrationManifestDigest: manifestDigest } }));
+const cli = spawnSync(process.execPath, [toolPath, "--evidence", tempPath, "--repo-root", fixtureRoot], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+await rm(fixtureRoot, { recursive: true, force: true });
 assert.equal(cli.status, 0);
 assert.equal(cli.stderr, "");
 assert.equal(JSON.parse(cli.stdout).status, STATUS.PASS);

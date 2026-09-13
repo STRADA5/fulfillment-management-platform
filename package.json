@@ -21,6 +21,7 @@
     "test:auth:phase6": "node tests/phase6/salespeople-route-authorization.mjs",
     "test:auth:phase7-role-aware": "node tests/phase6/role-aware-privileged-route-authorization.mjs",
     "test:auth:phase7-salesperson-scope": "node tests/phase7/salesperson-scope-policy.mjs",
+    "test:library-text": "node tests/phase7/library-text-validation.mjs",
     "test:hosted:phase6": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-phase6-hosted-smoke.ps1",
     "validate:phase7": "node tools/validate-phase7-acceptance.mjs",
     "evidence:phase7:release": "node tools/generate-phase7-release-evidence.mjs",
@@ -39,7 +40,7 @@
   "dependencies": {
     "@supabase/ssr": "0.12.4",
     "@supabase/supabase-js": "2.112.3",
-    "next": "16.3.1",
+    "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -48,9 +49,9 @@
     "@types/node": "26.2.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
-    "@playwright/test": "1.51.1",
+    "@playwright/test": "1.63.0",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.3.1",
+    "eslint-config-next": "16.3.5",
     "supabase": "^2.115.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3"
