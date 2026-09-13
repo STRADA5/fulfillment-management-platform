@@ -30,8 +30,16 @@ jobs:
           done < docs/migration-manifest.sha256
       - run: npx supabase start
       - run: npm run test:security:local
+      - run: npm run test:library-text
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Browser authorization and library regression tests
+        env:
+          PHASE6_BROWSER_CHANNEL: chromium
+        run: |
+          npm run test:auth:phase6
+          npm run test:auth:phase7-role-aware
       - if: always()
         run: npx supabase stop

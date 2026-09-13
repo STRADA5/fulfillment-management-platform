@@ -3,14 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { getAppContext } from "@/lib/auth/authorization";
 import { createClient } from "@/lib/supabase/server";
+import { libraryText as text } from "@/lib/knowledge-library/validation";
 
 export type LibraryActionState = { error?: string; success?: string };
 const raw = (form: FormData, name: string) => String(form.get(name) ?? "").trim();
-const text = (form: FormData, name: string, max = 10000, required = false) => {
-  const value = raw(form, name);
-  if ((required && !value) || value.length > max || /[\u0000-\u001f]/.test(value)) throw new Error(`Invalid ${name}.`);
-  return value;
-};
 const uuid = (form: FormData, name: string, optional = false) => {
   const value = raw(form, name);
   if (!value && optional) return null;
@@ -75,7 +71,7 @@ export async function saveLibraryItem(_: LibraryActionState, form: FormData): Pr
     const itemId = uuid(form, "id", true);
     const slug = text(form, "slug", 80, true);
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error("Invalid slug.");
-    return await call("admin_save_library_item", { target_id: itemId, target_organization_id: organization, target_section_id: uuid(form, "sectionId"), target_category_id: uuid(form, "categoryId", true), target_item_type: text(form, "itemType", 20, true), target_slug: slug, target_title: text(form, "title", 240, true), target_summary: text(form, "summary", 5000), target_body: text(form, "body", 100000), target_document_metadata: json(form, "documentMetadata"), target_source_metadata: json(form, "sourceMetadata"), target_visibility: text(form, "visibility", 30, true), target_client_safe: form.get("clientSafe") === "on", target_expected_version: null });
+    return await call("admin_save_library_item", { target_id: itemId, target_organization_id: organization, target_section_id: uuid(form, "sectionId"), target_category_id: uuid(form, "categoryId", true), target_item_type: text(form, "itemType", 20, true), target_slug: slug, target_title: text(form, "title", 240, true), target_summary: text(form, "summary", 5000, false, true), target_body: text(form, "body", 100000, false, true), target_document_metadata: json(form, "documentMetadata"), target_source_metadata: json(form, "sourceMetadata"), target_visibility: text(form, "visibility", 30, true), target_client_safe: form.get("clientSafe") === "on", target_expected_version: null });
   } catch (error) { return { error: error instanceof Error ? error.message : "Unable to save library item." }; }
 }
 

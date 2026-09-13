@@ -108,6 +108,43 @@ try {
   check("Company report includes order, quantity, sales, and commissions", adminReport.order_count === 1 && adminReport.quantity === 2 && adminReport.sales_amount === 25 && adminReport.commission_amount === 2.5);
   await denied("Other tenant cannot access company report", otherClient.client.rpc("get_company_sales_report", { target_provider_id: seller, target_start: new Date(Date.now() - 86400000).toISOString(), target_end: new Date(Date.now() + 86400000).toISOString() }));
 
+  const foreignSalesperson = await must(otherClient.client.rpc("admin_save_salesperson", { target_id: null, target_provider_id: otherSeller, target_user_id: otherClient.id, target_code: "FOREIGN", target_name: "Other Provider Sales", target_email: "foreign@example.test", target_status: "active" }));
+  const reportPeriod = { target_start: new Date(Date.now() - 86400000).toISOString(), target_end: new Date(Date.now() + 86400000).toISOString() };
+  // Assert the actual permission error, not merely an empty result.
+  for (const [caller, providerId, salespersonId] of [
+    [admin.client, seller, foreignSalesperson],
+    [otherClient.client, otherSeller, salesperson],
+    [admin.client, seller, randomUUID()],
+  ]) {
+    const dashboardResult = await caller.rpc("get_salesperson_dashboard", { target_provider_id: providerId, target_salesperson_id: salespersonId });
+    check("Provider admin rejects foreign or nonexistent salesperson identity", dashboardResult.error?.code === "42501" && dashboardResult.data === null);
+    const reportResult = await caller.rpc("get_salesperson_report", { target_provider_id: providerId, target_salesperson_id: salespersonId, ...reportPeriod });
+    check("Shared report authorization rejects mismatched salesperson", reportResult.error?.code === "42501" && reportResult.data === null);
+  }
+  const selectedDashboard = await must(admin.client.rpc("get_salesperson_dashboard", { target_provider_id: seller, target_salesperson_id: salesperson }));
+  check("Provider admin can still select an own-provider salesperson", selectedDashboard.salesperson.id === salesperson);
+  const selectedReport = await must(admin.client.rpc("get_salesperson_report", { target_provider_id: seller, target_salesperson_id: salesperson, ...reportPeriod }));
+  check("Own-provider salesperson report remains available", selectedReport.order_count === 1 && selectedReport.sales_amount === 25);
+
+  // Repeated amounts and multi-line orders must each contribute exactly once.
+  const submit = (lines, suffix) => must(client.client.rpc("submit_order", { target_client_organization_id: clientOrg, target_customer_id: customer.id, target_address_id: address.id, target_currency: "USD", target_lines: lines, target_idempotency_key: `p5b-${suffix}-${run}` }));
+  await submit([{ entry_id: entry.id, quantity: 2 }], "equal-total");
+  await submit([{ entry_id: entry.id, quantity: 3 }], "different-total");
+  const variantB = await must(svc.from("product_variants").insert({ organization_id: seller, product_id: product.id, sku: `P5B-B-${run}`, variant_name: "Second Unit" }).select("id").single());
+  const entryB = await must(svc.from("client_catalog_entries").insert({ organization_id: seller, client_organization_id: clientOrg, connection_id: connection.id, product_id: product.id, variant_id: variantB.id, public_name: "Second Unit", public_description: "", status: "active", starts_at: "2020-01-01T00:00:00Z" }).select("id").single());
+  await must(admin.client.rpc("admin_save_pricing_tier_price", { target_id: null, target_provider_id: seller, target_pricing_tier_id: tier, target_product_id: product.id, target_variant_id: variantB.id, target_currency: "USD", target_unit_price: 7.5, target_minimum_quantity: 1, target_maximum_quantity: null, target_starts_at: new Date(Date.now() - 60000).toISOString(), target_ends_at: null, target_status: "active" }));
+  const multilineOrder = await submit([{ entry_id: entry.id, quantity: 1 }, { entry_id: entryB.id, quantity: 1 }], "multiple-lines");
+  const multilineRows = await must(svc.from("order_lines").select("id").eq("order_id", multilineOrder));
+  check("Regression fixture really contains multiple order lines", multilineRows.length === 2);
+  for (const [rpc, extra] of [["get_company_sales_report", {}], ["get_client_sales_report", { target_client_id: clientOrg }]]) {
+    const report = await must(admin.client.rpc(rpc, { target_provider_id: seller, ...reportPeriod, ...extra }));
+    check(`${rpc} counts equal-value and multi-line orders once`, report.order_count === 4 && report.quantity === 9 && report.sales_amount === 107.5 && report.salesperson_count === 1);
+    const emptyReport = await must(admin.client.rpc(rpc, { target_provider_id: seller, target_start: "2000-01-01T00:00:00Z", target_end: "2000-02-01T00:00:00Z", ...extra }));
+    check(`${rpc} preserves zero totals for empty periods`, emptyReport.order_count === 0 && emptyReport.quantity === 0 && emptyReport.sales_amount === 0);
+  }
+  const unassignedClientReport = await must(admin.client.rpc("get_client_sales_report", { target_provider_id: seller, target_client_id: clientOrgB, ...reportPeriod }));
+  check("Client reports exclude other clients' orders", unassignedClientReport.order_count === 0 && unassignedClientReport.sales_amount === 0);
+
   await must(admin.client.rpc("transition_commission", { target_commission_id: snapshot.id, target_status: "earned" }));
   await must(admin.client.rpc("transition_commission", { target_commission_id: snapshot.id, target_status: "payable" }));
   const payable = await must(svc.from("commission_snapshots").select("status,earned_at,payable_at").eq("id", snapshot.id).single());
@@ -133,5 +170,4 @@ try {
 } finally {
   for (const id of users) { try { await svc.auth.admin.deleteUser(id); } catch {} }
 }
-
 

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -66,7 +66,12 @@ redactionViolation.notes = "database password must never be recorded";
 assert.equal((await validate(redactionViolation)).reason, "redaction-required");
 
 await writeFile(tempPath, JSON.stringify(baseEvidence));
-const cli = spawnSync(process.execPath, [toolPath, "--evidence", tempPath], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+// Do not compare synthetic test evidence with the real hosted release policy.
+const fixtureRoot = await mkdtemp(join(tmpdir(), "phase7-observability-policy-"));
+await mkdir(join(fixtureRoot, "config"));
+await writeFile(join(fixtureRoot, "config", "phase7-acceptance.json"), JSON.stringify({ targetIdentity: { approvedSupabaseProjectReference: policy.approvedStagingProject }, releaseIdentity: { currentSchemaIdentity: policy.currentSchemaIdentity, currentMigrationManifestDigest: manifestDigest } }));
+const cli = spawnSync(process.execPath, [toolPath, "--evidence", tempPath, "--repo-root", fixtureRoot], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+await rm(fixtureRoot, { recursive: true, force: true });
 assert.equal(cli.status, 0);
 assert.equal(cli.stderr, "");
 assert.equal(JSON.parse(cli.stdout).status, STATUS.PASS);
