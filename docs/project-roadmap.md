@@ -16,6 +16,12 @@ Phase 7 is the next implementation phase. It should complete controlled non-prod
 
 The Phase 6 Vercel automation-bypass problem remains a gated testing-infrastructure item. It must not be solved by weakening Deployment Protection or Production safeguards.
 
+### Post-Phase 7 commercialization backlog: administrator-controlled tenant branding
+
+[TENANT-BRAND-01: Administrator-controlled tenant branding and brand isolation](administrator-controlled-tenant-branding.md) records the specification-only requirement for one licensed tenant organization = one active approved business brand. Platform-approved branding is locked; tenant changes require review, and a second independent business requires a separate tenant and applicable license/subscription. The design includes tenant-isolated propagation, immutable historical document branding and platform-managed white-label entitlements.
+
+Coordinate implementation with Phase 8 commercialization/entitlements and Phase 8B document archives. This is not a new Phase 7 launch gate, does not change the numbered phase sequence, and does not authorize runtime/schema changes or deployment. Governance designation as Secondary Reviewer remains separate from full platform-administrator authorization.
+
 ## Phase 8A — Client-level automatic compound discount and order-calculation consistency
 
 This future pricing enhancement extends the completed Phase 3D client-catalog pricing and Phase 4A order-snapshot foundations. It is a separate post-Phase 7 implementation phase and does not alter the current Phase 7 authorization/security correction. It should be completed before subscription billing so invoices and access-related commercial reporting consume the same authoritative order amounts.

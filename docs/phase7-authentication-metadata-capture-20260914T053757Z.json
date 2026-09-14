@@ -1,0 +1,180 @@
+{
+  "formatVersion": 1,
+  "evidenceReference": "P7-AUTHENTICATION-METADATA-CAPTURE-20260914T053757Z",
+  "gateId": "P7-BLOCK-VERCEL-AUTOMATION-BYPASS",
+  "mode": "AUTHENTICATION_METADATA_CAPTURE",
+  "status": "FAIL",
+  "closureComplete": false,
+  "startedAt": "2026-09-14T05:37:57.8435865Z",
+  "finishedAt": "2026-09-14T05:38:25.7062849Z",
+  "exitCode": 1,
+  "authorization": "Exactly one authentication-metadata capture using the tested stop boundary; fresh target/OIDC/protection checks; first fatal remains blocked and stops the run. No downstream verification, policy change or retry.",
+  "approvedHostedIdentity": {
+    "project": "fulfillment-management-platform",
+    "projectId": "prj_DSxru65flK5vNipHMtAms9EJ8roT",
+    "team": "fulfillment-management-platform",
+    "teamId": "team_zhXZVZz3PeYoRzbIRuDSMyA4",
+    "previewUrl": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+    "deploymentId": "dpl_HNwQgTJB7oupc81kWJ197RY3o7jt",
+    "deployedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
+    "environment": "Preview",
+    "state": "READY"
+  },
+  "trustedSourcesOperatorEvidence": {
+    "accepted": true,
+    "source": "Existing authenticated dashboard operator evidence, explicitly retained as applicable in this authorization.",
+    "project": "fulfillment-management-platform",
+    "trustedSource": "This project",
+    "displayedAccessRule": "All tokens can access matching environments, development tokens can access preview",
+    "configurationChanged": false,
+    "missingApiFieldNotRequiredToDuplicateOperatorEvidence": true
+  },
+  "execution": {
+    "launcher": "tools/run-phase6-hosted-smoke.ps1",
+    "switch": "-AuthenticationMetadataCapture",
+    "boundedExecutionCount": 1,
+    "credentialRetrievalCount": 0,
+    "loginAttemptCount": 0,
+    "retryPerformed": false,
+    "localPreflightRegressionSuites": 4,
+    "localPreflightRegressions": "PASS",
+    "runnerModified": false,
+    "runnerSha256BeforeAndAfter": "949903cc4b2457e7f2b9bf3cc8fa2fc08a05b1d32601209f6b361bad7f7a0cc8",
+    "launcherSha256BeforeAndAfter": "69ca4a43267051ec03c0d8b70a09576c7cdd77b9b9265a6a11f49d3d4b4327e8",
+    "feedbackMetadataSha256BeforeAndAfter": "1067aa308dfac39ae716fc3115f42261795742ef99bb8a277de33decdc41419e",
+    "stopBoundarySafetyTestSha256BeforeAndAfter": "2253fdf3926495a0742ab7457481ff4ef76c84b3688c3d4739f3cddc4e2eec7e",
+    "credentialAndLoginCountBasis": "Fatal occurred in BROWSER_ACCESS before APP_LOGIN and before SALESPERSON_A_AUTHENTICATION. Capture-mode cancellation prevented credentialFromLauncher, field population and submit."
+  },
+  "preflight": {
+    "LOCAL_IDENTITY": "PASS",
+    "LIVE_IDENTITY": "PASS",
+    "READY": "PASS",
+    "PREVIEW_TARGET": "PASS",
+    "PROTECTION_ENABLED": "PASS",
+    "DEVELOPMENT_OIDC": "PASS",
+    "UNAUTHENTICATED_PROTECTION": "PASS",
+    "OIDC_PREVIEW_ACCESS": "PASS"
+  },
+  "stageSequence": [
+    "LIVE_IDENTITY",
+    "DEVELOPMENT_OIDC",
+    "UNAUTHENTICATED_PROTECTION",
+    "BROWSER_ACCESS"
+  ],
+  "firstRefusal": {
+    "PHASE": "BROWSER_ACCESS",
+    "UTC": "2026-09-14T05:38:24.751Z",
+    "ATTRIBUTION": "REQUEST_INTERCEPTION",
+    "CODE": "OFF_TARGET_REQUEST_BLOCKED",
+    "INITIATING_ORIGIN": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+    "INITIATING_PATH": "/login",
+    "INTENDED_ACTION": "VERIFY_ROUTE",
+    "INTENDED_PATH": "/login",
+    "INTENDED_URL_FORM": "RELATIVE",
+    "METHOD": "GET",
+    "ORIGINAL_URL_FORM": "UNKNOWN",
+    "TARGET_PROTOCOL": "https:",
+    "TARGET_HOSTNAME": "vercel.live",
+    "TARGET_PORT": "443",
+    "TARGET_ORIGIN": "https://vercel.live",
+    "TARGET_PATH": "/_next-live/feedback/feedback.js",
+    "RESOURCE_TYPE": "script",
+    "INITIATOR": "UNKNOWN",
+    "NAVIGATION": false,
+    "FETCH_XHR": false,
+    "RSC_QUERY_PRESENT": false,
+    "FORM_SUBMISSION": false,
+    "REDIRECT": false,
+    "QUERY_PRESENT": false,
+    "GUARD_RULE": "ASSERT_REQUEST_EXACT_TARGET_COMPOUND",
+    "FIRST_FAILED_PREDICATE": "ORIGIN_EQUALS_PIN",
+    "BEFORE_TRANSMISSION": true,
+    "PREDICATE_ORIGIN_EQUALS_PIN": false,
+    "PREDICATE_PROTOCOL_HTTPS": true,
+    "PREDICATE_HOSTNAME_EQUALS_PIN": false,
+    "PREDICATE_USERNAME_ABSENT": true,
+    "PREDICATE_PASSWORD_ABSENT": true,
+    "PREDICATE_NONDEFAULT_PORT_ABSENT": true,
+    "PREDICATE_FRAGMENT_ABSENT": true
+  },
+  "captureOutcome": {
+    "feedbackRequestObserved": true,
+    "noFatalRequestCaptured": false,
+    "authentication": "NOT_COMPLETED",
+    "outcome": "FIRST_FATAL_CAPTURED",
+    "networkDecision": "BLOCKED",
+    "captureControl": "FATAL",
+    "feedbackRequestTransmitted": false,
+    "stoppedBeforeCredentialRetrieval": true,
+    "authenticationVerification": "NOT_RUN",
+    "dashboardVerification": "NOT_RUN",
+    "salespersonIdentityVerification": "NOT_RUN",
+    "salespersonRouteReached": false,
+    "reportsRouteReached": false,
+    "isolationChecksReached": false,
+    "finalGateClosureReached": false
+  },
+  "eligibility": {
+    "allConditionsPositivelyVerified": false,
+    "fiveMissingFactsCaptured": false,
+    "facts": [
+      {
+        "name": "Request-body absence",
+        "result": "UNKNOWN"
+      },
+      {
+        "name": "Credential/session-bearing metadata and server-action absence",
+        "result": "UNKNOWN"
+      },
+      {
+        "name": "Initiator attribution, approved main-frame ownership and service-worker absence",
+        "result": "UNKNOWN"
+      },
+      {
+        "name": "Single exact-request occurrence in the fresh context",
+        "result": "UNKNOWN"
+      },
+      {
+        "name": "Feedback-specific Production deployment/alias exclusion",
+        "result": "UNKNOWN"
+      }
+    ],
+    "authenticationPhaseCondition": false,
+    "authenticationApi": "NO_BY_EXACT_REQUEST_PATH_CLASSIFICATION",
+    "supabaseAuth": "NO_BY_EXACT_REQUEST_ORIGIN_CLASSIFICATION",
+    "applicationApiRequiredForLogin": "UNKNOWN",
+    "bodyPresent": "UNKNOWN",
+    "credentialMetadataPresent": "UNKNOWN",
+    "sessionRequiredMaterialPresent": "UNKNOWN",
+    "initiatorType": "UNKNOWN",
+    "singleOccurrenceVerified": false,
+    "toolbarInitiatorAttributionVerified": false,
+    "authenticationSucceededWhileBlocked": false,
+    "nonfatalImplementationJustified": false,
+    "explanation": "The exact feedback script appeared before authentication. The existing supplement intentionally captures only SALESPERSON_A_AUTHENTICATION requests; it was not invoked for this BROWSER_ACCESS refusal. No missing field is interpreted as false and prior authentication success is not substituted for this run."
+  },
+  "safety": {
+    "productionRequestCount": 0,
+    "productionRequestCountBasis": "Pinned immutable Preview checks and exact-host CONNECT proxy; first off-origin request blocked before transmission. No Production application request was issued; final closure marker was not reached.",
+    "hostedBusinessDataModified": false,
+    "credentialsModified": false,
+    "applicationSourceModified": false,
+    "vercelSettingsModified": false,
+    "allowlistModified": false,
+    "networkPolicyModified": false,
+    "secretValuesRecorded": false,
+    "pushPerformed": false,
+    "deploymentPerformed": false
+  },
+  "historicalEvidence": {
+    "path": "docs/phase7-vercel-automated-access-evidence.json",
+    "sha256Unchanged": "eb902d467d76332894051ed2f3807bead33ddcdc0fda3bf1bd7f11d5d81f74cf",
+    "previousSuccessfulAuthenticationPreserved": true,
+    "previousDashboardIdentityPreserved": true,
+    "separateRecordReason": "Preserve the accepted historical evidence and its local regression hash unchanged."
+  },
+  "p7Ci01": "PASS",
+  "p7Obs01": "BLOCKED",
+  "p7Obs01Classification": "EXTERNAL_PROVIDER_BLOCKED",
+  "nextAction": "Request authorization for local-only review of the BROWSER_ACCESS first-refusal phase versus the authentication-only metadata eligibility boundary. No hosted retry or nonfatal policy change is authorized by this record."
+}

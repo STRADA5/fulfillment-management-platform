@@ -1,0 +1,309 @@
+{
+  "formatVersion": 1,
+  "evidenceReference": "P7-PREAUTH-AUTHENTICATION-METADATA-CAPTURE-20260914T134556Z",
+  "gateId": "P7-BLOCK-VERCEL-AUTOMATION-BYPASS",
+  "mode": "AUTHENTICATION_METADATA_CAPTURE",
+  "observers": [
+    "PRE_AUTHENTICATION_FATAL_METADATA_OBSERVER",
+    "AUTHENTICATION_METADATA_COLLECTOR"
+  ],
+  "status": "FAIL",
+  "closureComplete": false,
+  "startedAt": "2026-09-14T13:45:56.2794144Z",
+  "finishedAt": "2026-09-14T13:46:25.2291804Z",
+  "exitCode": 1,
+  "authorization": "Exactly one bounded preauthentication plus conditional authentication metadata capture. Stop at first fatal; no request-policy change, retry, salesperson/report/isolation checks, or final closure.",
+  "approvedHostedIdentity": {
+    "project": "fulfillment-management-platform",
+    "projectId": "prj_DSxru65flK5vNipHMtAms9EJ8roT",
+    "team": "fulfillment-management-platform",
+    "teamId": "team_zhXZVZz3PeYoRzbIRuDSMyA4",
+    "previewUrl": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+    "deploymentId": "dpl_HNwQgTJB7oupc81kWJ197RY3o7jt",
+    "deployedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
+    "environment": "Preview",
+    "state": "READY"
+  },
+  "trustedSourcesOperatorEvidence": {
+    "accepted": true,
+    "source": "Existing authenticated-dashboard operator evidence remains applicable under this authorization; no new dashboard inspection or configuration action.",
+    "project": "fulfillment-management-platform",
+    "trustedSource": "This project",
+    "displayedAccessRule": "All tokens can access matching environments, development tokens can access preview",
+    "configurationChanged": false,
+    "missingApiFieldNotRequiredToDuplicateOperatorEvidence": true
+  },
+  "execution": {
+    "launcher": "tools/run-phase6-hosted-smoke.ps1",
+    "switch": "-AuthenticationMetadataCapture",
+    "boundedExecutionCount": 1,
+    "retryPerformed": false,
+    "loginAttemptCount": 0,
+    "loginAttemptCountBasis": "Only PRE_AUTHENTICATION reached. No submit-stage or AUTHENTICATION_SUBMIT_STARTED marker; fatal capture terminated before intentional submission.",
+    "credentialRetrievalCount": "UNKNOWN",
+    "credentialRetrievalCompleted": "UNKNOWN",
+    "credentialRetrievalEvidenceLimit": "APP_LOGIN passed before the fatal refusal. Private credential IPC may already have started/completed; the unchanged launcher does not report credentialSent. No IPC payload or credential value was inspected. PRE_AUTHENTICATION does not prove no credential read.",
+    "runnerModified": false,
+    "launcherModified": false,
+    "fileIntegrityBeforeAndAfter": [
+      {
+        "Path": "tests/phase6/hosted-auth-smoke.mjs",
+        "Sha256": "7818fc82580886a5212fa355429110fa07785b2bb68ed1a3cafce81dd6cf2825"
+      },
+      {
+        "Path": "tools/run-phase6-hosted-smoke.ps1",
+        "Sha256": "69ca4a43267051ec03c0d8b70a09576c7cdd77b9b9265a6a11f49d3d4b4327e8"
+      },
+      {
+        "Path": "tests/phase7/protected-preview-preauth-fatal-metadata.mjs",
+        "Sha256": "441cc1c91c5721387f71aa1d9845bc48847c46c7e7f66a7ed9121f6770729e94"
+      },
+      {
+        "Path": "tests/phase7/protected-preview-preauth-fatal-metadata-safety.mjs",
+        "Sha256": "fafe59b5c7acc94548dbc563467eca43e8791357ab04b43797f162d339116c5e"
+      },
+      {
+        "Path": "tests/phase7/protected-preview-feedback-metadata.mjs",
+        "Sha256": "1d4835ec95119311a6fdcafa8d3e6a99dc7adea6240954efa8b0c16660e4da5c"
+      },
+      {
+        "Path": "tests/phase7/protected-preview-auth-capture-boundary-safety.mjs",
+        "Sha256": "cad648026d793dd542a38bfee4b6f14f9e0e52394aebe50e4e8cf7b633f45af1"
+      },
+      {
+        "Path": "config/phase7-acceptance.json",
+        "Sha256": "5174225886b9f20e14bd47f50d95b09bf653dfe8d0abca0264ff5375fe11ef5e"
+      },
+      {
+        "Path": "docs/phase7-ci-release-evidence.json",
+        "Sha256": "86a9f5f4c73b71cb6e0a673f237eb1138bd5c3e8069c5e3ec0c6b7c3fd15fae4"
+      },
+      {
+        "Path": "docs/phase7-vercel-automated-access-evidence.json",
+        "Sha256": "eb902d467d76332894051ed2f3807bead33ddcdc0fda3bf1bd7f11d5d81f74cf"
+      },
+      {
+        "Path": "docs/phase7-authentication-metadata-capture-20260914T053757Z.json",
+        "Sha256": "f88a6f5d840d02ff1776418c8011e78f543cc8ca0aedfdfe95929ccf43a5bfe2"
+      },
+      {
+        "Path": "docs/phase7-authentication-metadata-capture-20260914T111811Z.json",
+        "Sha256": "31dce14799bb87604003f5f91954daa76a190b881bcd6ce5be7f0b050df14d60"
+      }
+    ],
+    "localPreflightRegressions": {
+      "preauthFatalMetadata": "PASS",
+      "captureBoundary": "PASS",
+      "authenticationMetadata": "PASS",
+      "firstRefusal": "PASS",
+      "targetSafety": "PASS",
+      "assertionCount": 1515,
+      "launcherChannelCases": 98,
+      "hostedRequests": 0,
+      "credentialReads": 0
+    }
+  },
+  "preflight": {
+    "LOCAL_IDENTITY": "PASS",
+    "LIVE_IDENTITY": "PASS",
+    "READY": "PASS",
+    "PREVIEW_TARGET": "PASS",
+    "PROTECTION_ENABLED": "PASS",
+    "DEVELOPMENT_OIDC": "PASS",
+    "UNAUTHENTICATED_PROTECTION": "PASS",
+    "OIDC_PREVIEW_ACCESS": "PASS",
+    "APP_LOGIN": "PASS"
+  },
+  "stageSequence": [
+    "LIVE_IDENTITY",
+    "DEVELOPMENT_OIDC",
+    "UNAUTHENTICATED_PROTECTION",
+    "BROWSER_ACCESS"
+  ],
+  "lifecycle": {
+    "observedStates": [
+      "PRE_AUTHENTICATION"
+    ],
+    "preauthObserverActive": true,
+    "authenticationCollectorInactiveDuringPreauthentication": true,
+    "submissionBoundaryReached": false,
+    "preauthFrozenAtSubmit": "NOT_RUN",
+    "authenticationCollectorActivatedAtSubmit": false,
+    "preauthObserverFrozenAtTermination": true,
+    "authenticationPhaseFeedbackObserved": false,
+    "originalRequestPhasePreserved": true
+  },
+  "preauthenticationFatal": {
+    "firstRefusal": {
+      "PHASE": "BROWSER_ACCESS",
+      "ORIGINAL_LIFECYCLE_PHASE": "PRE_AUTHENTICATION",
+      "UTC": "2026-09-14T13:46:22.945Z",
+      "ATTRIBUTION": "REQUEST_INTERCEPTION",
+      "CODE": "OFF_TARGET_REQUEST_BLOCKED",
+      "INITIATING_ORIGIN": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+      "INITIATING_PATH": "/login",
+      "INTENDED_ACTION": "VERIFY_ROUTE",
+      "INTENDED_PATH": "/login",
+      "INTENDED_URL_FORM": "RELATIVE",
+      "METHOD": "GET",
+      "ORIGINAL_URL_FORM": "UNKNOWN",
+      "TARGET_PROTOCOL": "https:",
+      "TARGET_HOSTNAME": "vercel.live",
+      "TARGET_PORT": "443",
+      "TARGET_ORIGIN": "https://vercel.live",
+      "TARGET_PATH": "/_next-live/feedback/feedback.js",
+      "RESOURCE_TYPE": "script",
+      "INITIATOR": "UNKNOWN",
+      "NAVIGATION": "NO",
+      "FETCH_XHR": "NO",
+      "RSC_QUERY_PRESENT": "NO",
+      "FORM_SUBMISSION": "NO",
+      "REDIRECT": "NO",
+      "QUERY_PRESENT": "NO",
+      "GUARD_RULE": "ASSERT_REQUEST_EXACT_TARGET_COMPOUND",
+      "FIRST_FAILED_PREDICATE": "ORIGIN_EQUALS_PIN",
+      "BEFORE_TRANSMISSION": "YES",
+      "PREDICATE_ORIGIN_EQUALS_PIN": "NO",
+      "PREDICATE_PROTOCOL_HTTPS": "YES",
+      "PREDICATE_HOSTNAME_EQUALS_PIN": "NO",
+      "PREDICATE_USERNAME_ABSENT": "YES",
+      "PREDICATE_PASSWORD_ABSENT": "YES",
+      "PREDICATE_NONDEFAULT_PORT_ABSENT": "YES",
+      "PREDICATE_FRAGMENT_ABSENT": "YES"
+    },
+    "metadata": {
+      "EXACT_RESOURCE_IDENTITY": "YES",
+      "AUTHENTICATION_PHASE": "NO",
+      "BODY_PRESENT": "NO",
+      "HEADERS_COMPLETE": "YES",
+      "CREDENTIAL_METADATA_PRESENT": "NO",
+      "SESSION_MATERIAL_PRESENT": "NO",
+      "SESSION_REQUIRED_MATERIAL_PRESENT": "NO",
+      "UNKNOWN_HEADERS_PRESENT": "NO",
+      "STRUCTURAL_HEADERS_VALID": "YES",
+      "SERVER_ACTION": "NO",
+      "AUTHENTICATION_API": "NO",
+      "SUPABASE_AUTH": "NO",
+      "APPLICATION_API": "NO",
+      "APPROVED_LOGIN_ACTION": "NO",
+      "APPLICATION_API_REQUIRED_FOR_LOGIN": "NO",
+      "AUTHENTICATION_RELEVANT": "NO",
+      "NAVIGATION": "NO",
+      "DOCUMENT": "NO",
+      "FETCH_XHR": "NO",
+      "FORM_SUBMISSION": "NO",
+      "REDIRECT_TARGET": "NO",
+      "SERVICE_WORKER": "NO",
+      "APPROVED_INITIATING_LOGIN": "YES",
+      "APPROVED_MAIN_FRAME": "YES",
+      "CURRENT_PAGE_LOGIN": "YES",
+      "PRODUCTION_TARGET": "NO",
+      "PRODUCTION_EXCLUSION_VERIFIED": "YES",
+      "INITIATOR_CORRELATED": "YES",
+      "INITIATOR_APPROVED_SOURCE": "YES",
+      "INITIATOR_FOREIGN_SOURCE": "NO",
+      "INITIATOR_ATTRIBUTION_VERIFIED": "YES",
+      "SINGLE_OCCURRENCE": "YES",
+      "COUNT_COMPLETE": "YES",
+      "EXACT_OCCURRENCE": "1",
+      "ORIGINAL_LIFECYCLE_PHASE": "PRE_AUTHENTICATION",
+      "INITIATOR_TYPE": "SCRIPT",
+      "FIRST_FATAL_REFUSAL": "YES",
+      "NETWORK_DECISION": "BLOCKED",
+      "CAPTURE_CONTROL": "FATAL",
+      "BEFORE_TRANSMISSION": "YES",
+      "SCRIPT": "YES",
+      "RSC_QUERY_PRESENT": "NO",
+      "GUARD_RULE": "ASSERT_REQUEST_EXACT_TARGET_COMPOUND",
+      "FIRST_FAILED_PREDICATE": "ORIGIN_EQUALS_PIN"
+    }
+  },
+  "authenticationPhaseFatal": null,
+  "captureOutcome": {
+    "feedbackRequestObserved": true,
+    "noFatalRequestCaptured": false,
+    "authentication": "NOT_COMPLETED",
+    "outcome": "FIRST_FATAL_CAPTURED",
+    "networkDecision": "BLOCKED",
+    "captureControl": "FATAL",
+    "feedbackRequestTransmitted": false,
+    "terminatedAtPreauthenticationFatal": true,
+    "authenticationVerification": "NOT_RUN",
+    "dashboardVerification": "NOT_RUN",
+    "salespersonIdentityVerification": "NOT_RUN",
+    "salespersonRouteReached": false,
+    "reportsRouteReached": false,
+    "isolationChecksReached": false,
+    "finalGateClosureReached": false
+  },
+  "eligibility": {
+    "allConditionsPositivelyVerified": false,
+    "fiveMissingFactsCapturedForPreauthentication": true,
+    "facts": [
+      {
+        "name": "Request-body absence",
+        "result": "YES"
+      },
+      {
+        "name": "Credential/session-bearing metadata and server-action absence",
+        "result": "YES"
+      },
+      {
+        "name": "Correlated approved initiator/main-frame ownership and service-worker absence",
+        "result": "YES"
+      },
+      {
+        "name": "Single exact-request occurrence through this fatal refusal in the fresh context",
+        "result": "YES"
+      },
+      {
+        "name": "Feedback-specific Production deployment/alias exclusion",
+        "result": "YES"
+      }
+    ],
+    "authenticationPhaseCondition": "NO",
+    "authenticationPhaseDetailedEligibility": "NOT_RUN",
+    "authenticationSucceededWhileFeedbackBlockedInThisRun": false,
+    "nonfatalImplementationJustified": false,
+    "exactAuthenticationPhasePredicateReady": false,
+    "evidenceLimits": [
+      "The newly captured request originated in PRE_AUTHENTICATION, not an eligible authentication lifecycle phase.",
+      "Authentication-phase occurrence, body/header/initiator facts were not captured in this run; preauth observations cannot be relabeled or substituted.",
+      "No same-run authentication success occurred while this request remained blocked. Historical successful authentication/dashboard evidence remains preserved, not a replacement for missing phase-specific evidence.",
+      "Single occurrence means complete observations through this fatal refusal, not proof about future requests or a later authentication window.",
+      "AUTHENTICATION_RELEVANT=NO and APPLICATION_API_REQUIRED_FOR_LOGIN=NO are structural classifier outputs, not a demonstrated end-to-end login-independence result."
+    ],
+    "remainingUnprovenOrFailedConditions": [
+      "AUTHENTICATION_PHASE_ONLY fails for the observed request: original phase PRE_AUTHENTICATION.",
+      "Authentication-phase-specific metadata and single-occurrence proof remain unverified.",
+      "Same-run authentication success with this feedback request blocked remains unverified."
+    ]
+  },
+  "safety": {
+    "productionRequestCount": 0,
+    "productionRequestCountBasis": "Fresh pinned immutable Preview identity/Production-alias exclusion and exact-host CONNECT proxy; feedback refused before transmission. No final-closure Production-count marker is claimed as observed.",
+    "hostedBusinessDataModified": false,
+    "credentialsModified": false,
+    "applicationSourceModified": false,
+    "vercelSettingsModified": false,
+    "allowlistModified": false,
+    "networkPolicyModified": false,
+    "captureControlPolicyModified": false,
+    "secretValuesRecorded": false,
+    "pushPerformed": false,
+    "deploymentPerformed": false
+  },
+  "historicalEvidence": {
+    "path": "docs/phase7-vercel-automated-access-evidence.json",
+    "sha256Unchanged": "eb902d467d76332894051ed2f3807bead33ddcdc0fda3bf1bd7f11d5d81f74cf",
+    "previousSuccessfulAuthenticationPreserved": true,
+    "previousDashboardIdentityPreserved": true,
+    "historicalNonfatalRecordsOverwritten": false,
+    "priorCaptureEvidenceUnchanged": true,
+    "separation": "This new sidecar records only the present attempt; authentication fatal evidence is null. Existing successful authentication/dashboard evidence and prior nonfatal/fatal evidence are not overwritten."
+  },
+  "p7Ci01": "PASS",
+  "p7Obs01": "BLOCKED",
+  "p7Obs01Classification": "EXTERNAL_PROVIDER_BLOCKED",
+  "nextAction": "Request LOCAL-ONLY design/review of an exact single-occurrence PRE_AUTHENTICATION blocked-but-nonfatal exception using the completed preauth metadata. Do not implement it, relabel evidence as authentication-phase, or perform another hosted run without separate authorization."
+}

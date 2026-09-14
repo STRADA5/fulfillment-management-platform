@@ -1,0 +1,2 @@
+supabase/migrations/*.sql text eol=lf
+docs/migration-manifest.sha256 text eol=lf

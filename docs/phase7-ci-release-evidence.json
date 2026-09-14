@@ -1,0 +1,244 @@
+{
+  "formatVersion": 1,
+  "gateId": "P7-CI-01",
+  "evidenceReference": "P7-CI-01-21D7FE7-20260913",
+  "status": "PASS",
+  "validatedAt": "2026-09-13T03:06:42.027Z",
+  "preservationVerifiedAt": "2026-09-13T03:08:23.321Z",
+  "candidate": {
+    "repository": "fulfillment-management-platform",
+    "branch": "codex/phase7-hosted-staging-preview",
+    "commit": "21d7fe78cba61f6f16a49a303a31efa2cf38285e",
+    "context": "clean isolated Windows validation checkout",
+    "headUnchanged": true,
+    "worktreeCleanBeforeAndAfter": true,
+    "evidenceRecordedOutsideValidatedCheckout": true,
+    "evidenceRecordingIsNotACandidateChange": true,
+    "candidateDeployedByThisValidation": false
+  },
+  "hostedIdentityBoundary": {
+    "currentPreviewUrl": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+    "deploymentId": "dpl_HNwQgTJB7oupc81kWJ197RY3o7jt",
+    "deployedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
+    "source": "config/phase7-acceptance.json targetIdentity.currentPreviewDeployment",
+    "hostedIdentityCheckPerformedByThisLocalRun": false,
+    "candidateCommitMustNotBeSubstitutedForDeployedCommit": true
+  },
+  "authoritativeRun": {
+    "formatVersion": 1,
+    "tool": "phase7-local-ci-release-candidate",
+    "status": "PASS",
+    "mandatoryGateCount": 11,
+    "gates": {
+      "typecheck": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "lint": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "productionBuild": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "securityRegression": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "phase6Authorization": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "phase7ReleaseIdentity": {
+        "status": "PASS",
+        "reason": "local-release-identity-validated",
+        "deploymentIdentity": "NOT_RUN",
+        "expectedCommitProvided": true
+      },
+      "phase7Acceptance": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "phase7MigrationRecovery": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "phase7Observability": { "status": "PASS", "reason": "command-exited-zero", "exitCode": 0 },
+      "secretScan": { "status": "PASS", "reason": "no-secret-like-values-detected", "filesScanned": 228 },
+      "artifactIdentity": {
+        "status": "PASS",
+        "reason": "build-artifact-identity-recorded",
+        "buildIdDigest": "bc2dac2c5a85651a7e12a4801619562b0cdfea933b35e4aff3a27acbd9a5180f",
+        "buildIdLength": 21
+      }
+    },
+    "policy": {
+      "localOnly": true,
+      "networkRequired": false,
+      "productionTargetsAllowed": false,
+      "automaticFixtureCleanup": false,
+      "blockedOrNotRunCannotPass": true
+    }
+  },
+  "runnerProvenance": {
+    "implementation": "tools/run-phase7-local-ci.mjs at the validated candidate",
+    "entryPoint": "buildEvidence",
+    "expectedCommit": "21d7fe78cba61f6f16a49a303a31efa2cf38285e",
+    "expectedBranch": "codex/phase7-hosted-staging-preview",
+    "localAdapter": "Capture npm subprocess output for redaction and stop on the first nonzero gate; retain the authoritative commands, working directory, environment, assertions, and aggregate rules.",
+    "candidateRunnerModified": false,
+    "buildCommand": "cmd.exe /d /s /c npm.cmd run build",
+    "packageBuildTask": "next build"
+  },
+  "supplementalEvidence": {
+    "targetSafety": {
+      "status": "PASS",
+      "scope": "local CI prerequisites, not a new hosted P7-TGT-01 run",
+      "apiHost": "127.0.0.1",
+      "apiPort": 54321,
+      "databaseHost": "127.0.0.1",
+      "databasePort": 54322,
+      "dockerProject": "fulfillment-management-platform",
+      "apiContainer": "supabase_kong_fulfillment-management-platform",
+      "databaseContainer": "supabase_db_fulfillment-management-platform",
+      "explicitLoopbackBindingsVerified": true,
+      "containersHealthyBeforeBuildAndCi": true,
+      "childEnvironmentRestrictedToLocalTargets": true,
+      "hostedConfigurationConsumed": false,
+      "receipt": "P7-CI-LOCAL-TARGET-RECEIPT"
+    },
+    "releaseIdentity": {
+      "status": "PASS",
+      "repositoryMatches": true,
+      "branchMatches": true,
+      "commitMatches": true,
+      "worktreeClean": true,
+      "version": "0.1.0",
+      "hostedDeploymentIdentity": "NOT_RUN",
+      "receipt": "P7-CI-LOCAL-RELEASE-RECEIPT"
+    },
+    "migrationManifest": {
+      "status": "PASS",
+      "path": "docs/migration-manifest.sha256",
+      "migrationCount": 25,
+      "setDigest": "ed8e928bccf6afbc6a7ac8558674874eb54fb6af017d12a5e56dac291d26a2ff",
+      "manifestDigest": "ed8e928bccf6afbc6a7ac8558674874eb54fb6af017d12a5e56dac291d26a2ff",
+      "firstMigration": "20260819010000_phase1_identity_and_tenancy.sql",
+      "lastMigration": "20260914010000_phase7_warehouse_shipping_view.sql",
+      "historicalMigrationsModified": false,
+      "receipt": "P7-CI-LOCAL-RELEASE-RECEIPT"
+    },
+    "windowsLinuxMaterialization": {
+      "status": "PASS",
+      "corroboratedAt": "2026-09-13T03:15:26.428Z",
+      "method": "Read-only SHA-256 comparison of immutable candidate Git blobs, the Windows candidate files, and the existing Linux Git-archive materialization.",
+      "fileCount": 27,
+      "migrationCount": 25,
+      "additionalFiles": ["docs/migration-manifest.sha256", ".gitattributes"],
+      "byteHashDifferences": 0,
+      "linuxApplicationBuildClaimed": false,
+      "databaseQueriesExecutedByCorroboration": false,
+      "receipt": "P7-CI-MATERIALIZATION-RECEIPT"
+    },
+    "authorizationTenantIsolation": {
+      "status": "PASS",
+      "commands": ["npm.cmd run test:security:local", "npm.cmd run test:auth:phase6"],
+      "scope": "existing local security/RLS regression suites and local isolated-browser route authorization",
+      "receipts": ["P7-CI-SECURITY-RECEIPT", "P7-CI-PHASE6-AUTH-RECEIPT"]
+    },
+    "phase6Authorization": {
+      "status": "PASS",
+      "earlierFailureReproduced": false,
+      "test": "tests/phase6/salespeople-route-authorization.mjs",
+      "receipt": "P7-CI-PHASE6-AUTH-RECEIPT"
+    },
+    "authenticationSessionPreservation": {
+      "status": "PASS",
+      "basis": "The unchanged Phase 6 browser regression authenticates isolated Client, STAFF, and ADMIN contexts; authorized STAFF/ADMIN retain authentication across protected routes including /reports, while unauthorized client route access is denied.",
+      "newHostedRoleValidationPerformed": false,
+      "receipt": "P7-CI-PHASE6-AUTH-RECEIPT"
+    },
+    "migrationRecovery": {
+      "status": "PASS",
+      "command": "npm.cmd run test:phase7:migration-recovery",
+      "scope": "local migration-recovery validator regression suite; not another recovery rehearsal"
+    },
+    "localObservability": {
+      "status": "PASS",
+      "command": "npm.cmd run test:phase7:observability",
+      "scope": "focused local observability validator tests only",
+      "closesProviderDependentReadiness": false
+    },
+    "buildArtifactIdentity": {
+      "status": "PASS",
+      "source": "authoritativeRun.gates.artifactIdentity",
+      "scope": "local build identifier digest and length; not a hosted deployment identity"
+    }
+  },
+  "dependencyMaterialization": {
+    "status": "PASS",
+    "method": "npm ci",
+    "registry": "registry.npmjs.org",
+    "alternateRegistryUsed": false,
+    "installedPackageCount": 379,
+    "installedIdentitiesMatchLockfile": true,
+    "lockMismatches": 0,
+    "playwrightCoreVersion": "1.51.1",
+    "nodeVersion": "v24.19.0",
+    "npmVersion": "11.17.0",
+    "isolatedNodeModulesRealDirectory": true,
+    "externalDependencyLinks": 0,
+    "packageJsonSha256": "932bb6c55014204a3925e8e8c7824791df23ffe4b0a6553027ac0cf4582cc1d5",
+    "packageLockSha256": "e5c17d132699d7209bd9b871de3de7ab42051baa8cf8c28ef7d7b6e59297bb73",
+    "packageFilesUnchanged": true,
+    "versionsUpgraded": false,
+    "globalPackagesModified": false,
+    "installScriptApprovalsChanged": false,
+    "localCorrections": [
+      "Use the native Windows cmd.exe executable path in the external runner.",
+      "Remove only the isolated dependency junction; preserve its operator-workspace target.",
+      "Materialize lockfile-pinned dependencies inside the isolated candidate after official-registry retrieval of missing cached artifacts."
+    ],
+    "receipt": "P7-CI-DEPENDENCY-RECEIPT"
+  },
+  "preservation": {
+    "applicationSourceModifiedToAchievePass": false,
+    "candidateTestsOrAcceptanceCriteriaModifiedToAchievePass": false,
+    "packageFilesModified": false,
+    "historicalMigrationsModified": false,
+    "hostedDataModified": false,
+    "credentialsModified": false,
+    "operatorDependencyFiles": 31422,
+    "operatorDependencyBytes": 832391010,
+    "operatorDependencyFingerprintSha256": "c205c5a001c4ce84806f98e4c2fc6b84af7e3f563e8c15af00f2e1dc3e1f0714",
+    "operatorDependencyFingerprintUnchanged": true,
+    "originalOperatorFiles": 237,
+    "originalOperatorFilesUnchangedDuringCi": 237,
+    "temporaryOperatorArtifactsIncludedInCandidate": false,
+    "rawTemporaryArtifactsCopiedIntoThisEvidence": false,
+    "pushPerformed": false,
+    "deploymentPerformed": false,
+    "productionContacted": false,
+    "receipt": "P7-CI-FINAL-AUDIT-RECEIPT"
+  },
+  "receiptProvenance": [
+    { "id": "P7-CI-AUTHORITATIVE-RECEIPT", "sha256": "35d4e6628cc42d0e960f076d1f28f1082cfb6e9a8d5e9c164be95b53c5255c0d", "content": "Unchanged authoritative CI aggregate reproduced in authoritativeRun." },
+    { "id": "P7-CI-FINAL-AUDIT-RECEIPT", "sha256": "d38b58c82ef4f9191fa454cd7d4f8dc8d1331baf2929f4aa457d93ab89ba0e5d", "content": "Final clean-candidate, package, operator-file and dependency-fingerprint verification." },
+    { "id": "P7-CI-DEPENDENCY-RECEIPT", "sha256": "2c2899746cf9794089d586ec17eafba3850c5c44f664b46fb557694f15bbc0f0", "content": "Successful locked install, exact versions, isolated resolution and official-registry-only retrieval." },
+    { "id": "P7-CI-LOCAL-RELEASE-RECEIPT", "sha256": "c378d42eb1268da44a8afc03c1f1f48b7ee2bc9a1781b1cb5cac08dbe3db4c0e", "content": "Candidate commit, branch, clean state, version and 25-migration manifest validation; hosted deployment identity NOT_RUN." },
+    { "id": "P7-CI-LOCAL-TARGET-RECEIPT", "sha256": "244c7b76d08cafdb90331ec1bb481eb94dead1137998818d1d4a8a8c924fab5b", "content": "Preserved local data and explicit repository-local loopback bindings, rechecked before build and CI." },
+    { "id": "P7-CI-PHASE6-AUTH-RECEIPT", "sha256": "94316b98d446bf4fd9ac65c81aa62bd241e5188df30f7d417143ef77135ee116", "content": "Phase 6 route authorization exit 0, PASS, with no stderr." },
+    { "id": "P7-CI-SECURITY-RECEIPT", "sha256": "4dd64215b853a8cc28a052ae3cfddd9261063b0641c066f144e832f0344e142e", "content": "Complete local security regression suites passed." },
+    { "id": "P7-CI-MATERIALIZATION-RECEIPT", "sha256": "5287e3633cf3dc612834c4a7150431f8af74821334231d779e2481d9022110e8", "content": "All 27 compared Windows/Linux/immutable-Git file hashes match." }
+  ],
+  "remainingLaunchCriticalGates": [
+    {
+      "id": "P7-OBS-01",
+      "status": "BLOCKED",
+      "classification": "EXTERNAL_PROVIDER_BLOCKED",
+      "evidenceReference": "docs/phase7-observability-evidence.json",
+      "existingPassingEvidencePreserved": true,
+      "otherRecordedConfigurationGapsRemainOpen": true,
+      "ciPassDoesNotCloseThisGate": true
+    },
+    {
+      "id": "P7-BLOCK-VERCEL-AUTOMATION-BYPASS",
+      "status": "BLOCKED",
+      "classification": "hosted-automated-browser-access-not-proven",
+      "existingRunnerPinnedPreviewUrl": "https://fulfillment-management-platform-5uxw6i3a.vercel.app",
+      "currentRecordedPreviewUrl": "https://fulfillment-management-platform-j4ntvrkrz.vercel.app",
+      "manualSixRoleEvidenceRemainsPass": true,
+      "manualEvidenceProvesAutomatedProtectionAccess": false,
+      "localBrowserTestsProveHostedProtectionAccess": false,
+      "closureRequirement": "Separately authorize reconciliation of the hosted runner to the exact current approved Preview and an approved non-production automation access path; validate target/configuration rejection guards, then record a successful protected automated-browser application access/authenticated-route result for that same deployment with Deployment Protection and Production safeguards unchanged. Retain the existing six-role manual evidence; do not relabel it as an automated run.",
+      "vercelConfigurationChanged": false,
+      "hostedValidationPerformedInThisRecordingTask": false
+    }
+  ],
+  "finalReleaseAcceptance": {
+    "launchReadyDeclared": false,
+    "releaseOwnerSignoffPendingRemainingGateClosure": true,
+    "additionalFeatureGateInvented": false,
+    "tenantBrand01ImplementedOrMadeALaunchBlocker": false
+  }
+}

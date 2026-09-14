@@ -26,6 +26,121 @@ The mismatch and no-network tests run with `npm.cmd run test:phase7:release`. Th
 
 Run `npm.cmd run test:phase7:ci` for aggregation and fail-closed behavior tests. The full candidate command is `node tools/run-phase7-local-ci.mjs`; its JSON output records only safe gate statuses, exit categories, manifest/release metadata from the existing evidence tool, and a digest/length for the local build identifier. A nonzero command, stale fixture failure, unreadable evidence, dirty worktree, release mismatch, missing artifact, `BLOCKED`, or `NOT_RUN` result prevents an overall `PASS`. The local CI gate does not claim hosted deployment identity; that remains a separate hosted acceptance gate.
 
+### Completed P7-CI-01 evidence — candidate 21d7fe7
+
+Evidence reference: `P7-CI-01-21D7FE7-20260913`, recorded in
+[`docs/phase7-ci-release-evidence.json`](phase7-ci-release-evidence.json).
+The authoritative run completed at `2026-09-13T03:06:42.027Z` with all **11/11
+mandatory gates PASS**, against exactly
+`21d7fe78cba61f6f16a49a303a31efa2cf38285e` on
+`codex/phase7-hosted-staging-preview`. The isolated candidate was clean before and
+after validation. This evidence is written outside that checkout: it does not
+change the candidate, claim the operator evidence worktree was validated, or
+substitute its HEAD for the validated SHA.
+
+The unchanged runner's `buildEvidence` implementation supplied the aggregate. A
+temporary external adapter captured/redacted subprocess output and stopped on
+nonzero results without changing package tasks, assertions, or acceptance rules.
+The production command remained `cmd.exe /d /s /c npm.cmd run build` (`next build`).
+
+| Recorded check | Result and scope |
+| --- | --- |
+| Target safety | PASS — repository-local Docker/Supabase, API `127.0.0.1:54321`, PostgreSQL `127.0.0.1:54322`, healthy containers and local-only child environment. |
+| Release identity | PASS — exact candidate, branch, clean worktree and version `0.1.0`; this local run's hosted deployment check remains NOT_RUN. |
+| Migration/manifest | PASS — 25 locked migrations; matching set/manifest digest `ed8e928bccf6afbc6a7ac8558674874eb54fb6af017d12a5e56dac291d26a2ff`. |
+| Windows/Linux materialization | PASS — identical immutable Git, Windows and existing Linux archive hashes for 25 migrations, the manifest and `.gitattributes` (27 files); not a Linux application-build claim. Read-only corroboration at `2026-09-13T03:15:26.428Z` made no database queries. |
+| Typecheck, lint, production build | PASS individually. |
+| Authorization/tenant isolation | PASS — complete local security regressions and the Phase 6 browser authorization suite. |
+| Phase 6 authorization and auth/session preservation | PASS — isolated local Client/STAFF/ADMIN checks, protected route boundaries and authorized reporting; the earlier Phase 6 failure did not reproduce. |
+| Migration/recovery and local observability | PASS — existing local validator regression suites; not a new rehearsal or provider operational-readiness result. |
+| Secret scan and build-artifact identity | PASS — 228 candidate files scanned; final local build identifier length 21, SHA-256 `bc2dac2c5a85651a7e12a4801619562b0cdfea933b35e4aff3a27acbd9a5180f`. |
+
+The local-only corrections were a native Windows command executable path and
+locked dependency materialization inside the isolated candidate. `npm ci` retrieved
+only existing lockfile-pinned artifacts from `registry.npmjs.org`; 379 installed
+package identities matched the lockfile, including `playwright-core` **1.51.1**.
+The resulting `node_modules` is a real directory with no external dependency links.
+No dependency versions or install-script approvals were changed. No application
+source, package files, historical migrations, candidate tests/acceptance rules,
+hosted data or credentials were changed to achieve PASS. All 237 original operator
+files and the complete original dependency fingerprint were unchanged after CI.
+Only redacted metadata and receipt digests are included here, not temporary
+helpers, installation trees, raw logs or operator artifacts. This recording step
+edits evidence only; it makes no commit, push or deployment.
+
+The deployed Preview remains separately identified as
+`https://fulfillment-management-platform-j4ntvrkrz.vercel.app`,
+`dpl_HNwQgTJB7oupc81kWJ197RY3o7jt`, application commit
+`213a2cea3ebf2435d138b201de0a5883e8d8d4e0`. Candidate `21d7fe7` was not deployed by
+this validation. Earlier pending-CI references are historical and superseded only
+for P7-CI-01; they do not override this candidate-scoped record.
+
+### Remaining launch-critical gates after local CI PASS
+
+1. **P7-OBS-01 remains BLOCKED — EXTERNAL_PROVIDER_BLOCKED.** Preserve
+   [`docs/phase7-observability-evidence.json`](phase7-observability-evidence.json)
+   and its passing sub-evidence. Provider availability, the unavailable Supabase
+   access/retention/private-configuration checks, and all other recorded routing,
+   suppression, retention and review requirements must be verified before PASS.
+   Local observability tests do not close this operational gate.
+2. **P7-BLOCK-VERCEL-AUTOMATION-BYPASS remains open; latest bounded verification: FAIL.**
+   The Release Owner supplied fresh authenticated-dashboard confirmation of
+   `This project` with the rule "All tokens can access matching environments,
+   development tokens can access preview". This satisfies the prior manual
+   reconfirmation requirement; an absent API field is not required to duplicate it.
+   The single authorized run at `2026-09-14T04:03:51.1330749Z` through
+   `2026-09-14T04:04:26.4783268Z` passed live immutable identity, fresh development
+   OIDC, Deployment Protection, unauthenticated protection and application login
+   access. Exactly one Salesperson A authentication **passed**, reaching
+   `/dashboard` and verifying the exact approved account email. The runner then
+   stopped at `SALESPERSON_A_IDENTITY` with `OFF_TARGET_REQUEST_BLOCKED` (exit 1).
+   The refused destination and its original occurrence time are not established
+   by the existing redacted output. No application or credential defect is inferred.
+   Salesperson-record/tenant/client validation, `/salespeople` to `/reports`
+   session preservation, bounded denials and the final provider-settings comparison
+   remain unproven. No retry, repair, guard change, business-data mutation,
+   credential change or Production access occurred. The 67 local target/proxy
+   regressions passed; runner and launcher hashes remained unchanged.
+
+   Historical preflight (superseded by the fresh operator confirmation):
+   At `2026-09-14T03:33:33.180Z`, fixed read-only Vercel control-plane lookups
+   verified the current canonical Preview, project/team, deployment, commit,
+   READY/non-production state, Production-alias exclusion and enabled Deployment
+   Protection. The existing exact `POST /login` target policy also passed.
+   The project API does not expose Trusted Sources, and no authenticated dashboard
+   tab was available to independently confirm the previously approved rule remains
+   unchanged. An absent `trustedSources` property, including equal hashes of
+   `null`, is not proof of an unchanged rule. The final bounded attempt stopped
+   before fresh OIDC acquisition, Preview requests, credential retrieval or login.
+   Authentication/session/denial checks are NOT_RUN, not application failures.
+   Fresh authenticated operator/dashboard confirmation was then required; no Vercel
+   configuration change is indicated or authorized. The 67 offline target/proxy
+   safety checks passed. Existing capture, manual-role and CI evidence is preserved.
+
+   Historical bounded-run evidence follows; it is not the latest attempt:
+   The stale `5uxw6i3a` runner pin recorded at the local CI checkpoint has since
+   been reconciled in separately scoped operator-workspace tooling, without
+   changing the validated candidate. The authorized 2026-09-13 bounded run on
+   current Preview `j4ntvrkrz` passed live immutable identity, fresh development
+   OIDC, unauthenticated protection, and authorized application `/login` access.
+   It then stopped at `SALESPERSON_A_AUTHENTICATION` with
+   `OFF_TARGET_REQUEST_BLOCKED`. The refused destination was not recorded;
+   neither a credential defect nor an application defect is established.
+   Authentication success, session/isolation checks and the final protection
+   comparison are not proven. Redacted evidence and limitations are recorded in
+   [`phase7-vercel-automated-access-evidence.json`](phase7-vercel-automated-access-evidence.json).
+   No retry, repair, Vercel configuration change or Production request occurred.
+   Diagnose the refused request only under separate authorization; do not weaken
+   the guard or relabel prior manual six-role evidence as automated evidence.
+
+The previously completed six-role and recovery results are not reopened by this
+local-only correction. No third technical gate or TENANT-BRAND-01 feature is added.
+Final release-owner acceptance remains pending closure of the two blockers above;
+local CI PASS is not a declaration of launch readiness. The next redacted
+request-target diagnostic can advance independently of unavailable Supabase
+operator controls; runner changes, retries or configuration changes require
+separate authorization.
+
 ## Synthetic role matrix
 
 The matrix is intentionally ordered and matches the Phase 6 hosted definitions:

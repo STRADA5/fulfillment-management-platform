@@ -4,17 +4,27 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { STATUS, validateObservabilityEvidence } from "../../tools/validate-phase7-observability-evidence.mjs";
+import { readLocalMigrationIdentity } from "../../tools/validate-phase7-migration-recovery-evidence.mjs";
 
 const toolPath = join(process.cwd(), "tools", "validate-phase7-observability-evidence.mjs");
 const tempPath = join(tmpdir(), `phase7-observability-${process.pid}.json`);
-const manifestDigest = "20e3b42fa2ff449f6155bfc43b64f3fa80ab7d8037f6b1da19176204af39804a";
-const policy = { approvedStagingProject: "nftufhffzlokryafcbku", currentSchemaIdentity: "schema-phase7-23", currentMigrationManifestDigest: manifestDigest };
+const config = JSON.parse(await readFile("config/phase7-acceptance.json", "utf8"));
+const identity = await readLocalMigrationIdentity(process.cwd(), config.releaseIdentity.migrationManifest);
+assert.equal(identity.matches, true, "Local migrations must match the established manifest");
+assert.equal(identity.manifestDigest, config.releaseIdentity.currentMigrationManifestDigest, "Manifest must match approved release evidence");
+assert.equal(config.releaseIdentity.currentSchemaIdentity, `schema-phase7-${identity.count}`, "Schema evidence must match the migration count");
+const manifestDigest = identity.manifestDigest;
+const policy = {
+  approvedStagingProject: config.targetIdentity.approvedSupabaseProjectReference,
+  currentSchemaIdentity: config.releaseIdentity.currentSchemaIdentity,
+  currentMigrationManifestDigest: manifestDigest,
+};
 const source = () => ({ status: STATUS.PASS, availabilityVerified: true, accessControlled: true, retentionReviewed: true, redactionReviewed: true, sensitiveValuesExcluded: true, evidenceReference: "P7-OBS-SOURCE-001" });
 const baseEvidence = {
   gateId: "P7-OBS-01",
   status: STATUS.PASS,
   target: { environment: "local-disposable", identity: "local-observability-fixture", approved: true, productionTarget: false },
-  releaseIdentity: { status: STATUS.PASS, expectedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", observedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", version: "0.1.0", schemaIdentity: "schema-phase7-23", migrationManifestDigest: manifestDigest, verified: true },
+  releaseIdentity: { status: STATUS.PASS, expectedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", observedCommit: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", version: "0.1.0", schemaIdentity: policy.currentSchemaIdentity, migrationManifestDigest: manifestDigest, verified: true },
   sources: { applicationLogs: source(), supabaseLogs: source(), auditLogs: source() },
   alerts: { status: STATUS.PASS, routingVerified: true, redactionReviewed: true, testNotificationSuppressed: true, requiredSignals: Object.fromEntries(["authFailures", "serverErrors", "databaseErrors", "auditWriteFailures", "migrationFailures", "backupFailures", "queueFailures", "securityEvents"].map((key) => [key, true])) },
   authorization: { status: "AUTHORIZED", operatorRole: "observability-operator", operatorId: "P7-OPERATOR-001", approverRole: "observability-approver", approverId: "P7-APPROVER-001", approvedAt: "2026-01-01T00:02:00.000Z" },
@@ -32,6 +42,14 @@ assert.equal(valid.status, STATUS.PASS);
 assert.equal(valid.valid, true);
 assert.equal(valid.sourceCount, 3);
 assert.doesNotMatch(safeJson(valid), /(?:password|secret|token|cookie|credential|https?:\/\/)/i);
+
+const staleManifest = clone(baseEvidence);
+staleManifest.releaseIdentity.migrationManifestDigest = "0".repeat(64);
+assert.equal((await validate(staleManifest)).reason, "release-identity-invalid");
+
+const staleSchema = clone(baseEvidence);
+staleSchema.releaseIdentity.schemaIdentity = "schema-phase7-23";
+assert.equal((await validate(staleSchema)).reason, "release-identity-invalid");
 
 const missingSource = clone(baseEvidence);
 delete missingSource.sources.supabaseLogs;

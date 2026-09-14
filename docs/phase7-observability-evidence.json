@@ -1,0 +1,581 @@
+{
+  "gateId": "P7-OBS-01",
+  "status": "BLOCKED",
+  "collectedOn": "2026-09-12",
+  "externalProviderBlocker": {
+    "evidenceReference": "P7-OBS-SUPABASE-PROVIDER-BLOCK-20260912",
+    "classification": "EXTERNAL_PROVIDER_BLOCKED",
+    "status": "BLOCKED",
+    "scope": "unresolved-Supabase-dependent-P7-OBS-01-verification-only",
+    "observedAt": "2026-09-12T23:44:09Z",
+    "provider": "Supabase",
+    "projectName": "fulfillment-management-platform",
+    "projectReference": "nftufhffzlokryafcbku",
+    "environment": "non-production-staging",
+    "publicIncident": {
+      "title": "401 errors due to JWT rejections",
+      "statusPageHost": "status.supabase.com",
+      "incidentPath": "/incidents/6q5902p2xd9f",
+      "activeAtObservation": true,
+      "latestPublishedUpdateAt": "2026-09-11T23:41:00Z",
+      "affectedComponent": "API Gateway",
+      "latestUpdateSummary": "Regional remediation rollout and monitoring remain in progress.",
+      "dashboardComponentStatusAtObservation": "OPERATIONAL",
+      "publicStatusReadOnlyRequestPerformed": true
+    },
+    "operatorObservation": {
+      "source": "release-owner-report-in-current-task",
+      "projectDashboardState": "Coming up...",
+      "requiredConfigurationControls": "UNAVAILABLE_OR_DISABLED",
+      "independentlyReproducedByAgent": false,
+      "exactCausalLinkToPublicIncident": "UNVERIFIED"
+    },
+    "blockedVerification": [
+      "staging-Supabase-log-access",
+      "actual-staging-Supabase-retention",
+      "private-provider-account-email-phone-configuration-inspection",
+      "remaining-Supabase-dependent-P7-OBS-01-operational-checks"
+    ],
+    "applicationDefectIndicated": false,
+    "existingPassingEvidencePreserved": true,
+    "otherConfigurationGapsRemainOpen": true,
+    "readinessPassGranted": false,
+    "hostedProjectActionPerformed": false,
+    "productionContacted": false,
+    "resumeConditions": [
+      "provider-availability-and-approved-project-controls-positively-reverified-read-only",
+      "previously-unavailable-access-retention-and-private-configuration-checks-completed-with-redacted-evidence",
+      "all-original-P7-OBS-01-requirements-and-independent-review-satisfied-before-PASS"
+    ],
+    "nextIndependentGate": {
+      "id": "P7-CI-01",
+      "status": "NOT_RUN",
+      "canAdvanceIndependently": true,
+      "initialScope": "local-candidate-safety-preflight-and-focused-CI-aggregation-tests",
+      "focusedCommand": "npm.cmd run test:phase7:ci",
+      "fullRunner": "tools/run-phase7-local-ci.mjs",
+      "fullRunPreconditions": [
+        "exact-candidate-commit-and-evidence-identity-reviewed",
+        "clean-isolated-candidate-context-with-operator-files-preserved-and-helpers-excluded",
+        "child-process-environment-and-database-test-target-verified-local-only",
+        "local-Docker-Supabase-prerequisites-verified-before-database-suites"
+      ],
+      "hostedProviderControlsRequiredForLocalTests": false,
+      "ciPassWouldCloseObservabilityGate": false
+    }
+  },
+  "policyApproval": {
+    "status": "APPROVED",
+    "authorityRole": "Release Owner",
+    "evidenceReference": "P7-OBS-POLICY-OWNER-20260912",
+    "recordedAt": "2026-09-12T18:26:55Z",
+    "scope": "policy-and-documentation-only",
+    "implementationProven": false,
+    "providerConfigurationAuthorized": false,
+    "unknownExpenditureAuthorized": false,
+    "newExternalServiceAuthorized": false,
+    "readinessPassAuthorizedWithoutEvidence": false
+  },
+  "staffingDesignation": {
+    "status": "DESIGNATED_BY_RELEASE_OWNER",
+    "evidenceReference": "P7-OBS-STAFFING-OWNER-20260912",
+    "recordedAt": "2026-09-12T18:43:26Z",
+    "source": "release-owner-private-designation-in-current-task",
+    "releaseOwnerPersonReference": "P7-OBS-PERSON-001",
+    "primaryPersonReference": "P7-OBS-PERSON-001",
+    "secondaryPersonReference": "P7-OBS-PERSON-002",
+    "distinctPrimaryAndSecondaryAttested": true,
+    "independentReviewPerformed": false,
+    "publicRecordUsesRoleDesignationsOnly": false,
+    "publicRecordIncludesOwnerApprovedNames": true,
+    "releaseOwnerName": "Shane Holmes",
+    "primaryName": "Shane Holmes",
+    "secondaryName": "Kale Meyer",
+    "privateChannelStatus": "PRIVATE CONTACT CHANNEL TO BE CONFIGURED OUTSIDE PUBLIC REPOSITORY EVIDENCE",
+    "privateChannelsVerified": false
+  },
+  "configurationAuthorization": {
+    "evidenceReference": "P7-OBS-STAFFING-OWNER-20260912",
+    "scope": "existing-approved-cost-bounded-non-production-observability-only",
+    "configurationAuthorizedWithinScope": true,
+    "knownCostRequired": true,
+    "verifiedNonProductionSeparationRequired": true,
+    "verifiedPrivateDestinationRequired": true,
+    "unknownExpenditureAuthorized": false,
+    "newExternalServiceAuthorized": false,
+    "providerWritesPerformed": false,
+    "testNotificationsSent": false,
+    "remainingPreconditions": ["verified-private-destinations", "verified-preview-only-rule-scope", "verified-per-signal-detection-and-cost-boundaries"]
+  },
+  "alertCenterArchitecture": {
+    "evidenceReference": "P7-OBS-ALERT-CENTER-OWNER-20260912",
+    "status": "APPROVED_FOR_IMPLEMENTATION_PLANNING",
+    "currentExecutionScope": "provider-capability-discovery-and-evidence-only",
+    "implemented": false,
+    "providerConfigurationChanged": false,
+    "deliveryTestsPerformed": false,
+    "persistentRecordBeforeDeliveryRequired": true,
+    "allOperationalAlertsRequireDashboardRecord": true,
+    "channels": {
+      "dashboard": "MANDATORY",
+      "email": "MANDATORY_FOR_CRITICAL_AND_HIGH",
+      "sms": "DESIRED_FOR_CRITICAL_AND_HIGH_ONLY_IF_EXISTING_APPROVED_KNOWN_COST",
+      "smsOptionalForInitialPreview": true
+    },
+    "lifecycle": ["NEW", "DELIVERED", "VIEWED", "ACKNOWLEDGED", "INVESTIGATING", "RESOLVED"],
+    "transitionEvidence": {
+      "auditableTimestampRequired": true,
+      "actorIdentityRequiredWhereApplicable": true,
+      "perRecipientAndChannelDeliveryHistoryRequired": true,
+      "viewIsNotAcknowledgement": true,
+      "channelFailureMustNotDeletePersistentAlert": true,
+      "unprovenDeliveryMustNotBeMarkedDelivered": true
+    },
+    "critical": {
+      "immediateDashboardRequired": true,
+      "immediatePrimaryEmailRequired": true,
+      "primaryPersonReference": "P7-OBS-PERSON-001",
+      "smsWhenConfigured": true,
+      "acknowledgementMinutes": 15,
+      "unacknowledgedEscalationMinutes": 15,
+      "escalationPersonReference": "P7-OBS-PERSON-002",
+      "escalationDashboardAndEmailRequired": true,
+      "escalationSmsWhenConfigured": true,
+      "primaryAlertRetainedAfterEscalation": true,
+      "bothPlatformAdministratorsRetainVisibility": true,
+      "prominentlyActiveUntilResolved": true,
+      "resolutionActorTimestampAndNoteRequired": true,
+      "securityIsolationAndIntegrityMustNeverBeSilentlySuppressed": true
+    },
+    "high": {
+      "immediateDashboardRequired": true,
+      "primaryEmailRequired": true,
+      "primaryPersonReference": "P7-OBS-PERSON-001",
+      "smsWhenConfigured": true,
+      "acknowledgementMinutes": 30,
+      "unacknowledgedEscalationMinutes": 30,
+      "escalationPersonReference": "P7-OBS-PERSON-002",
+      "escalationDashboardAndEmailRequired": true,
+      "escalationSmsWhenConfigured": true,
+      "primaryAlertRetainedAfterEscalation": true,
+      "completeAcknowledgementAndEscalationHistoryRequired": true,
+      "activeUntilResolved": true
+    },
+    "medium": {
+      "persistentDashboardRequired": true,
+      "operatorEmailOrNotificationPerApprovedRouting": true,
+      "acknowledgementBusinessHours": 4,
+      "emergencySmsRequired": false,
+      "businessHoursCalendar": "OPERATOR_CONFIGURATION_PENDING"
+    },
+    "lowInformational": {
+      "dashboardAndLogVisibilityRequired": true,
+      "immediateEmailOrSmsRequired": false,
+      "emergencyAcknowledgementRequired": false
+    },
+    "duplicateSuppression": {
+      "groupSameUnderlyingIncident": true,
+      "retainedFields": ["firstOccurrence", "latestOccurrence", "occurrenceCount", "severity", "affectedComponent", "affectedTenantWhereApplicable"],
+      "mustNotHide": ["newCriticalCondition", "differentAffectedTenant", "severityIncrease", "newSecurityBoundaryFailure", "newDataIntegrityFailure"],
+      "numericGroupingWindowApproved": false
+    },
+    "testControls": {
+      "administratorOnly": true,
+      "plannedControls": ["TEST_DASHBOARD_ALERT", "TEST_EMAIL_ALERT", "TEST_SMS_ALERT"],
+      "requiredLabels": ["TEST", "NON_PRODUCTION"],
+      "deliveryAndResultEvidenceRequired": true,
+      "productionTargetsAllowed": false,
+      "unnecessaryEmergencyEscalationAllowed": false,
+      "separateSuppressedTestEvidenceRequired": true,
+      "smsTestUnavailableUntilApprovedBindingVerified": true
+    },
+    "alertCenterViews": ["Active", "MyAlerts", "Unacknowledged", "Critical", "High", "Investigating", "Resolved"],
+    "alertCenterCapabilities": ["search", "tenantFilter", "componentFilter", "severityFilter", "acknowledgement", "investigationAssignment", "resolution", "completeHistoryAndAuditTrail"],
+    "isolation": {
+      "tenantAdministratorsOnlySeeExplicitlyIntendedTenantAlerts": true,
+      "platformAdministratorsSeePlatformWideAlertsAccordingToAuthorization": true,
+      "secondaryReviewerPlatformRole": "SUPER_ADMIN",
+      "secondaryReviewerOnlyRestrictionPermitted": false,
+      "immutableSystemSafeguardsPreserved": true,
+      "unrelatedTenantOperationalAndSecurityDisclosureProhibited": true,
+      "previewProductionSeparationRequired": true
+    },
+    "designRisksRequiringImplementationReview": ["durable-ingestion-when-primary-database-is-unavailable", "delivery-versus-view-versus-acknowledgement-semantics", "private-sender-and-recipient-bindings", "known-cost-worker-and-timer-capability"]
+  },
+  "providerCapabilityDiscovery": {
+    "evidenceReference": "P7-OBS-PROVIDER-DISCOVERY-20260912",
+    "status": "PARTIAL_HOSTED_ACCOUNT_VERIFICATION_REQUIRED",
+    "scope": "repository-configuration-existing-redacted-evidence-and-public-provider-documentation",
+    "liveProviderAccountLookupPerformedThisStep": false,
+    "repositoryOperationalEmailAdapterFound": false,
+    "repositoryLocalOutboxIsSimulationOnly": true,
+    "repositoryLocalMailCaptureEnabled": true,
+    "repositoryCustomSmtpConfigurationActive": false,
+    "repositorySmsProviderEnabled": false,
+    "matchingSenderSettingNameCountInCheckedLocalFilesAndProcess": 0,
+    "settingValuesPrinted": false,
+    "hostedSmtpConfiguration": "UNABLE_TO_VERIFY",
+    "hostedSmsConfiguration": "UNABLE_TO_VERIFY",
+    "approvedOperationalEmailProvider": null,
+    "approvedOperationalSmsProvider": null,
+    "vercelNativeEmailAvailable": true,
+    "vercelNativeEmailCoversWholeAlertCenter": false,
+    "vercelViewMaySuppressNativeEmail": true,
+    "vercelSmsDocumentedScope": "SPEND_MANAGEMENT_ONLY",
+    "supabaseDefaultEmailScope": "AUTHENTICATION_TESTING_NOT_OPERATIONAL_ALERT_DISPATCH",
+    "supabaseCustomSmtpAndPhoneProvidersAreIntegrationPoints": true,
+    "supabaseGeneralOperationalDeliveryVerified": false,
+    "privateBindingsVerified": false,
+    "privateChannelStatus": "PRIVATE CONTACT CHANNEL TO BE CONFIGURED OUTSIDE PUBLIC REPOSITORY EVIDENCE",
+    "smsOptionalForInitialPreview": true,
+    "newServiceRequiredForDiscovery": false,
+    "newServiceConnected": false,
+    "deliveryPricingVerified": false,
+    "unknownCostAuthorized": false,
+    "nextAction": "OPERATOR_READ_ONLY_STAGING_PROVIDER_ACCOUNT_AND_EXISTING_SENDER_CAPABILITY_VERIFICATION"
+  },
+  "approvedPolicy": {
+    "retention": {
+      "vercelDays": 30,
+      "supabaseBasis": "actual-connected-staging-plan-only-after-positive-verification",
+      "supabaseActualDays": null,
+      "auditTargetMonths": 12,
+      "auditTenantScoped": true,
+      "auditAccessControlled": true,
+      "auditAppropriatelyRedacted": true,
+      "auditImplementationVerified": false
+    },
+    "severity": {
+      "CRITICAL": {
+        "conditions": ["security-boundary-failure", "cross-tenant-exposure", "authentication-or-security-infrastructure-failure", "material-data-integrity-failure", "application-wide-outage", "failed-recovery-threatening-service-integrity"],
+        "acknowledgementMinutes": 15,
+        "escalateUnacknowledgedAfterMinutes": 15,
+        "delivery": "actionable-alert"
+      },
+      "HIGH": {
+        "conditions": ["major-operational-failure", "repeated-order-or-fulfillment-processing-failure", "significant-shipping-or-integration-failure", "persistent-elevated-application-errors", "critical-background-process-failure"],
+        "acknowledgementMinutes": 30,
+        "escalateUnacknowledgedAfterMinutes": 30,
+        "delivery": "actionable-alert"
+      },
+      "MEDIUM": {
+        "conditions": ["isolated-operational-failure", "non-critical-integration-problem", "degraded-functionality-without-broad-outage", "actionable-warning"],
+        "acknowledgementBusinessHours": 4,
+        "escalationDeadline": null,
+        "delivery": "operator-notification-no-emergency-paging"
+      },
+      "LOW_INFORMATIONAL": {
+        "conditions": ["routine-information", "expected-operational-notice", "non-actionable-diagnostic"],
+        "immediateAcknowledgementRequired": false,
+        "review": "next-business-day-where-applicable",
+        "delivery": "primarily-logs-or-dashboard"
+      }
+    },
+    "suppression": {
+      "groupSameUnderlyingIncident": true,
+      "preventAlertFlooding": true,
+      "newCriticalSecurityEventMustRemainVisible": true,
+      "newCriticalTenantIsolationEventMustRemainVisible": true,
+      "newCriticalIntegrityEventMustRemainVisible": true,
+      "productionSeparationRequired": true,
+      "markTestsNonProduction": true,
+      "groupingWindowMinutes": null,
+      "implementationVerified": false
+    },
+    "ownership": {
+      "releaseOwner": "Release Owner",
+      "primaryRole": "Primary Operations Administrator",
+      "secondaryRole": "Secondary Reviewer",
+      "primaryResponsibility": "first-line-investigation-and-acknowledgement",
+      "secondaryResponsibility": "independent-review-escalation-backup-and-verification",
+      "releaseOwnerResponsibility": "final-escalation-and-release-promotion-decisions",
+      "distinctPrimaryAndSecondaryRequired": true,
+      "privateContactStatus": "PRIVATE CONTACT CHANNEL TO BE CONFIGURED OUTSIDE PUBLIC REPOSITORY EVIDENCE",
+      "primaryPersonVerified": true,
+      "secondaryPersonVerified": true,
+      "personVerificationBasis": "explicit-release-owner-designation-not-provider-account-verification",
+      "privateChannelsVerified": false,
+      "secondaryPlatformAuthorization": {
+        "requirementRecorded": true,
+        "governanceRole": "Secondary Reviewer",
+        "requiredPlatformAccess": "full-highest-supported-platform-administration",
+        "currentModelRole": "SUPER_ADMIN",
+        "immutableSafeguardsPreserved": true,
+        "reviewerOnlyRestrictionPermitted": false,
+        "platformAccountBindingVerified": false,
+        "permissionAssignmentVerified": false,
+        "permissionsChanged": false
+      }
+    },
+    "coverage": {
+      "previewStaffed24x7Required": false,
+      "requiredDuring": ["active-testing", "release-validation", "planned-operational-testing"],
+      "outsideCoverageCriticalReviewBeforeReleaseOrPromotion": true,
+      "businessHoursCalendar": null
+    },
+    "manualReview": {
+      "beforeEveryReleaseCandidateApproval": true,
+      "unresolvedHighAndCriticalBeforeAnyPromotion": true,
+      "periodicNoiseAndSuppressionReview": true,
+      "periodicAuditAccessReview": true,
+      "materialPolicyChangesRecordedInReleaseDocumentation": true,
+      "periodicInterval": null
+    }
+  },
+  "target": {
+    "environment": "non-production-staging",
+    "identity": "nftufhffzlokryafcbku",
+    "approved": true,
+    "productionTarget": false
+  },
+  "releaseIdentity": {
+    "status": "PASS",
+    "expectedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
+    "observedCommit": "213a2cea3ebf2435d138b201de0a5883e8d8d4e0",
+    "version": "0.1.0",
+    "schemaIdentity": "schema-phase7-25",
+    "migrationManifestDigest": "ed8e928bccf6afbc6a7ac8558674874eb54fb6af017d12a5e56dac291d26a2ff",
+    "verified": true,
+    "evidenceReference": "P7-RELEASE-CURRENT-PREVIEW-213A2CE"
+  },
+  "deployment": {
+    "host": "fulfillment-management-platform-j4ntvrkrz.vercel.app",
+    "id": "dpl_HNwQgTJB7oupc81kWJ197RY3o7jt",
+    "environment": "preview"
+  },
+  "sources": {
+    "applicationLogs": {
+      "status": "PASS",
+      "availabilityVerified": true,
+      "accessControlled": true,
+      "retentionReviewed": true,
+      "redactionReviewed": true,
+      "sensitiveValuesExcluded": true,
+      "evidenceReference": "P7-OBS-VERCEL-20260912"
+    },
+    "supabaseLogs": {
+      "status": "BLOCKED",
+      "availabilityVerified": true,
+      "accessControlled": true,
+      "retentionReviewed": false,
+      "redactionReviewed": true,
+      "sensitiveValuesExcluded": true,
+      "evidenceReference": "P7-OBS-LOCAL-DB-AUTH-20260912"
+    },
+    "auditLogs": {
+      "status": "BLOCKED",
+      "availabilityVerified": true,
+      "accessControlled": true,
+      "retentionReviewed": false,
+      "redactionReviewed": true,
+      "sensitiveValuesExcluded": true,
+      "evidenceReference": "P7-OBS-AUDIT-20260912"
+    }
+  },
+  "observations": {
+    "vercel": {
+      "successfulSampleCount": 100,
+      "successfulStatus": 200,
+      "wrongDeploymentOrEnvironmentCount": 0,
+      "timestampAndRequestIdPresentCount": 100,
+      "traceIdPresentCount": 0,
+      "successfulRoutes": ["/dashboard", "/library", "/reports", "/salespeople", "/shipping"],
+      "safeFailure": {
+        "timestamp": "2026-09-12T18:11:34.634Z",
+        "route": "/api/library/delivery",
+        "status": 400,
+        "requestIdPresent": true,
+        "databaseClientReached": false
+      },
+      "plan": "pro",
+      "observabilityEntitlementEnabled": true,
+      "disabledPlusProjectCount": 0,
+      "runtimeRetentionDays": 30
+    },
+    "localDatabase": {
+      "environment": "local-disposable",
+      "dockerContext": "desktop-linux",
+      "container": "supabase_db_fulfillment-management-platform",
+      "repositoryOwnershipVerified": true,
+      "diagnosticErrorsObserved": true,
+      "authorizationDenialSampleCount": 52,
+      "authorizationDenialTimestamp": "2026-09-12T07:57:13.667Z",
+      "dockerLoggingDriver": "json-file",
+      "perContainerRotationConfigured": false,
+      "durableRetentionPeriodVerified": false
+    },
+    "localAuth": {
+      "container": "supabase_auth_fulfillment-management-platform",
+      "existingStatuses": [200, 500],
+      "timestampComponentPathStatusAndRequestIdFieldsPresent": true,
+      "invalidLoginSampleObserved": false,
+      "auditEntryCount": 298
+    },
+    "localAudit": {
+      "eventCount": 203,
+      "actionCategoryTimestampPresentCount": 203,
+      "actorPresentCount": 63,
+      "rlsEnabled": true,
+      "readRequiresOrganizationAndAuditPermission": true,
+      "authenticatedDirectWriteAllowed": false,
+      "anonymousPrivateWriterExecutionAllowed": false,
+      "authenticatedPrivateWriterExecutionAllowed": false,
+      "existingOperationalActions": ["shipping.labels_created", "notification.internal_alert_created", "invoice.created"],
+      "outboxPendingCount": 16,
+      "outboxSentCount": 4,
+      "dashboardAlertCount": 3
+    },
+    "stagingAudit": {
+      "readStatus": 200,
+      "redactedSampleCount": 10,
+      "allSampleActorsPresent": true,
+      "latestTimestamp": "2026-09-12T04:48:12.839Z",
+      "existingActions": ["library.download", "calculator.personal_created", "calculator.source_linked"],
+      "hostedPolicyCatalogRequeried": false
+    },
+    "stagingLogAccessCheck": {
+      "evidenceReference": "P7-OBS-STAGING-ACCESS-CHECK-20260912",
+      "linkedProjectMatchesApproved": true,
+      "processManagementAuthorizationPresent": false,
+      "stagingManagementAuthorizationPresent": false,
+      "defaultCliAuthorizationFilePresent": false,
+      "nativeSupabaseEntryObserved": false,
+      "cliHelpCompleted": false,
+      "cliFailureCategory": "local-telemetry-file-not-writable",
+      "hostedManagementLookupExecuted": false,
+      "hostedLogQueryExecuted": false,
+      "accessStatus": "UNABLE_TO_VERIFY",
+      "actualRetentionStatus": "UNABLE_TO_VERIFY",
+      "includedQueryCostBoundaryVerified": false
+    },
+    "defaultVercelRule": {
+      "exists": true,
+      "ownerAutoSubscription": true,
+      "projectAdminAutoSubscription": true,
+      "action": "trigger",
+      "severityFilter": "medium-high",
+      "explicitNotificationDestinationCount": 0,
+      "previewOnlyFilterVerified": false,
+      "deliveryAcknowledgementVerified": false,
+      "recheckedAfterStaffingDesignation": true,
+      "readCommandExitCode": 0,
+      "acknowledgementTimerEvidencePresent": false,
+      "escalationTimerEvidencePresent": false,
+      "eightCategoryCoverageVerified": false,
+      "newRuleConfigured": false
+    },
+    "auditRetentionImplementationReview": {
+      "evidenceReference": "P7-OBS-RETENTION-CAPABILITY-20260912",
+      "environment": "local-disposable",
+      "container": "supabase_db_fulfillment-management-platform",
+      "localNamedPipeAndRepositoryContainerVerified": true,
+      "readOnlyTransactionUsed": true,
+      "auditTablePresent": true,
+      "rowSecurityEnabled": true,
+      "authenticatedSelectAllowed": true,
+      "authenticatedInsertAllowed": false,
+      "authenticatedUpdateAllowed": false,
+      "authenticatedDeleteAllowed": false,
+      "repositoryAuditAgeLimitFound": false,
+      "repositoryAuditPurgeJobFound": false,
+      "localPgCronPresent": false,
+      "localEventCount": 203,
+      "localOldestEvent": "2026-09-12T07:50:37.732Z",
+      "localTwelveMonthOldEventCount": 0,
+      "localAuditTotalBytes": 221184,
+      "twelveMonthHistoricalSampleRequiredToProveConfiguration": false,
+      "hostedRetentionControlsVerified": false,
+      "capacityForRetentionTargetVerified": false,
+      "durableArchiveOrPreservationEvidenceVerified": false,
+      "retentionImplementationVerified": false
+    }
+  },
+  "alerts": {
+    "status": "BLOCKED",
+    "routingVerified": false,
+    "redactionReviewed": false,
+    "testNotificationSuppressed": false,
+    "behaviorVerification": {
+      "acknowledgementDeadlines": false,
+      "escalation": false,
+      "duplicateAndNoiseSuppression": false,
+      "newCriticalEventProtection": false,
+      "markedAndSuppressedTestHandling": false
+    },
+    "requiredSignals": {
+      "authFailures": false,
+      "serverErrors": false,
+      "databaseErrors": false,
+      "auditWriteFailures": false,
+      "migrationFailures": false,
+      "backupFailures": false,
+      "queueFailures": false,
+      "securityEvents": false
+    },
+    "categoryMapping": {
+      "authFailures": { "critical": "authentication-infrastructure-or-security-boundary-failure", "high": "major-operational-impact", "medium": "isolated-actionable-failure", "low": "expected-non-actionable-denial" },
+      "serverErrors": { "critical": "application-wide-outage", "high": "persistent-elevated-errors", "medium": "isolated-degradation" },
+      "databaseErrors": { "critical": "material-integrity-failure-or-broad-outage", "high": "major-operational-failure", "medium": "isolated-failure" },
+      "auditWriteFailures": { "critical": "security-boundary-or-material-integrity-failure", "high": "major-operational-impact", "medium": "isolated-actionable-failure" },
+      "migrationFailures": { "critical": "failed-recovery-threatening-service-integrity", "high": "major-operational-failure", "medium": "isolated-safely-stopped-failure" },
+      "backupFailures": { "critical": "failed-recovery-threatening-service-integrity", "high": "critical-background-process-failure", "medium": "isolated-non-critical-failure" },
+      "queueFailures": { "critical": "security-integrity-or-application-wide-availability-failure", "high": "repeated-processing-or-critical-background-failure", "medium": "isolated-processing-failure" },
+      "securityEvents": { "critical": "boundary-failure-cross-tenant-exposure-or-security-infrastructure-failure", "high": "major-operational-impact", "medium": "actionable-warning", "low": "non-actionable-diagnostic" }
+    }
+  },
+  "authorization": {
+    "status": "DESIGNATED_PENDING_IMPLEMENTATION_REVIEW",
+    "policyApprovalReference": "P7-OBS-POLICY-OWNER-20260912",
+    "staffingDesignationReference": "P7-OBS-STAFFING-OWNER-20260912",
+    "operatorRole": "observability-operator",
+    "approverRole": "observability-approver",
+    "operatorId": "P7-OBS-PERSON-001",
+    "approverId": "P7-OBS-PERSON-002",
+    "approvedAt": null
+  },
+  "readiness": {
+    "incidentEscalationDefined": true,
+    "logAccessBounded": true,
+    "auditAccessBounded": true,
+    "retentionDefined": false,
+    "noProductionContact": true
+  },
+  "redaction": {
+    "secretsExcluded": true,
+    "credentialsExcluded": true,
+    "tokensExcluded": true,
+    "cookiesExcluded": true,
+    "sessionValuesExcluded": true,
+    "sensitiveEnvironmentExcluded": true,
+    "rawPayloadsExcluded": true,
+    "customerDataExcluded": true,
+    "productionDataExcluded": true
+  },
+  "evidenceReferences": [
+    "P7-RELEASE-CURRENT-PREVIEW-213A2CE",
+    "P7-OBS-VERCEL-20260912",
+    "P7-OBS-LOCAL-DB-AUTH-20260912",
+    "P7-OBS-AUDIT-20260912",
+    "P7-OBS-READINESS-20260912",
+    "P7-OBS-POLICY-OWNER-20260912",
+    "P7-OBS-STAGING-ACCESS-CHECK-20260912",
+    "P7-OBS-STAFFING-OWNER-20260912",
+    "P7-OBS-RETENTION-CAPABILITY-20260912",
+    "P7-OBS-ALERT-CENTER-OWNER-20260912",
+    "P7-OBS-PROVIDER-DISCOVERY-20260912",
+    "P7-OBS-SUPABASE-PROVIDER-BLOCK-20260912"
+  ],
+  "blockingReasons": [
+    "all-eight-signal-routing-and-suppressed-test-unverified",
+    "staging-log-access-and-actual-retention-unverified",
+    "audit-twelve-month-retention-implementation-unverified",
+    "private-notification-channels-and-delivery-unverified",
+    "independent-operational-review-incomplete",
+    "EXTERNAL_PROVIDER_BLOCKED"
+  ],
+  "outcome": {
+    "status": "BLOCKED",
+    "productionContacted": false,
+    "networkRequired": false
+  }
+}

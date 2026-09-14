@@ -17,7 +17,7 @@
     "currentRoadmapCommit": "6126e16",
     "migrationManifest": "docs/migration-manifest.sha256",
     "currentSchemaIdentity": "schema-phase7-25",
-    "currentMigrationManifestDigest": "42cd0318f4fb34cd65348b722a5e9895f0b4d0e5935b3c462535b0bb7860c1bb",
+    "currentMigrationManifestDigest": "ed8e928bccf6afbc6a7ac8558674874eb54fb6af017d12a5e56dac291d26a2ff",
     "approvedPriorReleases": [
       {
         "commit": "889bd38030caa56742091b500c6155b0d30a0222",
@@ -238,7 +238,10 @@
       "id": "P7-CI-01",
       "category": "readiness",
       "title": "CI and release-candidate gates",
-      "status": "NOT_RUN",
+      "status": "PASS",
+      "evidenceReference": "docs/phase7-ci-release-evidence.json",
+      "validatedCandidateCommit": "21d7fe78cba61f6f16a49a303a31efa2cf38285e",
+      "evidenceScope": "local-only validation of the exact isolated candidate; not hosted deployment validation",
       "evidenceRequired": ["independent gate statuses", "typecheck", "lint", "build", "regression/security suites", "secret scan", "release artifact identity", "fail-closed aggregate status"]
     }
   ],
